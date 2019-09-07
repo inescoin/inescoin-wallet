@@ -1,0 +1,317 @@
+/* You can add global styles to this file, and also import other style files */
+
+body { font-family: "proxima-nova", "proxima nova", "helvetica neue", "helvetica", "arial", sans-serif; min-height: 100%;}
+
+h1.title-tab {
+  padding-bottom: 30px;
+  font-weight: 300;
+  margin-top: 20px;
+}
+
+.labelError {
+	color: #FF0000;
+}
+
+.labelSuccess {
+	color: #009900;
+}
+
+.labelIn {
+	font-weight: bold;
+	color: #009900;
+}
+
+.labelOut {
+  font-weight: bold;
+  color: #999999;
+}
+
+
+.labelTag {
+	color: #999999;
+}
+
+.rowIn {
+
+}
+
+.rowOut {
+  background: #F1F1F1;
+}
+
+h2 {
+	margin-top: 20px;
+}
+
+.btnWalletAction {
+	margin-right: 10px;
+}
+
+.btnWalletActionBox {
+	border-top: solid 1px #CCC;
+	padding-top: 10px;
+}
+
+.wallet-header-panel {
+	padding-bottom: 10px;
+	cursor: pointer;
+}
+
+.wallet-title {
+	font-size: 13pt;
+	font-weight: 600;
+	color: #333333;
+}
+
+.fa {
+	margin-left: 10px;
+}
+
+.badge {
+	margin-left: 10px;
+}
+
+.img-crypto-logo {
+	width: 30px;
+	margin-right: 15px;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+/*******************/
+/* Dashboard Start */
+/*******************/
+
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Content
+ */
+
+[role="main"] {
+  padding-top: 48px; /* Space for fixed navbar */
+}
+
+/* Navbar
+-------------------------------------------------- */
+.navbar {
+    background: #ffffff;
+    padding-top: 0;
+    padding-bottom: 0;
+    box-shadow: 0 0 25px rgba(40,47,60,.05), 0 20px 25px rgba(40,47,60,.05), 0 3px 4px rgba(40,47,60,.05);
+}
+.navbar .navbar-brand {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    margin-right: 1.2rem;
+}
+.navbar .navbar-brand img {
+    height: 1.8rem;
+}
+
+.navbar .navbar-toggler-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+}
+
+.navbar .nav-item {
+    border-top: 0;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+    font-size: 1.8rem;
+    font-weight: 200;
+    line-height: 1.2;
+    margin: 0;
+
+    // @include media-breakpoint-up(md) {
+    //     border-top: .3rem solid transparent;
+    //     padding-bottom: .6rem;
+    //     margin-left: .9rem;
+    //     margin-right: .9rem;
+    // }
+}
+
+.navbar .nav-item a.nav-link {
+    color: #9ba4ae;
+    padding-left: .3rem;
+    padding-right: .3rem
+}
+
+.navbar .nav-item a.nav-link:hover {
+    color: #212529;
+}
+
+.navbar .nav-item {
+    border-bottom: solid 5px #FFFFFF;
+}
+
+.navbar .nav-item.active {
+    border-bottom: solid 5px #FF00CC;
+}
+
+.navbar .nav-item.active a {
+    color: #212529;
+}
+
+.form-search {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    max-width: 40rem;
+    // width: 100%;
+}
+
+.form-search .input-group.input-group-seamless > .form-control {
+    border-radius: 2rem;
+}
+
+main {
+  min-height: 600px;
+}
+
+main .form-search {
+    /*max-width: 40rem;*/
+    margin: 0 auto;
+    padding: 0;
+}
+main .form-search .form-control,
+main .form-search .form-control:focus {
+    border-color: transparent;
+}
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    /* line-height: 60px; */
+}
+
+.navbar-brand {
+  font-family: "Merriweather Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-weight: 700;
+}
+.navbar-brand::first-letter {
+  text-transform: uppercase;
+}

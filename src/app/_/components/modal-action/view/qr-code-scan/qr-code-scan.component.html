@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Scan' | dgTranslate }} QrCode</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	  <zxing-scanner (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="close()">{{ '#Close' | dgTranslate }}</button>
+</div>
+
+

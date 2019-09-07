@@ -1,0 +1,75 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Transfer details' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="row border-bottom mb-2">
+		<div class="col-2">
+			<label class="font-weight-bold">{{ '#Date' | dgTranslate }}</label>
+		</div>
+		<div class="col-10">
+			{{ (transfer.createdAt * 1000) | date:'medium' }}
+		</div>
+	</div>
+	<div class="row border-bottom mb-2">
+		<div class="col-2">
+			<label class="font-weight-bold">{{ '#Amount' | dgTranslate }}</label>
+		</div>
+		<div class="col-10">
+			{{ transfer.amount | cryptoAmount }} INES
+		</div>
+	</div>
+	<div class="row border-bottom mb-2">
+		<div class="col-2">
+			<label class="font-weight-bold">{{ '#From' | dgTranslate }}</label>
+		</div>
+		<div class="col-10">
+			{{ transfer.from }}
+		</div>
+	</div>
+	<div class="row border-bottom mb-2">
+		<div class="col-2">
+			<label class="font-weight-bold">{{ '#To' | dgTranslate }}</label>
+		</div>
+		<div class="col-10">
+			{{ transfer.to }}
+		</div>
+	</div>
+	<div class="row border-bottom mb-2">
+		<div class="col-2">
+			<label class="font-weight-bold">{{ '#Transaction Hash' | dgTranslate }}</label>
+		</div>
+		<div class="col-10">
+			{{ transfer.transactionHash }}
+		</div>
+	</div>
+	<div class="row border-bottom mb-2">
+		<div class="col-2">
+			<label class="font-weight-bold">{{ '#Transfer Hash' | dgTranslate }}</label>
+		</div>
+		<div class="col-10">
+			{{ transfer.hash }}
+		</div>
+	</div>
+	<div class="row border-bottom mb-2">
+		<div class="col-2">
+			<label class="font-weight-bold">{{ '#Height' | dgTranslate }}</label>
+		</div>
+		<div class="col-10">
+			{{ transfer.height }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-2">
+			<label class="font-weight-bold">{{ '#Wallet Id' | dgTranslate }}</label>
+		</div>
+		<div class="col-10">
+			{{ transfer.walletId }}
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="close()">{{ '#Close' | dgTranslate }}</button>
+</div>

@@ -1,0 +1,8 @@
+<div class="form-group" >
+	{{ '#Password' | dgTranslate }}
+	<input class="form-control" type="password" name="password" [(ngModel)]="password" autocomplete="new-password">
+	<ng2-password-strength-bar [passwordToCheck]="password"></ng2-password-strength-bar>
+</div>
+
+<hr />
+<button class="btn btn-success" (click)="create()">{{ '#Create new account' | dgTranslate }}</button>

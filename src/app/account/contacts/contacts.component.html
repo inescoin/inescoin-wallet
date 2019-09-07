@@ -1,0 +1,63 @@
+<div class="row mb-3">
+	<div class="col-md-6 text">
+		<input 	class="form-control"
+	         	type="text"
+	        	placeholder="{{ '#Type to filter the name column...' | dgTranslate }}"
+	        	(keyup)="updateFilter($event)"
+		/>
+	</div>
+	<div class="col-md-6 text-right">
+		<button class="btn btn-light"
+				(click)="openContactCreateModal()">
+				<i class="fa fa-plus" aria-hidden="true"></i> {{ '#Create new contact' | dgTranslate }}
+		</button>
+	</div>
+</div>
+
+<ngx-datatable #table
+    class="material"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [limit]="10"
+    [rows]="contacts">
+    <ngx-datatable-column name="{{ '#Label' | dgTranslate }}" sortable="false" prop="label">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+	    {{ value | dgTruncate :{ limit: 10 } }}
+	  </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column name="{{ '#Address' | dgTranslate }}" sortable="false" prop="address">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+	    {{ value | dgTruncate :{ limit: 15 } }}
+	  </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column name="{{ '#Public Key' | dgTranslate }}" sortable="false" prop="publicKey">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+	    {{ value | dgTruncate :{ limit: 15 } }}
+	  </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column name="{{ '#Wallet Id' | dgTranslate }}" sortable="false" prop="walletId">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+	    {{ value | dgTruncate :{ limit: 10 } }}
+	  </ng-template>
+	</ngx-datatable-column>
+    <ngx-datatable-column name="{{ '#Actions' | dgTranslate }}" sortable="false" prop="address">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+	    <button class="btn btn-light mr-2" (click)="openQrCodeViewModal(row)">
+	      <fa-icon icon="qrcode"></fa-icon>
+	    </button>
+
+	    <button class="btn btn-light mr-2" (click)="openContactEditModal(row, index)">
+	      <fa-icon icon="edit"></fa-icon>
+	    </button>
+
+	    <button class="btn btn-danger" (click)="openContactRemoveModal(row, getRowIndex(row))">
+	    	<fa-icon icon="times"></fa-icon>
+	    </button>
+	  </ng-template>
+	</ngx-datatable-column>
+</ngx-datatable>
+
+

@@ -1,0 +1,56 @@
+<div class="messaging">
+	<div class="inbox_msg">
+  	<div class="inbox_people">
+  		<div class="headind_srch">
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              {{ '#Channels' | dgTranslate }}
+            </div>
+            <div class="col-md-6 col-xs-6 text-right">
+              <button class="btn btn-light" (click)="openModal()"><fa-icon icon="plus"></fa-icon> {{ '#Start new' | dgTranslate }}</button>
+            </div>
+    		</div>
+  		</div>
+  		<div class="inbox_chat">
+    		<div class="chat_list" *ngFor="let channel of conversations" [ngClass]="{'active_chat': channel.id === current.id}">
+          <div class="chat_people" (click)="startChat(channel)">
+            <div class="chat_img"> <img src="/assets/img/casa.png" alt="sunil"> </div>
+            <div class="chat_ib">
+              <h5>{{ channel.from | dgTruncate :{limit: 8}  }} <fa-icon icon="exchange-alt"></fa-icon> {{ channel.to | dgTruncate :{limit: 8} }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mesgs">
+      <div class="msg_history" #scrollMe>
+        <h4 *ngIf="current.from">{{ current.from.address | dgTruncate :{ limit: 10 } }} <fa-icon icon="exchange-alt"></fa-icon> {{ current.to.address | dgTruncate :{ limit: 10 } }}</h4>
+        <div *ngFor="let message of current.messages">
+          <div class="incoming_msg" *ngIf="message && !message.isMe">
+            <div class="incoming_msg_img"> <img src="/assets/img/casa.png" alt="sunil"> </div>
+            <div class="received_msg">
+              <div class="received_withd_msg">
+                <p>{{ message.body || message.original }}</p>
+                <span class="time_date">{{ message.createdAt * 1000 | timeAgo}}</span></div>
+            </div>
+          </div>
+
+          <div class="outgoing_msg" *ngIf="message && message.isMe">
+            <div class="sent_msg">
+              <p>{{ message.body || message.original }}</p>
+              <span class="time_date">{{ message.createdAt * 1000 | timeAgo }}</span> </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="type_msg">
+        <div class="input_msg_write">
+          <input type="text" class="write_msg" autocomplete="off" placeholder="{{ '#Type a message' | dgTranslate }}" [(ngModel)]="message" />
+          <input type="password" autocomplete="new-password" [(ngModel)]="password" />
+          <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

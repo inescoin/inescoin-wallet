@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Start conversation' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="form-group">
+		<label>{{ '#From' | dgTranslate }} </label>
+		<select class="form-control" [(ngModel)]="fromValue" (change)="onFromChange($event)">
+			<option value="">
+		      -
+		    </option>
+		    <option *ngFor="let address of getAdressesArray()" [value]="address.address">
+		      {{ address.address }}
+		    </option>
+		</select>
+	</div>
+	<hr />
+
+	<div class="form-group">
+		<label>{{ '#To' | dgTranslate }} <small>({{ '#Address' | dgTranslate }})</small></label>
+		<input 	[(ngModel)]="toValue"
+						[typeahead]="contacts"
+						[typeaheadMinLength]="0"
+						[typeaheadScrollable]="true"
+						[typeaheadOptionsInScrollableView]="100"
+						(typeaheadOnSelect)="onSelectTransferTo($event)"
+						typeaheadScrollable="true"
+						typeaheadOptionField="value"
+						autocomplete="off"
+						class="form-control" placeholder="0x...">
+	</div>
+
+	<div class="form-group">
+		<label>{{ '#To' | dgTranslate }} <small>({{ '#Public Key' | dgTranslate }})</small></label>
+		<input 	[(ngModel)]="toPublicKeyValue" autocomplete="off" type="text" class="form-control" placeholder="987987879...">
+	</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" [disabled]="!(fromValue && toValue && toPublicKeyValue)" (click)="start()">{{ '#Start now' | dgTranslate }}</button>
+  <button type="button" class="btn btn-light" (click)="close()">{{ '#Close' | dgTranslate }}</button>
+</div>

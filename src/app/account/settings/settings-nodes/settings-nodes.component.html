@@ -1,0 +1,43 @@
+<h5 class="setting-title">
+	<button class="btn btn-light pull-right"
+			(click)="openSettingNodeCreateModal()">
+			<i class="fa fa-plus" aria-hidden="true"></i> {{ '#Add node' | dgTranslate }}
+	</button>
+	{{ '#Nodes' | dgTranslate }}
+</h5>
+
+<ngx-datatable #table
+    class="material"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [limit]="10"
+    [rows]="nodes">
+    <ngx-datatable-column name="{{ '#Ip' | dgTranslate }}" sortable="false" prop="ip">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+	    {{ value }}
+	  </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column name="{{ '#RPC Port' | dgTranslate }}" sortable="false" prop="rpcPort">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+	    {{ value }}
+	  </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column name="{{ '#Messenger Port' | dgTranslate }}" sortable="false" prop="messengerPort">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+	    {{ value }}
+	  </ng-template>
+	</ngx-datatable-column>
+    <ngx-datatable-column name="{{ '#Actions' | dgTranslate }}" sortable="false" prop="ip">
+	  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+		<button class="btn btn-light mr-2" (click)="openSettingNodeEditModal(row)">
+	      <fa-icon icon="edit"></fa-icon>
+	    </button>
+
+	    <button class="btn btn-danger" (click)="openSettingNodeRemoveModal(row, getRowIndex(row))">
+	    	<fa-icon icon="times"></fa-icon>
+	    </button>
+	  </ng-template>
+	</ngx-datatable-column>
+</ngx-datatable>

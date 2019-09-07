@@ -1,0 +1,52 @@
+<h5 class="setting-title">{{ '#Profile' | dgTranslate }}</h5>
+
+<h6>{{ '#Current profile informations' | dgTranslate }}</h6>
+<div class="card mb-4">
+	<div class="card-body">
+	  <div class="row">
+	    <label for="wallets-count" class="col-sm-4 col-form-label">{{ '#Wallets' | dgTranslate }}</label>
+	    <div class="col-sm-8 mt-2">
+	      <span class="badge badge-secondary">{{ this.profile.wallets }}</span>
+	    </div>
+	  </div>
+	  <div class="row">
+	    <label for="wallets-count" class="col-sm-4 col-form-label">{{ '#Contacts' | dgTranslate }}</label>
+	    <div class="col-sm-8 mt-2">
+	      <span class="badge badge-secondary">{{ this.profile.contacts }}</span>
+	    </div>
+	  </div>
+	  <div class="row">
+	    <label for="wallets-count" class="col-sm-4 col-form-label">{{ '#Nodes' | dgTranslate }}</label>
+	    <div class="col-sm-8 mt-2">
+	      <span class="badge badge-secondary">{{ this.profile.nodes }}</span>
+	    </div>
+	  </div>
+	  <div class="row">
+	    <label for="wallets-count" class="col-sm-4 col-form-label">{{ '#Channels' | dgTranslate }}</label>
+	    <div class="col-sm-8 mt-2">
+	      <span class="badge badge-secondary">{{ this.profile.channels }}</span>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<h6>{{ '#Export' | dgTranslate }}</h6>
+<div class="card mb-4">
+	<div class="card-body text-center">
+		<button class="btn btn-light" (click)="exportProfile()">{{ '#Export to file' | dgTranslate }}</button>
+	</div>
+</div>
+
+<h6>{{ '#Import' | dgTranslate }}</h6>
+<div class="card mb-4">
+	<div class="card-body text-center">
+		<button class="btn btn-light" (click)="importProfile()">{{ '#Import from file' | dgTranslate }}</button>
+	</div>
+</div>
+
+<h6>{{ '#Reset' | dgTranslate }}</h6>
+<div class="card mb-4">
+	<div class="card-body text-center">
+		<button class="btn btn-danger" (click)="resetProfile()">{{ '#Reset profile & clear cache' | dgTranslate }}</button>
+	</div>
+</div>

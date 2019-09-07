@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Export profile' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="list-group list-group-flush mb-4">
+		<div class="list-group-item">
+			<ui-switch class="pull-right"
+								 [(ngModel)]="config.wallets"></ui-switch>
+			{{ '#Wallets' | dgTranslate }}
+		</div>
+		<div class="list-group-item">
+			<ui-switch class="pull-right"
+								 [(ngModel)]="config.channels"></ui-switch>
+			{{ '#Channels' | dgTranslate }}
+		</div>
+		<div class="list-group-item">
+			<ui-switch class="pull-right"
+								 [(ngModel)]="config.nodes"></ui-switch>
+			{{ '#Nodes' | dgTranslate }}
+		</div>
+		<div class="list-group-item">
+			<ui-switch class="pull-right"
+								 [(ngModel)]="config.contacts"></ui-switch>
+			{{ '#Contacts' | dgTranslate }}
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>{{ '#File name' | dgTranslate }}</label>
+		<input class="form-control" [(ngModel)]="config.filename" />
+	</div>
+
+	<div class="form-group">
+		<label>{{ '#Password' | dgTranslate }}</label>
+		<input type="password" autocomplete="new-password" class="form-control" [(ngModel)]="config.password" />
+		<ng2-password-strength-bar [passwordToCheck]="config.password"></ng2-password-strength-bar>
+	</div>
+
+	<div class="text-center mt-4">
+		<button class="btn btn-primary"
+			[disabled]="!(config.filename && config.password)" (click)="exportProfile()">{{ '#Save to file' | dgTranslate }}</button>
+	</div>
+</div>

@@ -1,0 +1,58 @@
+<div class="text-center">
+	<h1 class="total-amount-wallet">{{ total | cryptoAmount }} {{ inescoinConfig.symbol }}</h1>
+</div>
+
+<div class="row" *ngIf="getAccounts().length">
+	<div class="col-md-6">
+		<div class="form-group mb-3 mr-5">
+			<div class="input-group input-group-seamless">
+		        <input type="text" class="form-control " placeholder="{{ '#Search account' | dgTranslate }}" name="requestType" required="" ng-model="hashRequest" autocomplete="new-password">
+		    </div>
+		</div>
+	</div>
+	<div class="col-md-6 text-right">
+		<button class="btn btn-light mr-2"
+			(click)="openModal('sendCoin', { component: 'wallet', size: 'lg' })"
+			><fa-icon icon="paper-plane"></fa-icon> {{ '#Send' | dgTranslate }}</button>
+
+		<button class="btn btn-light mr-2"
+			(click)="openModal('accountCreate', { component: 'wallet'})"
+			><fa-icon icon="plus"></fa-icon> {{ '#Create new account' | dgTranslate }}</button>
+
+		<button class="btn btn-light"
+			(click)="openModal('accountImport', { component: 'wallet'})"
+			><fa-icon icon="download"></fa-icon> {{ '#Import account' | dgTranslate }}</button>
+	</div>
+
+</div>
+
+<div class="row" *ngIf="getAccounts().length">
+	<div class="col-md-6 mb-2" *ngFor="let account of getAccounts()" (click)="openAccountDetail(account)">
+		<div class="card account-card">
+		  	<div class="card-body">
+				<h6 class="card-subtitle mb-2 text-muted"><fa-icon icon="wallet" pull="left"></fa-icon> {{ account.address }}</h6>
+				<p class="card-text">{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }}</p>
+		  	</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="card" *ngIf="!getAccounts().length">
+	<div class="card-body">
+		<h4 class="text-center mb-4">{{ '#No account yet, Welcome into InesCoin Network.' | dgTranslate }}</h4>
+		<p class="text-center">
+			<button class="btn btn-light mr-2" (click)="openModal('accountCreate', { component: 'wallet'})">
+				<i class="fa fa-plus" aria-hidden="true"></i> {{ '#Create new account' | dgTranslate }}
+			</button>
+
+			<button class="btn btn-light mr-2" (click)="openModal('accountImport', { component: 'wallet'})">
+				<i class="fa fa-download" aria-hidden="true"></i> {{ '#Import account' | dgTranslate }}
+			</button>
+
+			<button class="btn btn-light" (click)="openModal('profileImport', { component: 'wallet'})">
+				<fa-icon icon="download"></fa-icon> {{ '#Import profile' | dgTranslate }}
+			</button>
+		</p>
+	</div>
+</div>

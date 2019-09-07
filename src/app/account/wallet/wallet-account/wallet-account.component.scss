@@ -1,0 +1,20 @@
+.amount-balance {
+	font-size: 30px;
+    font-weight: 600;
+}
+
+.amount-balance small{
+	font-size: 10px;
+	vertical-align: middle;
+}
+
+.title-address {
+	color: #9900CC;
+}
+
+.transaction-row {
+	cursor: pointer;
+}
+.transaction-row:hover {
+	background-color: #F1F1F1F1;
+}

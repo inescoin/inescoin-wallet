@@ -1,0 +1,114 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+@import '~ngx-toastr/toastr';
+@import '~ngx-ui-switch/ui-switch.component.scss';
+
+.setting-title {
+	border-bottom: solid 1px #F1F1F1;
+	padding-bottom: 23px;
+  margin-bottom: 20px;
+}
+
+.spinner-ctnr {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  .spinner.colorwheel {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 100%;
+    z-index: 0;
+    // margin-top: 15%;
+    // margin-left: 45%;
+  }
+  .spinner.colorwheel::before,
+  .spinner.colorwheel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .spinner.colorwheel::after {
+    background: #C1C1C1;
+    -webkit-animation: rotate 2.5s linear reverse infinite;
+    animation: rotate 2.5s linear reverse infinite;
+    // -webkit-animation: fade 1s infinite alternate, rotate 2.5s linear reverse infinite;
+    // animation: fade 1s infinite alternate, rotate 2.5s linear reverse infinite;
+  }
+
+  .spinner .centerpiece {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: 100%;
+    border-color: #000;
+    box-sizing: border-box;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid rgba(33, 33, 255, 0.3);
+    border-top: 12px solid rgba(33, 33, 255, 0.3);
+    -webkit-animation: rotate 0.8s linear infinite;
+    animation: rotate 0.8s linear infinite;
+  }
+  .logo-fixed {
+    background-image: url('/assets/img/logo_inescoin_w.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    top: 15px;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .spinner-ctnr {
+    .spinner.colorwheel {
+      // margin-top: 15%;
+      // margin-left: 35%;
+    }
+  }
+}
+
+// @-webkit-keyframes fade {
+//   from { opacity: 1; }
+//   to { opacity: 0.2; }
+// }
+// @keyframes fade {
+//   from { opacity: 1; }
+//   to { opacity: 0.2; }
+// }
+
+@-webkit-keyframes rotate {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Contact' | dgTranslate }} QrCode</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="text-center">
+		<small>{{ qrCode.address }}</small>
+	</div>
+
+	<ngx-qrcode
+	      qrc-element-type="canvas"
+	      [qrc-value]="qrCodeString"
+	      qrc-class="text-center"
+	      qrc-errorCorrectionLevel="L">
+	</ngx-qrcode>
+
+	<div class="text-center">
+		<label>{{ '#Public Key' | dgTranslate }}</label> <br /><small>{{ qrCode.publicKey }}</small>
+	</div>
+	<div class="text-center">
+		<label>{{ '#Wallet Id' | dgTranslate }}</label> <br /><small>{{ qrCode.walletId }}</small>
+	</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="close()">{{ '#Close' | dgTranslate }}</button>
+</div>

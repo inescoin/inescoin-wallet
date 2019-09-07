@@ -1,0 +1,18 @@
+<ng-template>
+	<app-qr-code-scan *ngIf="currentName === 'qrCodeScan'" ></app-qr-code-scan>
+	<app-qr-code-view *ngIf="currentName === 'qrCodeView'" ></app-qr-code-view>
+	<app-transfer-details *ngIf="currentName === 'transferDetails'" ></app-transfer-details>
+	<app-start-conversation *ngIf="currentName === 'startConversation'" ></app-start-conversation>
+	<app-account-create *ngIf="currentName === 'accountCreate'"></app-account-create>
+	<app-account-import *ngIf="currentName === 'accountImport'"></app-account-import>
+	<app-contact-add *ngIf="currentName === 'contactAdd'"></app-contact-add>
+	<app-contact-edit *ngIf="currentName === 'contactEdit'"></app-contact-edit>
+	<app-contact-remove *ngIf="currentName === 'contactRemove'"></app-contact-remove>
+	<app-node-add *ngIf="currentName === 'nodeAdd'"></app-node-add>
+	<app-node-edit *ngIf="currentName === 'nodeEdit'"></app-node-edit>
+	<app-node-remove *ngIf="currentName === 'nodeRemove'"></app-node-remove>
+	<app-profile-export *ngIf="currentName === 'profileExport'"></app-profile-export>
+	<app-profile-import *ngIf="currentName === 'profileImport'"></app-profile-import>
+	<app-profile-reset *ngIf="currentName === 'profileReset'"></app-profile-reset>
+	<app-send-coin *ngIf="currentName === 'sendCoin'"></app-send-coin>
+</ng-template>

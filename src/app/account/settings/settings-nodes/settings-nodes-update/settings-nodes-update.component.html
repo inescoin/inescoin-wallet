@@ -1,0 +1,16 @@
+<div class="form-group">
+	<label>{{ '#Ip' | dgTranslate }}</label>
+	<input type="text" class="form-control" [(ngModel)]="node.ip">
+</div>
+<div class="form-group">
+	<label>{{ '#RPC Port' | dgTranslate }}</label>
+	<input type="text" class="form-control" [(ngModel)]="node.rpcPort">
+</div>
+<div class="form-group">
+	<label>{{ '#Messenger Port' | dgTranslate }}</label>
+	<input type="text" class="form-control" [(ngModel)]="node.messengerPort">
+</div>
+
+<hr />
+
+<button [disabled]="!this.node.ip || !this.node.rpcPort  || !this.node.messengerPort" class="btn btn-success" (click)="updateNode()">{{ '#Update' | dgTranslate }}</button>

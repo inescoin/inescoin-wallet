@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Import profile' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="form-group" *ngIf="file">
+	{{ '#Password' | dgTranslate }}
+		<input class="form-control" type="password" name="password" [(ngModel)]="password" autocomplete="new-password">
+	</div>
+
+	<input *ngIf="!file" (change)="loadWallet($event)" type="file">
+
+	<hr />
+
+	<button class="btn btn-success" [disabled]="!file" (click)="importProfile()">{{ '#Import now' | dgTranslate }}</button>
+
+</div>

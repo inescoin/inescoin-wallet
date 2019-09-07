@@ -1,0 +1,154 @@
+<div class="card" *ngIf="!getAdressesArray().length">
+	<div class="card-body">
+		<h4 class="text-center mb-4">{{ '#No account yet, Welcome into InesCoin Network.' | dgTranslate }}</h4>
+		<p class="text-center">
+			<button class="btn btn-light mr-2" (click)="openModal('accountCreate', { component: 'wallet'})">
+				<i class="fa fa-plus" aria-hidden="true"></i> {{ '#Create new account' | dgTranslate }}
+			</button>
+
+			<button class="btn btn-light mr-2" (click)="openModal('accountImport', { component: 'wallet'})">
+				<i class="fa fa-download" aria-hidden="true"></i> {{ '#Import account' | dgTranslate }}
+			</button>
+
+			<button class="btn btn-light" (click)="openModal('profileImport', { component: 'wallet'})">
+				<fa-icon icon="download"></fa-icon> {{ '#Import profile' | dgTranslate }}
+			</button>
+		</p>
+	</div>
+</div>
+
+<div *ngIf="getAdressesArray().length && !isSummaryStep">
+	<h6>{{ '#From' | dgTranslate }}</h6>
+	<div class="card">
+		<div class="card-body">
+			<div class="form-group">
+				<select class="form-control" [(ngModel)]="from" (change)="onFromChange($event)">
+					<option value="">
+				      -
+				    </option>
+				    <option *ngFor="let address of getAdressesArray()" [value]="address.address">
+				      {{ address.address }} - {{ address.amount | cryptoAmount}} {{ inescoinConfig.symbol }}
+				    </option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<hr />
+
+	<h6>{{ '#To' | dgTranslate }}</h6>
+	<ul class="list-group">
+		<li class="list-group-item" *ngFor="let transfer of transfers; let i = index;">
+			<div class="row">
+				<div class="col-md-5">
+					<button class="pull-right" (click)="openModal('qrCodeScan', { index: i , component: 'wallet-send'})">QrCode <fa-icon icon="qrcode"></fa-icon></button>
+					<label>{{ '#Address' | dgTranslate }}</label>
+					<input [(ngModel)]="transfer.to"
+						   [typeahead]="contacts"
+						   [typeaheadMinLength]="0"
+						   [typeaheadScrollable]="true"
+	       				   [typeaheadOptionsInScrollableView]="100"
+	       				   (typeaheadOnSelect)="onSelectTransferTo($event, i)"
+						   typeaheadScrollable="true"
+						   typeaheadOptionField="value"
+						   autocomplete="off"
+						   class="form-control" placeholder="0x...">
+				  	<!-- <input type="text" [(ngModel)]="transfer.to" class="form-control" placeholder="0x..."> -->
+				</div>
+				<div class="col-md-3">
+					<label>{{ '#Wallet Id' | dgTranslate }}</label>
+				  	<input type="text" [(ngModel)]="transfer.walletId" maxlength="10" class="form-control" placeholder="ACCOUNT_UNIQUE_CODE">
+				</div>
+				<div class="col-md-3">
+					<label>{{ '#Amount' | dgTranslate }}</label>
+				  	<input type="number" min="0.002" max="999999999.999999999" step=".000000001" [(ngModel)]="transfer.amount" class="form-control" placeholder="0.000000000">
+				</div>
+				<div class="col-md-1">
+					<label>{{ '#Action' | dgTranslate }}</label>
+					<button class="btn btn-danger form-control" *ngIf="transfers.length > 1" (click)="remove(i)"><i class="fa fa-close"></i></button>
+				</div>
+			</div>
+		</li>
+	</ul>
+
+
+	<hr />
+
+	<div class="text-center" *ngIf="transfers.length < 26">
+		<button class="btn btn-light" (click)="addTransfer()"><i class="fa fa-plus"></i> {{ '#add transfer' | dgTranslate }}</button>
+		<hr />
+	</div>
+
+
+	<div class="text-center form-group send-fee-box">
+		<label>{{ '#Fee' | dgTranslate }}</label>
+		<input class="form-control" type="range" step=".000000001" min="0.001" max="1" [(ngModel)]="fee" />
+	</div>
+	<hr />
+
+	<h6>{{ '#Total' | dgTranslate }}</h6>
+	<div class="card" >
+		<div class="card-body text-center">
+			{{ getTotal() }} {{ inescoinConfig.symbol }}
+			<p><small>{{ '#Fee' | dgTranslate }}: {{ fee }} {{ inescoinConfig.symbol }}</small></p>
+		</div>
+	</div>
+	<hr />
+
+	<div class="text-center" *ngIf="!isSummaryStep">
+		<p class="alert alert-danger" *ngIf="error.length">{{ error }}</p>
+		<button class="btn btn-success mr-2" [disabled]="!getTotal() || !from" (click)="isSummaryStep = true">{{ '#Next' | dgTranslate }}</button>
+	</div>
+
+</div>
+
+<div *ngIf="isSummaryStep">
+	<div class="card mb-2">
+		<div class="card-body">
+			<div class="form-group">
+				<label>{{ '#From' | dgTranslate }} :</label> {{ from }}
+			</div>
+			<div class="form-group">
+				<label>{{ '#Password' | dgTranslate }}</label>
+				<input type="password" [(ngModel)]="password" autocomplete="off" class="form-control" placeholder="password">
+			</div>
+			<div class="alert alert-danger" *ngIf="badPassword">{{ '#Bad password' | dgTranslate }}</div>
+		</div>
+	</div>
+
+	<div class="card mb-2">
+		<div class="card-body">
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">{{ '#To' | dgTranslate }}</th>
+			      <th scope="col">{{ '#Amount' | dgTranslate }}</th>
+			      <th scope="col">{{ '#Wallet Id' | dgTranslate }}</th>
+			    </tr>
+			  </thead>
+			   <tbody>
+				    <tr *ngFor="let transfer of transfers; let i = index;">
+				      <td>{{ transfer.to | dgTruncate :{limit: 15} }}</td>
+				      <td>{{ transfer.amount }}</td>
+				      <td>{{ transfer.walletId | dgTruncate :{limit: 15} }}</td>
+				    </tr>
+					</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	<div class="card">
+		<div class="card-body text-center">
+			<h6>{{ '#Total' | dgTranslate }}</h6>
+			{{ getTotal() }} {{ inescoinConfig.symbol }}
+			<p><small>{{ '#Fee' | dgTranslate }}: {{ fee }} {{ inescoinConfig.symbol }}</small></p>
+		</div>
+	</div>
+	<hr />
+
+	<div class="text-center" *ngIf="isSummaryStep">
+		<p class="alert alert-danger" *ngIf="error.length">{{ error }}</p>
+		<button class="btn btn-success mr-2" [disabled]="inProgress" (click)="send()">{{ '#Send Transaction' | dgTranslate }}</button>
+		<button class="btn btn-light" [disabled]="inProgress" (click)="isSummaryStep = false" >{{ '#Back' | dgTranslate }}</button>
+	</div>
+</div>

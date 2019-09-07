@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Reset profile' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="list-group list-group-flush mb-4">
+		<div class="list-group-item">
+			<ui-switch class="pull-right"
+								 [(ngModel)]="config.wallets"></ui-switch>
+			{{ '#Wallets' | dgTranslate }}
+		</div>
+		<div class="list-group-item">
+			<ui-switch class="pull-right"
+								 [(ngModel)]="config.channels"></ui-switch>
+			{{ '#Channels' | dgTranslate }}
+		</div>
+		<div class="list-group-item">
+			<ui-switch class="pull-right"
+								 [(ngModel)]="config.nodes"></ui-switch>
+			{{ '#Nodes' | dgTranslate }}
+		</div>
+		<div class="list-group-item">
+			<ui-switch class="pull-right"
+								 [(ngModel)]="config.contacts"></ui-switch>
+			{{ '#Contacts' | dgTranslate }}
+		</div>
+	</div>
+
+	<div class="text-center">
+		<button class="btn btn-danger mr-2" (click)="remove()">{{ '#Reset profile & Clear cache' | dgTranslate }}</button>
+		<button class="btn btn-secondary" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
+	</div>
+</div>

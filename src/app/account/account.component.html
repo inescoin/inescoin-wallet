@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-md">
+  <div class="container-fluid">
+    <a href="//inescoin.org" class="navbar-brand">{{ inescoinConfig.name }}</a>
+    <div class="collapse navbar-collapse" id="navbars">
+      <ul class="navbar-nav mr-auto">
+        <li [ngClass]="{ 'nav-item': true }">
+          <a class="nav-link" href="//explorer.inescoin.org">
+            {{ '#Explorer' | dgTranslate }}
+          </a>
+        </li>
+         <li [ngClass]="{ 'active': routerWallet.isActive, 'nav-item': true }">
+          <a class="nav-link" routerLinkActive [routerLink]="['/wallet']" #routerWallet="routerLinkActive">
+            {{ '#Wallet' | dgTranslate }}
+          </a>
+        </li>
+
+        <li [ngClass]="{ 'active': routerMessenger.isActive, 'nav-item': true }">
+          <a class="nav-link" routerLinkActive [routerLink]="['/messenger']" #routerMessenger="routerLinkActive">
+            {{ '#Messenger' | dgTranslate }}
+          </a>
+        </li>
+        <li [ngClass]="{ 'active': routerContacts.isActive, 'nav-item': true }">
+          <a class="nav-link" routerLinkActive [routerLink]="['/contacts']" #routerContacts="routerLinkActive">
+            {{ '#Contacts' | dgTranslate }}
+          </a>
+        </li>
+        <li [ngClass]="{ 'active': routerSettings.isActive, 'nav-item': true }">
+          <a class="nav-link" routerLinkActive [routerLink]="['/settings']" #routerSettings="routerLinkActive">
+            {{ '#Settings' | dgTranslate }}
+          </a>
+        </li>
+      </ul>
+
+      <button class="btn btn-primary" (click)="openModal('sendCoin', { component: 'wallet', size: 'lg'})"><fa-icon icon="paper-plane"></fa-icon> {{ '#Send' | dgTranslate }}</button>
+
+      <div class="form-group mt-3 ml-2">
+        <select class="form-control" [(ngModel)]="chooseLanguage" (ngModelChange)="changeLanguage()">
+          <option value="fr">Français</option>
+          <option value="it">Italiano</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="ru">русский</option>
+          <option value="cn">中国</option>
+          <option value="jp">日本の</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-12 ml-sm-auto">
+      <router-outlet></router-outlet>
+    </main>
+
+    <footer class="footer">
+      <div class="container text-center text-muted">
+        <small>
+          © {{ inescoinConfig.name | uppercase }} &nbsp; • &nbsp; <a target="_blank" href="{{ inescoinConfig.website }}"> Inescoin.org</a>
+        </small>
+      </div>
+    </footer>
+  </div>
+</div>

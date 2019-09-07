@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Delete node' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body text-center">
+	<p class="alert alert-infos">{{ node.ip }}</p>
+	<button class="btn btn-danger mr-2" (click)="remove()">{{ '#Delete now!' | dgTranslate }}</button>
+	<button class="btn btn-secondary" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
+</div>
