@@ -79,5 +79,12 @@
 	"#Add" : "Inserisci",
 	"#Explorer" : "Esploratore",
 	"#Import profile": "Importa profilo",
-	"#Import now": "Importa ora"
+	"#Import now": "Importa ora",
+	"#Next": "Il prossimo",
+	"#Back": "Indietro",
+	"#Balance": "Equilibrio",
+	"#Optional": "Opzionale",
+	"#Last 100 transfers": "Ultimi 100 trasferimenti",
+	"#Transfer details": "Dettagli di trasferimento",
+	"#Date": "Data"
 }

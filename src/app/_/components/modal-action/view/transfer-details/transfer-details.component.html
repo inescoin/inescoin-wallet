@@ -9,7 +9,7 @@
 		<div class="col-2">
 			<label class="font-weight-bold">{{ '#Date' | dgTranslate }}</label>
 		</div>
-		<div class="col-10">
+		<div class="col-10 text-break">
 			{{ (transfer.createdAt * 1000) | date:'medium' }}
 		</div>
 	</div>
@@ -17,7 +17,7 @@
 		<div class="col-2">
 			<label class="font-weight-bold">{{ '#Amount' | dgTranslate }}</label>
 		</div>
-		<div class="col-10">
+		<div class="col-10 text-break">
 			{{ transfer.amount | cryptoAmount }} INES
 		</div>
 	</div>
@@ -25,7 +25,7 @@
 		<div class="col-2">
 			<label class="font-weight-bold">{{ '#From' | dgTranslate }}</label>
 		</div>
-		<div class="col-10">
+		<div class="col-10 text-break">
 			{{ transfer.from }}
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 		<div class="col-2">
 			<label class="font-weight-bold">{{ '#To' | dgTranslate }}</label>
 		</div>
-		<div class="col-10">
+		<div class="col-10 text-break">
 			{{ transfer.to }}
 		</div>
 	</div>
@@ -41,7 +41,7 @@
 		<div class="col-2">
 			<label class="font-weight-bold">{{ '#Transaction Hash' | dgTranslate }}</label>
 		</div>
-		<div class="col-10">
+		<div class="col-10 text-break">
 			{{ transfer.transactionHash }}
 		</div>
 	</div>
@@ -49,7 +49,7 @@
 		<div class="col-2">
 			<label class="font-weight-bold">{{ '#Transfer Hash' | dgTranslate }}</label>
 		</div>
-		<div class="col-10">
+		<div class="col-10 text-break">
 			{{ transfer.hash }}
 		</div>
 	</div>
@@ -57,7 +57,7 @@
 		<div class="col-2">
 			<label class="font-weight-bold">{{ '#Height' | dgTranslate }}</label>
 		</div>
-		<div class="col-10">
+		<div class="col-10 text-break">
 			{{ transfer.height }}
 		</div>
 	</div>
@@ -65,7 +65,7 @@
 		<div class="col-2">
 			<label class="font-weight-bold">{{ '#Wallet Id' | dgTranslate }}</label>
 		</div>
-		<div class="col-10">
+		<div class="col-10 text-break">
 			{{ transfer.walletId }}
 		</div>
 	</div>

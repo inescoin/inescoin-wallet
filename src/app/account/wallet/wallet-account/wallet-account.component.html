@@ -1,10 +1,10 @@
 <div class="row">
 	<div class="col-md-9">
-		<h5 class="title-address"><fa-icon icon="wallet"></fa-icon> {{ account.address }}</h5>
-		<h6 class="title-address"><small><fa-icon icon="key"></fa-icon> {{ account.wallet.publicKey }}</small></h6>
-	  	<div class="amount-balance"><fa-icon icon="balance-scale"></fa-icon> {{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }} <small>({{ '#total transactions' | dgTranslate :account.total }})</small></div>
+		<h5 class="title-address text-wrap"><fa-icon icon="wallet"></fa-icon> {{ account.address }}</h5>
+		<h6 class="title-address text-wrap"><small><fa-icon icon="key"></fa-icon> {{ account.wallet.publicKey }}</small></h6>
+	  	<div class="amount-balance"><fa-icon icon="balance-scale"></fa-icon> {{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }} <small>(<span *ngIf="account.total >= 10000">+</span>{{ account.total }} {{ '#transactions' }})</small></div>
 	</div>
-	<div class="col-md-3 text-center">
+	<div class="col-md-3 mt-3 text-center">
 		<input type="type" class="form-control" placeholder="{{ '#Label' | dgTranslate }}" [(ngModel)]="account.wallet.label" />
 		<ngx-qrcode
 		      qrc-element-type="canvas"
@@ -12,49 +12,33 @@
 		      qrc-class="aclass"
 		      qrc-errorCorrectionLevel="L">
 		</ngx-qrcode>
-		<input type="type" class="form-control" placeholder="{{ '#Wallet Id' | dgTranslate }}" [(ngModel)]="account.wallet.walletId" />
+		<input type="type" class="form-control mb-3" placeholder="{{ '#Wallet Id' | dgTranslate }}" [(ngModel)]="account.wallet.walletId" />
 	</div>
 </div>
 
 <div *ngIf="account.transactions && account.transactions.length || account.transactionsPool && account.transactionsPool.length">
-	<h3>{{ '#Last 100 transfers' | dgTranslate }}</h3>
-	<table class="table mt-4">
-		<tr>
-			<th>{{ '#Date' | dgTranslate }}</th>
-			<th>{{ '#Type' | dgTranslate }}</th>
-			<th>{{ '#Height' | dgTranslate }}</th>
-			<th>{{ '#Amount' | dgTranslate }}</th>
-			<th>{{ '#From' | dgTranslate }}</th>
-			<th>{{ '#To' | dgTranslate }}</th>
-			<th>{{ '#Transfer Hash' | dgTranslate }}</th>
-			<th>{{ '#Transaction Hash' | dgTranslate }}</th>
-		</tr>
-		<tr *ngFor="let transfer of account.transactionsPool" (click)="openModal('transferDetails', { transfer: transfer, component: 'wallet-account', size: 'lg'})">
-			<td class="text-center"><fa-icon icon="hourglass-half"></fa-icon></td>
-			<td class="text-center">
-				<span class="badge badge-danger" *ngIf="account.address === transfer.from">OUT</span>
-				<span class="badge badge-success" *ngIf="account.address !== transfer.from">IN</span>
-			</td>
-			<td class="text-center">-</td>
-			<td class="text-center">{{ transfer.amount  | cryptoAmount }}</td>
-			<td>{{ transfer.from | dgTruncate :{limit: 15} }}</td>
-			<td>{{ transfer.to | dgTruncate :{limit: 15} }}</td>
-			<td>{{ transfer.hash | dgTruncate :{limit: 20, position: 'center'} }}</td>
-			<td>{{ transfer.transactionHash | dgTruncate :{limit: 20, position: 'center'} }}</td>
-		</tr>
-		<tr class="transaction-row" *ngFor="let transfer of account.transactions" (click)="openModal('transferDetails', { transfer: transfer, component: 'wallet', size: 'lg'})">
-			<td>{{ (transfer.createdAt * 1000) | date:'medium'}}</td>
-			<td class="text-center">
-				<span class="badge badge-danger" *ngIf="account.address === transfer.from">OUT</span>
-				<span class="badge badge-success" *ngIf="account.address !== transfer.from">IN</span>
-			<td class="text-center">{{ transfer.height }}</td>
-			<td class="text-center">{{ transfer.amount | cryptoAmount }}</td>
-			<td>{{ transfer.from | dgTruncate :{limit: 15} }}</td>
-			<td>{{ transfer.to | dgTruncate :{limit: 15} }}</td>
-			<td>{{ transfer.hash | dgTruncate :{limit: 20, position: 'center'} }}</td>
-			<td>{{ transfer.transactionHash | dgTruncate :{limit: 20, position: 'center'} }}</td>
-		</tr>
-	</table>
+	<h3><fa-icon icon="exchange-alt"></fa-icon> {{ '#Last 100 transfers' | dgTranslate }}</h3>
+	<div class="list-group list-group-flush">
+		<div class="list-group-item link-item text-center" *ngFor="let transfer of account.transactionsPool" (click)="openModal('transferDetails', { transfer: transfer, component: 'wallet', size: 'lg'})">
+			<h3 [class.text-danger]="account.address === transfer.from" [class.text-success]="account.address !== transfer.from" >
+				<span *ngIf="account.address === transfer.from">-</span><span *ngIf="account.address !== transfer.from">+</span>{{ transfer.amount | cryptoAmount }} {{ inescoinConfig.symbol }}
+			</h3>
+			<p *ngIf="account.address === transfer.from">{{ '#To' | dgTranslate }}: {{ transfer.to | dgTruncate :{limit: 15} }}</p>
+			<p *ngIf="account.address !== transfer.from">{{ '#From' | dgTranslate }}: {{ transfer.from | dgTruncate :{limit: 15} }}</p>
+			<p><fa-icon icon="hourglass-half"></fa-icon></p>
+		</div>
+	</div>
+
+	<div class="list-group list-group-flush">
+		<div class="list-group-item link-item text-center" *ngFor="let transfer of account.transactions" (click)="openModal('transferDetails', { transfer: transfer, component: 'wallet', size: 'lg'})">
+			<h3 [class.text-danger]="account.address === transfer.from" [class.text-success]="account.address !== transfer.from" >
+				<span *ngIf="account.address === transfer.from">-</span><span *ngIf="account.address !== transfer.from">+</span>{{ transfer.amount | cryptoAmount }} {{ inescoinConfig.symbol }}
+			</h3>
+			<p *ngIf="account.address === transfer.from">{{ '#To' | dgTranslate }}: {{ transfer.to | dgTruncate :{limit: 15} }}</p>
+			<p *ngIf="account.address !== transfer.from">{{ '#From' | dgTranslate }}: {{ transfer.from | dgTruncate :{limit: 15} }}</p>
+			<p>{{ (transfer.createdAt * 1000) | date:'medium' }}</p>
+		</div>
+	</div>
 </div>
 
 <p class="text-center" *ngIf="!account.transactions || !account.transactions.length">No transaction yet.</p>

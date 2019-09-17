@@ -79,5 +79,12 @@
 	"#Explorer": "Explorador",
 	"#Fee": "Cuota",
 	"#Import profile": "Importar perfil",
-	"#Import now": "Importar ahora"
+	"#Import now": "Importar ahora",
+	"#Next": "Siguiente",
+	"#Back": "Espalda",
+	"#Balance": "Equilibrar",
+	"#Optional": "Opcional",
+	"#Last 100 transfers": "Últimas 100 transferencias",
+	"#Transfer details": "Detalles de transferencia",
+	"#Date": "Fecha"
 }

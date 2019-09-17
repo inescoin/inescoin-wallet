@@ -50,8 +50,12 @@ import { ContactsCreateComponent } from './account/contacts/contacts-create/cont
 import { ContactsUpdateComponent } from './account/contacts/contacts-update/contacts-update.component';
 import { ContactsDetailsComponent } from './account/contacts/contacts-details/contacts-details.component';
 
-import { SettingsComponent } from './account/settings/settings.component';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
+import { SettingsComponent } from './account/settings/settings.component';
+
 import { CryptoAmountPipe } from './_/pipes/crypto-amount.pipe';
 import { ModalActionComponent } from './_/components/modal-action/modal-action.component';
 import { QrCodeScanComponent } from './_/components/modal-action/view/qr-code-scan/qr-code-scan.component';
@@ -157,6 +161,8 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     DoorgetsTruncateModule,
     HttpModule,
     HttpClientModule,
+    CollapseModule.forRoot(),
+    BsDropdownModule.forRoot(),
     DoorgetsTranslateModule,
     DoorgetsTranslateModule.forRoot({
       provide: NgTranslateAbstract,

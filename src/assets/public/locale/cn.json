@@ -79,5 +79,12 @@
 	"#Add" : "加",
 	"#Explorer" : "探险者",
 	"#Import profile": "导入个人资料",
-	"#Import now": "立即导入"
+	"#Import now": "立即导入",
+	"#Next": "下一个",
+	"#Back": "背部",
+	"#Balance": "平衡",
+	"#Optional": "可选的",
+	"#Last 100 transfers": "最近100次转账",
+	"#Transfer details": "转账详情",
+	"#Date": "日期"
 }

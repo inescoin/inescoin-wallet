@@ -96,6 +96,8 @@ export class WalletSendComponent implements OnInit {
   }
 
   getAdressesArray() {
+    this.addresses = this.walletService.getFromHomeStorage();
+
   	let addresses = [];
   	for(let address of Object.keys(this.addresses)) {
   		addresses.push(this.addresses[address]);
@@ -118,7 +120,7 @@ export class WalletSendComponent implements OnInit {
   }
 
   send() {
-    console.log('Send Transaction', this.transfers, this.from, this.transactionService);
+    console.log('Send Transaction', this.transfers, this.from);
     this.inProgress = true;
     this.badPassword = false;
 
@@ -143,7 +145,6 @@ export class WalletSendComponent implements OnInit {
         };
       }), this.from, decrypted.publicKey, decrypted.privateKey);
     } else {
-      console.log('');
       this.toastrService.error(this.doorgetsTranslateService.instant('#Error: Bad password'));
       this.inProgress = false;
       this.badPassword = true;
@@ -182,7 +183,7 @@ export class WalletSendComponent implements OnInit {
   }
 
   private _getFromCache() {
-    let wallets = localStorage.getItem('inescoin-wallets');
+    let wallets = localStorage.getItem(inescoinConfig.name + '-wallets');
     if (!wallets) {
       return {
         hash: '',

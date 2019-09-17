@@ -18,7 +18,7 @@ export class MessengerComponent implements OnInit {
 
 	@ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
-	password: string = '';
+	password: string = 'Amelmouna!123';
 	message: string = '';
 
   wallets: any = {};

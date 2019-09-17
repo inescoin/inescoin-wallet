@@ -1,6 +1,5 @@
 # Inescoin Blockchain - Offline Wallet
 
-
 Clone project
 ```
   git clone git@github.com:inescoin/inescoin-wallet.git
@@ -18,6 +17,7 @@ Install dependencies
 Run with dev env
 ```
   npm start
-  
+
   # open browser => http://localhost:4200
 ```
+

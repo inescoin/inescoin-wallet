@@ -79,5 +79,12 @@
 	"#Add" : "追加する",
 	"#Explorer" : "冒険者",
 	"#Import profile": "インポートプロファイル",
-	"#Import now": "今すぐインポート"
+	"#Import now": "今すぐインポート",
+	"#Next": "次",
+	"#Back": "バック",
+	"#Balance": "バランス",
+	"#Optional": "オプショナル",
+	"#Last 100 transfers": "過去100回の転送",
+	"#Transfer details": "転送の詳細",
+	"#Date": "日付"
 }

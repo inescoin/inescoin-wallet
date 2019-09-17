@@ -12,9 +12,32 @@
 	color: #9900CC;
 }
 
+@media screen and (min-width: 410px) and (max-width: 768px) {
+	.title-address {
+		font-size: 10pt;
+	}
+
+	.title-address small {
+		font-size: 7pt;
+	}
+
+	.amount-balance {
+		font-size: 20pt;
+	}
+}
+
+
 .transaction-row {
 	cursor: pointer;
 }
 .transaction-row:hover {
 	background-color: #F1F1F1F1;
+}
+
+.link-item {
+	cursor: pointer;
+}
+
+.link-item:hover {
+	background-color: #F1F1F1;
 }

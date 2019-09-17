@@ -315,3 +315,10 @@ main .form-search .form-control:focus {
 .navbar-brand::first-letter {
   text-transform: uppercase;
 }
+
+@media screen and (min-width: 768px) {
+  .navbar-toggle {
+    display: none;
+  }
+}
+

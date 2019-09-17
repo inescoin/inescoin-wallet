@@ -79,5 +79,12 @@
 	"#Add": "Add",
 	"#Explorer": "Explorer",
 	"#Import profile": "Import profile",
-	"#Import now": "Import now"
+	"#Import now": "Import now",
+	"#Next": "Next",
+	"#Back": "Back",
+	"#Balance": "Balance",
+	"#Optional": "Optional",
+	"#Last 100 transfers": "Last 100 transfers",
+	"#Transfer details": "Transfer details",
+	"#Date": "Date"
 }

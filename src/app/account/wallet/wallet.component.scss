@@ -7,3 +7,20 @@
     padding-bottom: 46px;
     margin-bottom: 20px;
 }
+
+@media screen and (min-width: 410px) and (max-width: 768px) {
+	h1.total-amount-wallet {
+		font-size: 15pt;
+	}
+
+	.btn-action {
+		display: block;
+		width: 100%;
+		margin-top: 7px;
+		margin-bottom: 7px;
+	}
+
+	.input-group-seamless {
+		width: 100%;
+	}
+}

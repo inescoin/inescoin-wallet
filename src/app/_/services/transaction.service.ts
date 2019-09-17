@@ -9,7 +9,6 @@ import * as CryptoJS from 'crypto-js';
 import { publicKeyConvert } from 'secp256k1';
 
 import { HttpService } from './http/http.service';
-
 import { CryptoJsService } from './crypto/crypto-js.service';
 
 import { inescoinConfig } from '../../config/inescoin.config';
@@ -77,7 +76,7 @@ export class TransactionService {
   }
 
   sendTransaction(fee, transfers, from, publicKey, privateKey) {
-  	//console.log('data', this._getFromCache());
+  	console.log('data', this._getFromCache());
 
     this.httpService.post('get-wallet-addresses-infos', {
       walletAddresses: from
@@ -89,9 +88,17 @@ export class TransactionService {
           this.nodePublicKey = node.publicKey;
           this.sendToNode(messageData, publicKey, privateKey);
           //console.log('node', node);
+        }, (error) => {
+          this.onRemoteResponse.emit([{
+            error: '#Connection not found'
+          }]);
         });
       }
       //console.log('wallet', wallet);
+    }, (error) => {
+      this.onRemoteResponse.emit([{
+        error: '#Connection not found'
+      }]);
     });
 
   }

@@ -87,5 +87,12 @@
 	"#Explorer": "Explorateur",
 	"#Fee": "Taxe",
 	"#Import profile": "Importer un profil",
-	"#Import now": "Importer maintenant"
+	"#Import now": "Importer maintenant",
+	"#Next": "Suivant",
+	"#Back": "Retour",
+	"#Balance": "Solde",
+	"#Optional": "Optionnel",
+	"#Last 100 transfers": "100 derniers transferts",
+	"#Transfer details": "Détails du transfert",
+	"#Date": "Date"
 }

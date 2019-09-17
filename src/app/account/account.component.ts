@@ -19,6 +19,8 @@ export class AccountComponent implements OnInit {
   chooseLanguage: string = 'en';
 	pageName: string = 'wallet';
 
+  isCollapsed = true;
+
   constructor(
   	private actRoute: ActivatedRoute,
     private configService: ConfigService,
@@ -39,6 +41,13 @@ export class AccountComponent implements OnInit {
       this.doorGetTranslateService.setCurrent(this.chooseLanguage);
 
       this.configService.setLanguage(this.chooseLanguage);
+    }
+  }
+
+  collapse() {
+    if (window.screen.width < 768) {
+      this.isCollapsed = !this.isCollapsed;
+      console.log(window.screen.width);
     }
   }
 }
