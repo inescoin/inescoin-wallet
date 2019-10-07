@@ -16,10 +16,12 @@ import * as CryptoJS from 'crypto-js';
 })
 export class MessengerComponent implements OnInit {
 
-	@ViewChild('scrollMe') private myScrollContainer: ElementRef;
+	@ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
 
 	password: string = 'Amelmouna!123';
 	message: string = '';
+
+  showEmojiPicker = false;
 
   wallets: any = {};
 
@@ -148,7 +150,6 @@ export class MessengerComponent implements OnInit {
   			from: this.history[id].from,
   			messages: this.messengerService.getConversationMessages(this.history[id].id)
   		}
-
   	}
   }
 
@@ -171,14 +172,6 @@ export class MessengerComponent implements OnInit {
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
-
-      //console.log('Decrypted')
-    	// console.log(message);
-    	// console.log(this.current.from.address);
-    	// console.log(this.current.to.address);
-    	// console.log(this.current.to.publicKey);
-    	// console.log(decrypted.publicKey);
-    	// console.log(decrypted.privateKey);
 
       let messageData = this.messageService.sendMessage(
       	this.message,
@@ -259,6 +252,11 @@ export class MessengerComponent implements OnInit {
     let idDERFrom = CryptoJS.SHA256(message.to + message.from).toString();
     let idDERTo = CryptoJS.SHA256(message.from + message.to).toString();
 
+    if (this.messengerService.messageExists(idDERFrom, message)) {
+      console.log('Message already exists => ', message);
+      return;
+    }
+
     if (this.wallets[message.to]) {
       if (!this.history[idDERFrom] || !this.history[idDERTo]) {
         this.messengerService.startConversation(idDERFrom, {
@@ -298,6 +296,7 @@ export class MessengerComponent implements OnInit {
           }
 
           this.messengerService.saveHistoryToStorage();
+          console.log('SaveHistoryToStorage: ' + message.body);
         } else {
           console.log('ERROR: body empty');
         }
@@ -342,6 +341,14 @@ export class MessengerComponent implements OnInit {
       //   }
       // }
     // }
+  }
+
+  addEmoji(event) {
+    if (event.emoji && event.emoji.colons) {
+      this.message = this.message + event.emoji.native;
+      this.showEmojiPicker = false;
+    }
+    console.log('addEmoji', event);
   }
 
   private _scrollToBottom(): void {

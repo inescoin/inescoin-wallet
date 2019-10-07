@@ -58,15 +58,19 @@ export class MessengerService {
   	return jsonMessages;
   }
 
-  pushMessage(id, message) {
-  	let messages = this.getConversationMessages(id);
+  messageExists(id, message) {
+    let messages = this.getConversationMessages(id);
 
-    let sameMessage = _.find(messages, {
+    return _.find(messages, {
       hash: message.hash
-    })
+    }) && messages;
+  }
 
-    if (!sameMessage) {
+  pushMessage(id, message) {
+    if (!this.messageExists(id, message)) {
+      let messages = this.getConversationMessages(id);
       messages.push(message);
+
       this.saveMessagesToStorage(id, messages);
       return true;
     }

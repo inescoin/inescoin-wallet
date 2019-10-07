@@ -13,7 +13,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 export class ContactsComponent implements OnInit {
 
 
-  @ViewChild(DatatableComponent) table: DatatableComponent;
+  @ViewChild(DatatableComponent, {static: false}) table: DatatableComponent;
 
   contacts: any = [];
 

@@ -31,24 +31,33 @@
             <div class="incoming_msg_img"> <img src="/assets/img/casa.png" alt="sunil"> </div>
             <div class="received_msg">
               <div class="received_withd_msg">
-                <p>{{ message.body || message.original }}</p>
+                <p style="word-break: break-word;">{{ message.body || message.original }}</p>
                 <span class="time_date">{{ message.createdAt * 1000 | timeAgo}}</span></div>
             </div>
           </div>
 
           <div class="outgoing_msg" *ngIf="message && message.isMe">
             <div class="sent_msg">
-              <p>{{ message.body || message.original }}</p>
+              <p style="word-break: break-word;">{{ message.body || message.original }}</p>
               <span class="time_date">{{ message.createdAt * 1000 | timeAgo }}</span> </div>
           </div>
         </div>
 
       </div>
       <div class="type_msg">
-        <div class="input_msg_write">
-          <input type="text" class="write_msg" autocomplete="off" placeholder="{{ '#Type a message' | dgTranslate }}" [(ngModel)]="message" />
-          <input type="password" autocomplete="new-password" [(ngModel)]="password" />
-          <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+        <emoji-mart *ngIf="showEmojiPicker" [style]="{ position: 'absolute', bottom: '20px', right: '20px' }" (emojiClick)="addEmoji($event)"></emoji-mart>
+
+        <div class="input_msg_write row">
+          <div class="col-1">
+            <button type="button" class="btn btn-light btn-emoji" (click)="showEmojiPicker = true"><i class="fa fa-smile-o"   aria-hidden="true"></i></button>
+          </div>
+          <div class="col-10">
+            <textarea type="text" class="write_msg" autocomplete="off" placeholder="{{ '#Type a message' | dgTranslate }}" [(ngModel)]="message"></textarea>
+            <input type="hidden" autocomplete="new-password" [(ngModel)]="password" />
+          </div>
+          <div class="col-1">
+            <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+          </div>
         </div>
       </div>
     </div>

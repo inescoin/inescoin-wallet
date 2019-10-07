@@ -13,7 +13,7 @@ import { SettingsNodesService } from './settings-nodes.service';
   styleUrls: ['./settings-nodes.component.scss']
 })
 export class SettingsNodesComponent implements OnInit {
-  @ViewChild(DatatableComponent) table: DatatableComponent;
+  @ViewChild(DatatableComponent, {static: false}) table: DatatableComponent;
 
 	nodes: any[] = [];
   temp: any[] = [];

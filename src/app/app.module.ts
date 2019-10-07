@@ -34,6 +34,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ToastrModule } from 'ngx-toastr';
 import { DoorgetsTranslateModule , NgTranslate, NgTranslateAbstract } from 'doorgets-ng-translate';
 
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+
 import { AccountComponent } from './account/account.component';
 
 import { WalletComponent } from './account/wallet/wallet.component';
@@ -178,7 +180,8 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     NgxDatatableModule,
     SocketIoModule.forRoot(config),
     UiSwitchModule,
-    PasswordStrengthBarModule
+    PasswordStrengthBarModule,
+    PickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

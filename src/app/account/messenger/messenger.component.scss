@@ -111,13 +111,14 @@ img{ max-width:100%;}
   width: 80%;
   text-align: right;
 }
-.input_msg_write input {
+.input_msg_write input,  .input_msg_write textarea{
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
   border: medium none;
   color: #4c4c4c;
   font-size: 15px;
   min-height: 48px;
   width: 100%;
+  margin-top: 10px;
 }
 
 .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
@@ -138,4 +139,12 @@ img{ max-width:100%;}
 .msg_history {
   height: 516px;
   overflow-y: auto;
+}
+
+.btn-emoji {
+  float: left;position: absolute;margin-top: 5px;margin-left: 1px;
+}
+
+.write_msg:focus {
+    outline: none !important;
 }
