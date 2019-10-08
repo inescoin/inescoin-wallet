@@ -5,7 +5,8 @@
 export const inescoinConfig = {
 	configHash: '19924913f08605e99f0a3aeb361b9a00',
 	remoteAddres: 'https://node.inescoin.org/',
-	messengerAddress: 'https://node.inescoin.org/',
+	messengerAddress: 'https://messenger.inescoin.org/',
+	// messengerAddress: 'http://198.199.73.197:8180',
 	website: 'https://inescoin.org/',
 	unit: 1000000000,
 	symbol: 'INES',

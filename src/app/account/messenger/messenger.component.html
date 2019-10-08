@@ -14,7 +14,7 @@
   		<div class="inbox_chat">
     		<div class="chat_list" *ngFor="let channel of conversations" [ngClass]="{'active_chat': channel.id === current.id}">
           <div class="chat_people" (click)="startChat(channel)">
-            <div class="chat_img"> <img src="/assets/img/casa.png" alt="sunil"> </div>
+            <div class="chat_img"> <img src="/assets/img/logo_inescoin.png" alt="sunil"> </div>
             <div class="chat_ib">
               <h5>{{ channel.from | dgTruncate :{limit: 8}  }} <fa-icon icon="exchange-alt"></fa-icon> {{ channel.to | dgTruncate :{limit: 8} }}</h5>
             </div>
@@ -28,7 +28,7 @@
         <h4 *ngIf="current.from">{{ current.from.address | dgTruncate :{ limit: 10 } }} <fa-icon icon="exchange-alt"></fa-icon> {{ current.to.address | dgTruncate :{ limit: 10 } }}</h4>
         <div *ngFor="let message of current.messages">
           <div class="incoming_msg" *ngIf="message && !message.isMe">
-            <div class="incoming_msg_img"> <img src="/assets/img/casa.png" alt="sunil"> </div>
+            <div class="incoming_msg_img"> <img src="/assets/img/logo_inescoin.png" alt="sunil"> </div>
             <div class="received_msg">
               <div class="received_withd_msg">
                 <p style="word-break: break-word;">{{ message.body || message.original }}</p>
