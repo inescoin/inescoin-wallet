@@ -66,9 +66,9 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^7.4.3",
-    "@angular-devkit/build-angular": "^0.13.9",
-    "@angular/cli": "~7.3.7",
+    "@angular-builders/custom-webpack": "^8.2.0",
+    "@angular-devkit/build-angular": "^0.803.9",
+    "@angular/cli": "~8.2.1",
     "@angular/compiler-cli": "~8.2.9",
     "@angular/language-service": "~8.2.9",
     "@types/crypto-js": "^3.1.43",

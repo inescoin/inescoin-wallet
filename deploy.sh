@@ -3,7 +3,7 @@
 #########################################
 echo "Building production version"
 #########################################
-rm -rf ./node_modules
+mv ./node_modules ./node_modules_old
 npm i
 ./node_modules/.bin/ng build --prod
 
@@ -38,3 +38,8 @@ echo "[Remote] Chown www-data"
 #########################################
 ssh root@67.205.189.5 'chown -R www-data:www-data /var/www/wallet/'
 
+#########################################
+echo "Clean"
+#########################################
+rm -rf ./node_modules/
+mv ./node_modules_old ./node_modules
