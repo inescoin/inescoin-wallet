@@ -1,0 +1,59 @@
+<div *ngIf="!isSummaryStep">
+	<h6>{{ '#Owner' | dgTranslate }}</h6>
+	<div class="form-group">
+		<select class="form-control" [(ngModel)]="from" (change)="onFromChange($event)">
+			<option value="">
+		      -
+		    </option>
+		    <option *ngFor="let address of getAdressesArray()" [value]="address.address">
+		      {{ address.address }} - {{ address.amount | cryptoAmount}} {{ inescoinConfig.symbol }}
+		    </option>
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label>{{ '#Name' | dgTranslate }}</label>
+		<input type="text" class="form-control" [(ngModel)]="domain.name">
+	</div>
+
+	<div class="card">
+		<div class="card-body text-center">
+			<h6>{{ '#Fee' | dgTranslate }}</h6>
+			{{ amount }} {{ inescoinConfig.symbol }}
+		</div>
+	</div>
+	<hr />
+	<button class="btn btn-success" (click)="next()">{{ '#Create domain' | dgTranslate }}</button>
+</div>
+
+<div *ngIf="isSummaryStep">
+	<div class="form-group">
+		<label>{{ '#Owner' | dgTranslate }} :</label> <b>{{ from }}</b>
+	</div>
+	<hr />
+	<div class="form-group">
+		<label>{{ '#Password' | dgTranslate }}</label>
+		<input type="password" [(ngModel)]="password" autocomplete="off" class="form-control">
+	</div>
+	<div class="alert alert-danger" *ngIf="badPassword">{{ '#Bad password' | dgTranslate }}</div>
+
+	<div class="card mb-4">
+		<div class="card-header">
+			{{ '#Domain' | dgTranslate }}
+		</div>
+		<div class="card-body">
+			<p>{{ '#Name' | dgTranslate }}: <b>{{ domain.name }}</b></p>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body text-center">
+			<h6>{{ '#Fee' | dgTranslate }}</h6>
+			{{ amount }} {{ inescoinConfig.symbol }}
+		</div>
+	</div>
+	<hr />
+
+	<button class="btn btn-light" (click)="back()">{{ '#Retour' | dgTranslate }}</button>
+	<button class="btn btn-success ml-2" (click)="createDomain()">{{ '#Create domain' | dgTranslate }}</button>
+</div>
