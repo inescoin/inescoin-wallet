@@ -13,7 +13,14 @@
             {{ '#Explorer' | dgTranslate }}
           </a>
         </li>
-         <li [ngClass]="{ 'active': routerWallet.isActive, 'nav-item': true }">
+
+        <li [ngClass]="{ 'active': routerWeb.isActive, 'nav-item': true }">
+          <a class="nav-link" routerLinkActive [routerLink]="['/web']" #routerWeb="routerLinkActive">
+            {{ '#Web' | dgTranslate }}
+          </a>
+        </li>
+
+        <li [ngClass]="{ 'active': routerWallet.isActive, 'nav-item': true }">
           <a class="nav-link" routerLinkActive [routerLink]="['/wallet']" #routerWallet="routerLinkActive">
             {{ '#Wallet' | dgTranslate }}
           </a>

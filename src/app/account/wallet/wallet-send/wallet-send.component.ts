@@ -24,9 +24,8 @@ import * as _ from 'lodash';
   styleUrls: ['./wallet-send.component.scss']
 })
 export class WalletSendComponent implements OnInit {
-  isSummaryStep: boolean = false;
-
   inProgress: boolean = false;
+  isSummaryStep: boolean = false;
 
   inescoinConfig: any = inescoinConfig;
 

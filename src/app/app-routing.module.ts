@@ -27,6 +27,9 @@ import { SettingsNodesComponent } from './account/settings/settings-nodes/settin
 import { SettingsProfileComponent } from './account/settings/settings-profile/settings-profile.component';
 import { SettingsMessengerComponent } from './account/settings/settings-messenger/settings-messenger.component';
 
+import { WebComponent } from './account/web/web.component';
+import { WebDetailsComponent } from './account/web/web-details/web-details.component';
+
 export const routes: Routes = [ {
     path: '',
     // canActivate: [AuthGuard],
@@ -36,46 +39,55 @@ export const routes: Routes = [ {
             path:'',
             redirectTo: 'wallet',
             pathMatch: 'full'
-        },{
+        },
+        {
+            path: 'web',
+            component: WebComponent
+        },
+        {
+            path: 'web/:hash',
+            component: WebDetailsComponent
+        },
+        {
             path: 'wallet',
             component: WalletComponent
-        },{
+        }, {
             path: 'wallet/:address',
             component: WalletAccountComponent
-        },{
+        }, {
             path: 'wallet-create',
             component: WalletCreateComponent
-        },{
+        }, {
             path: 'wallet-import',
             component: WalletImportComponent
-        },{
+        }, {
             path: 'wallet-send',
             component: WalletSendComponent
-        },{
+        }, {
             path: 'messenger',
             component: MessengerComponent
-        },{
+        }, {
             path: 'messenger/:address',
             component: MessengerChatComponent
-        },{
+        }, {
             path: 'contacts',
             component: ContactsComponent
-        },{
+        }, {
             path: 'contacts-create',
             component: ContactsCreateComponent
-        },{
+        }, {
             path: 'contacts-update/:address',
             component: ContactsUpdateComponent
-        },{
+        }, {
             path: 'contacts-details/:address',
             component: ContactsDetailsComponent
-        },{
+        }, {
             path: 'settings',
             component: SettingsComponent,
             children: [{
-                  path:'',
-                  redirectTo: 'profile',
-                  pathMatch: 'full'
+                path:'',
+                redirectTo: 'profile',
+                pathMatch: 'full'
               },{
                 path: 'nodes',
                 component: SettingsNodesComponent

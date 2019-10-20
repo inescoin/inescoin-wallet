@@ -56,6 +56,9 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
+import { NgxTinymceModule } from 'ngx-tinymce';
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { SettingsComponent } from './account/settings/settings.component';
 
 import { CryptoAmountPipe } from './_/pipes/crypto-amount.pipe';
@@ -84,6 +87,12 @@ import { ProfileResetComponent } from './_/components/modal-action/form/profile-
 import { inescoinConfig } from './config/inescoin.config';
 import { TransferDetailsComponent } from './_/components/modal-action/view/transfer-details/transfer-details.component';
 import { InProgressMessengerComponent } from './account/messenger/in-progress-messenger/in-progress-messenger.component';
+import { WebComponent } from './account/web/web.component';
+import { WebCreateComponent } from './account/web/web-create/web-create.component';
+import { WebUpdateComponent } from './account/web/web-update/web-update.component';
+import { DomainCreateComponent } from './_/components/modal-action/form/domain-create/domain-create.component';
+import { WebDetailsComponent } from './account/web/web-details/web-details.component';
+import { DomainUpdateComponent } from './_/components/modal-action/form/domain-update/domain-update.component';
 
 export function newNgTranslate(http: Http) {
   return new NgTranslate(http, '../../assets/public/locale');
@@ -135,6 +144,12 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     ProfileResetComponent,
     TransferDetailsComponent,
     InProgressMessengerComponent,
+    WebComponent,
+    WebCreateComponent,
+    WebUpdateComponent,
+    DomainCreateComponent,
+    WebDetailsComponent,
+    DomainUpdateComponent,
   ],
   entryComponents: [
     QrCodeScanComponent,
@@ -152,7 +167,9 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     ProfileExportComponent,
     ProfileImportComponent,
     ProfileResetComponent,
-    TransferDetailsComponent
+    TransferDetailsComponent,
+    DomainCreateComponent,
+    DomainUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -163,6 +180,10 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     DoorgetsTruncateModule,
     HttpModule,
     HttpClientModule,
+    NgxTinymceModule.forRoot({
+      baseURL: '//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.0/'
+    }),
+    ColorPickerModule,
     CollapseModule.forRoot(),
     BsDropdownModule.forRoot(),
     DoorgetsTranslateModule,

@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { CryptoJsService } from '../../_/services/crypto/crypto-js.service';
 import { HttpService } from '../../_/services/http/http.service';
 
+import { inescoinConfig } from '../../config/inescoin.config';
 import { saveAs } from 'file-saver';
 
 @Injectable({
@@ -18,7 +19,7 @@ export class WalletService {
     private cryptoJsService: CryptoJsService,
     private httpService: HttpService) {
 
-      let accounts = localStorage.getItem('inescoin-wallets');
+      let accounts = localStorage.getItem(inescoinConfig.name + '-wallets');
       if (!accounts || accounts == 'undefined') {
         this.saveToStorage();
       } else {
@@ -70,15 +71,15 @@ export class WalletService {
   }
 
   saveToStorage() {
-    localStorage.setItem('inescoin-wallets', JSON.stringify(this.accounts))
+    localStorage.setItem(inescoinConfig.name + '-wallets', JSON.stringify(this.accounts))
   }
 
   saveToHomeStorage(accounts) {
-    localStorage.setItem('inescoin-home', JSON.stringify(accounts))
+    localStorage.setItem(inescoinConfig.name + '-home', JSON.stringify(accounts))
   }
 
   getFromHomeStorage() {
-    let home = localStorage.getItem('inescoin-home');
+    let home = localStorage.getItem(inescoinConfig.name + '-home');
     if (home) {
       return JSON.parse(home);
     }
@@ -87,7 +88,7 @@ export class WalletService {
   }
 
   getFromWalletStorage() {
-    let home = localStorage.getItem('inescoin-wallets');
+    let home = localStorage.getItem(inescoinConfig.name + '-wallets');
     if (home) {
       return JSON.parse(home);
     }

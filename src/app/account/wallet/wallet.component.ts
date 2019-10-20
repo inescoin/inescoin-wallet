@@ -50,7 +50,6 @@ export class WalletComponent implements OnInit {
     return Object.keys(this.wallet).join(',');
   }
 
-
   getAccounts() {
     let i = 1;
     let wallet = [];

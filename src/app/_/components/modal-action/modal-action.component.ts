@@ -22,6 +22,8 @@ import { ContactEditComponent } from './form/contact-edit/contact-edit.component
 import { ContactRemoveComponent } from './form/contact-remove/contact-remove.component';
 import { AccountCreateComponent } from './form/account-create/account-create.component';
 import { AccountImportComponent } from './form/account-import/account-import.component';
+import { DomainCreateComponent } from './form/domain-create/domain-create.component';
+import { DomainUpdateComponent } from './form/domain-update/domain-update.component';
 import { NodeAddComponent } from './form/node-add/node-add.component';
 import { NodeEditComponent } from './form/node-edit/node-edit.component';
 import { NodeRemoveComponent } from './form/node-remove/node-remove.component';
@@ -74,6 +76,12 @@ export class ModalActionComponent implements OnInit, OnDestroy {
         break;
       case "startConversation":
         this.modalService.open(StartConversationComponent, data.option || {});
+        break;
+      case "domainAdd":
+        this.modalService.open(DomainCreateComponent, data.option || {});
+        break;
+      case "domainUpdate":
+        this.modalService.open(DomainUpdateComponent, data.option || {});
         break;
       case "accountCreate":
         this.modalService.open(AccountCreateComponent, data.option || {});

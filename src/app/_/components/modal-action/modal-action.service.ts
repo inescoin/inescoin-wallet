@@ -13,9 +13,7 @@ import * as _ from 'lodash';
 export class ModalActionService {
 
   currentName: string = '';
-  options: any = {
-
-  };
+  options: any = {};
 
   onOpen: EventEmitter<any> = new EventEmitter();
   onClose: EventEmitter<any> = new EventEmitter();
