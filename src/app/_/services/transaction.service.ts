@@ -64,10 +64,7 @@ export class TransactionService {
         publicKey: publicKey
       };
 
-      //console.log('wrappedMessage', wrappedMessage);
-
       this.httpService.post('transaction', wrappedMessage).subscribe((res) => {
-      	//console.log('transaction response: ', res);
         this.onRemoteResponse.emit(res);
       })
     } else {
@@ -75,26 +72,22 @@ export class TransactionService {
     }
   }
 
-  sendTransaction(fee, transfers, from, publicKey, privateKey) {
-  	console.log('data', this._getFromCache());
-
+  sendTransaction(fee, transfers, from, publicKey, privateKey, toDo?) {
     this.httpService.post('get-wallet-addresses-infos', {
       walletAddresses: from
     }).subscribe((wallet) => {
       if (wallet[from]) {
-        let messageData = this._doEncryption(fee * 1000000000, transfers, from, wallet[from].hash, publicKey, privateKey);
+        let messageData = this._doEncryption(fee * 1000000000, transfers, from, wallet[from].hash, publicKey, privateKey, toDo);
 
         this.httpService.get('public-key').subscribe((node: any) => {
           this.nodePublicKey = node.publicKey;
           this.sendToNode(messageData, publicKey, privateKey);
-          //console.log('node', node);
         }, (error) => {
           this.onRemoteResponse.emit([{
             error: '#Connection not found'
           }]);
         });
       }
-      //console.log('wallet', wallet);
     }, (error) => {
       this.onRemoteResponse.emit([{
         error: '#Connection not found'
@@ -121,9 +114,9 @@ export class TransactionService {
   	}
   }
 
-  private _doEncryption(fee, transfers, from, bankHash, publicKey, privateKey) {
-    console.log('transfers', transfers);
+  private _doEncryption(fee, transfers, from, bankHash, publicKey, privateKey, toDos?) {
     let encrypted = this._encryptTransaction(from, transfers);
+    let encryptedTodos = toDos ? this._encryptToDo(from, toDos, privateKey) : '';
 
     let sign = new JSEncryptModule.JSEncrypt();
     sign.setPrivateKey(privateKey);
@@ -133,11 +126,11 @@ export class TransactionService {
       bankHash
       + this.blockchainConfigHash
       + from
+      + encryptedTodos
       + encrypted
       + this.amount
       + date);
 
-    //console.log('completeMessage', completeMessage.toString());
     let signature = this.cryptoJsService.ecSign(completeMessage.toString(), privateKey);
 
     let messageData: any = {
@@ -145,6 +138,7 @@ export class TransactionService {
     	amount: this.amount,
       from: from,
       bankHash: bankHash,
+      toDo: encryptedTodos,
       transfers: encrypted,
       signature: signature.toDER('hex'),
       publicKey: publicKey,
@@ -154,6 +148,20 @@ export class TransactionService {
     this.lastDataSended = messageData;
 
     return messageData;
+  }
+
+  private _encryptToDo(from, toDos, privateKey) {
+    if (!toDos) {
+      return '';
+    }
+
+    return btoa(JSON.stringify(toDos.map((toDo) => {
+      toDo.hash = (CryptoJS.SHA256(from + toDo.name)).toString()
+      let signature = this.cryptoJsService.ecSign(toDo.hash, privateKey);
+      toDo.signature = signature.toDER('hex');
+
+      return toDo;
+    })));
   }
 
   private _encryptTransaction(from, transfers) {
