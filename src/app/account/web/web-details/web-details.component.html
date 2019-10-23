@@ -4,193 +4,320 @@
 		<p>{{ domain.ownerAddress }}</p>
 	</div>
 	<div class="col-md-6 text-right">
+    <a class="btn btn-light mr-4" [routerLink]="['/web']"><fa-icon icon="arrow-circle-left"></fa-icon> {{ '#Back' | dgTranslate }}</a>
 		<div ngbDropdown class="d-inline-block" placement="bottom-right">
       <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle><fa-icon icon="ellipsis-v"></fa-icon></button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem><fa-icon icon="edit"></fa-icon> Edit</button>
-        <button ngbDropdownItem><fa-icon icon="trash"></fa-icon> Delete</button>
+        <button ngbDropdownItem (click)="openDomainRenewModal()"><fa-icon icon="redo"></fa-icon> {{ '#Renew' | dgTranslate }}</button>
+        <button ngbDropdownItem class="text-danger" (click)="openDomainDeleteModal()"><fa-icon icon="trash"></fa-icon> {{ '#Delete' | dgTranslate }}</button>
       </div>
     </div>
 	</div>
 </div>
 
+<ul class="nav justify-content-center mb-4">
+  <li class="nav-item">
+    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'fr'" [class.btn-light]="currentLocale !== 'fr'" (click)="setCurrentLocale('fr')">Français</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'en'" [class.btn-light]="currentLocale !== 'en'" (click)="setCurrentLocale('en')">English</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'it'" [class.btn-light]="currentLocale !== 'it'" (click)="setCurrentLocale('it')">Italiano</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'es'" [class.btn-light]="currentLocale !== 'es'" (click)="setCurrentLocale('es')">Español</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'jp'" [class.btn-light]="currentLocale !== 'jp'" (click)="setCurrentLocale('jp')">中国</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'ru'" [class.btn-light]="currentLocale !== 'ru'" (click)="setCurrentLocale('ru')">русский</span>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link btn" [class.btn-secondary]="currentLocale === 'cn'" [class.btn-light]="currentLocale !== 'cn'" (click)="setCurrentLocale('cn')">日本の</span>
+  </li>
+</ul>
+
 <ngb-tabset [justify]="currentJustify">
   <ngb-tab>
-    <ng-template ngbTabTitle><fa-icon icon="home"></fa-icon> {{ '#Summary' | dgTranslate }}</ng-template>
-    <ng-template ngbTabContent>
-    	<div class="p-2">
-				<pre>{{ domain | json }}</pre>
-    	</div>
-    </ng-template>
-  </ngb-tab>
-
-  <ngb-tab>
-    <ng-template ngbTabTitle><fa-icon icon="file-alt"></fa-icon> {{ '#Pages' | dgTranslate }}</ng-template>
-    <ng-template ngbTabContent>
-    	<div class="p-2"></div>
-    </ng-template>
-  </ngb-tab>
-
-	<ngb-tab>
-    <ng-template ngbTabTitle><fa-icon icon="store"></fa-icon> {{ '#Products' | dgTranslate }}</ng-template>
-    <ng-template ngbTabContent>
-    	<div class="p-2"></div>
-    </ng-template>
-  </ngb-tab>
-
-  <ngb-tab>
-    <ng-template ngbTabTitle><fa-icon icon="tags"></fa-icon> {{ '#Categories' | dgTranslate }}</ng-template>
-    <ng-template ngbTabContent>
-    	<div class="p-2"></div>
-    </ng-template>
-  </ngb-tab>
-
-  <ngb-tab>
-    <ng-template ngbTabTitle><fa-icon icon="palette"></fa-icon> {{ '#Theme' | dgTranslate }}</ng-template>
-    <ng-template ngbTabContent>
-    	<div class="p-2">
-    		<div class="row">
-    			<div class="col-md-4">
-    				<div class="card">
-    					<div class="card-header">
-    						{{ '#Colors' | dgTranslate }}
-    					</div>
-    					<div class="card-body">
-		    				<div class="form-group">
-			    				<label>$body-bg: <input class="picker-input" [(colorPicker)]="domain.theme.colors['$body-bg']" [style.background]="domain.theme.colors['$body-bg']"/></label>
-			    				<input type="text" class="form-control" [(ngModel)]="domain.theme.colors['$body-bg']">
-		    				</div>
-		    				<div class="form-group">
-			    				<label>$gray-base: <input class="picker-input" [(colorPicker)]="domain.theme.colors['$gray-base']" [style.background]="domain.theme.colors['$gray-base']"/></label>
-			    				<input type="text" class="form-control" [(ngModel)]="domain.theme.colors['$gray-base']">
-		    				</div>
-		    				<div class="form-group">
-			    				<label>$brand-primary: <input class="picker-input" [(colorPicker)]="domain.theme.colors['$brand-primary']" [style.background]="domain.theme.colors['$brand-primary']"/></label>
-			    				<input type="text" class="form-control" [(ngModel)]="domain.theme.colors['$brand-primary']">
-		    				</div>
-		    				<div class="form-group">
-			    				<label>$brand-success: <input class="picker-input" [(colorPicker)]="domain.theme.colors['$brand-success']" [style.background]="domain.theme.colors['$brand-success']"/></label>
-			    				<input type="text" class="form-control" [(ngModel)]="domain.theme.colors['$brand-success']">
-		    				</div>
-		    				<div class="form-group">
-			    				<label>$brand-warning: <input class="picker-input" [(colorPicker)]="domain.theme.colors['$brand-warning']" [style.background]="domain.theme.colors['$brand-warning']"/></label>
-			    				<input type="text" class="form-control" [(ngModel)]="domain.theme.colors['$brand-warning']">
-		    				</div>
-		    				<div class="form-group">
-			    				<label>$brand-danger: <input class="picker-input" [(colorPicker)]="domain.theme.colors['$brand-danger']" [style.background]="domain.theme.colors['$brand-danger']"/></label>
-			    				<input type="text" class="form-control" [(ngModel)]="domain.theme.colors['$brand-danger']">
-		    				</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="card">
-    					<div class="card-header">
-    						{{ '#Font' | dgTranslate }}
-    					</div>
-    					<div class="card-body">
-		    				<div class="form-group">
-			    				<label>$body-bg: <input class="picker-input" [(colorPicker)]="domain.theme.colors['$body-bg']" [style.background]="domain.theme.colors['$body-bg']"/></label>
-		    				</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="card">
-    					<div class="card-header">
-    						{{ '#Buttons' | dgTranslate }}
-    					</div>
-    					<div class="card-body">
-		    				<div class="form-group">
-			    				<label>$btn-default-color: <input class="picker-input" [(colorPicker)]="domain.theme.buttons['$btn-default-color']" [style.background]="domain.theme.buttons['$btn-default-color']"/></label>
-		    				</div>
-    					</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </ng-template>
-  </ngb-tab>
-
-  <ngb-tab>
-    <ng-template ngbTabTitle><fa-icon icon="cog"></fa-icon> {{ '#Configuration' | dgTranslate }}</ng-template>
+    <ng-template ngbTabTitle><fa-icon icon="home"></fa-icon> {{ '#Website' | dgTranslate }}</ng-template>
     <ng-template ngbTabContent>
     	<div class="p-2 mt-4">
-				<ul class="nav justify-content-center">
-				  <li class="nav-item">
-				    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'fr'" [class.btn-light]="currentLocale !== 'fr'" (click)="setCurrentLocale('fr')">Français</span>
-				  </li>
-				  <li class="nav-item">
-				    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'en'" [class.btn-light]="currentLocale !== 'en'" (click)="setCurrentLocale('en')">English</span>
-				  </li>
-				  <li class="nav-item">
-				    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'it'" [class.btn-light]="currentLocale !== 'it'" (click)="setCurrentLocale('it')">Italiano</span>
-				  </li>
-				  <li class="nav-item">
-				    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'es'" [class.btn-light]="currentLocale !== 'es'" (click)="setCurrentLocale('es')">Español</span>
-				  </li>
-				  <li class="nav-item">
-				    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'jp'" [class.btn-light]="currentLocale !== 'jp'" (click)="setCurrentLocale('jp')">中国</span>
-				  </li>
-				  <li class="nav-item">
-				    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'ru'" [class.btn-light]="currentLocale !== 'ru'" (click)="setCurrentLocale('ru')">русский</span>
-				  </li>
-				  <li class="nav-item">
-				    <span class="nav-link btn" [class.btn-secondary]="currentLocale === 'cn'" [class.btn-light]="currentLocale !== 'cn'" (click)="setCurrentLocale('cn')">日本の</span>
-				  </li>
-				</ul>
-    		<div class="card mt-2">
+				<div class="card">
     			<div class="card-header">
-    				{{ '#Information' | dgTranslate }}
-    				<span class="pull-right">Active <ui-switch class="align-middle" [(ngModel)]="domain.data[currentLocale].active"></ui-switch></span>
+    				{{ '#Website' | dgTranslate }}
+    				<span class="pull-right">Active <ui-switch class="align-middle" [(ngModel)]="domain[currentLocale].data.active"></ui-switch></span>
     			</div>
     			<div class="card-body">
     				<div class="row">
     					<div class="col-md-6">
 		    				<div class="form-group">
 									<label>{{ '#Title' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.meta[currentLocale].title" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].meta.title" />
 								</div>
 								<div class="form-group">
 									<label>{{ '#Description' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.meta[currentLocale].description" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].meta.description" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>{{ '#Keywords' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.meta[currentLocale].keywords" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].meta.keywords" />
 								</div>
 		    				<div class="form-group">
 									<label>{{ '#Zone' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.data[currentLocale].timezone" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].data.timezone" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+    	</div>
+    </ng-template>
+  </ngb-tab>
+
+	<ngb-tab>
+    <ng-template ngbTabTitle><fa-icon icon="briefcase"></fa-icon> {{ '#Company' | dgTranslate }}</ng-template>
+    <ng-template ngbTabContent>
+    	<div class="p-2 mt-4">
+	    	<div class="card" *ngIf="domain[currentLocale].company">
+	  			<div class="card-header">
+	  				{{ '#Company' | dgTranslate }}
+	  			</div>
+	  			<div class="card-body">
+	  				<div class="row">
+	  					<div class="col-md-6">
+		    				<div class="form-group">
+									<label>{{ '#Name' | dgTranslate }}</label>
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].company.name" />
+								</div>
+								<div class="form-group">
+									<label>{{ '#Slogan' | dgTranslate }}</label>
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].company.slogan" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>{{ '#Description' | dgTranslate }}</label>
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].company.description" />
+								</div>
+		    				<div class="form-group">
+									<label>{{ '#Year started' | dgTranslate }}</label>
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].company.year" />
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label>{{ '#FAQ' | dgTranslate }}</label>
-							<tinymce [(ngModel)]="domain.data[currentLocale].faq"></tinymce>
+							<tinymce [(ngModel)]="domain[currentLocale].data.faq" [config]="tinymceConfig"></tinymce>
 						</div>
 
 						<div class="form-group">
 							<label>{{ '#Terms of service' | dgTranslate }}</label>
-							<tinymce [(ngModel)]="domain.data[currentLocale].termsOfService"></tinymce>
+							<tinymce [(ngModel)]="domain[currentLocale].data.termsOfService" [config]="tinymceConfig"></tinymce>
 						</div>
 
 						<div class="form-group">
 							<label>{{ '#Terms of sales' | dgTranslate }}</label>
-							<tinymce [(ngModel)]="domain.data[currentLocale].termsOfSales"></tinymce>
+							<tinymce [(ngModel)]="domain[currentLocale].data.termsOfSales" [config]="tinymceConfig"></tinymce>
 						</div>
 
 						<div class="form-group">
 							<label>{{ '#Privacy policy' | dgTranslate }}</label>
-							<tinymce [(ngModel)]="domain.data[currentLocale].privacyPolicy"></tinymce>
+							<tinymce [(ngModel)]="domain[currentLocale].data.privacyPolicy" [config]="tinymceConfig"></tinymce>
 						</div>
+	  			</div>
+	  		</div>
+	  	</div>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab>
+    <ng-template ngbTabTitle><fa-icon icon="file-alt"></fa-icon> {{ '#Page' | dgTranslate }}</ng-template>
+    <ng-template ngbTabContent>
+    	<div class="p-2 mt-4">
+
+				<ul class="list-group" dragula="VAMPIRES" [(dragulaModel)]="domain[currentLocale].pages">
+          <li class="list-group-item" *ngFor="let item of domain[currentLocale].pages; let i = index">
+          	<div class="page-position">
+          		{{ '#Position' | dgTranslate }} {{ (i + 1) }} <span *ngIf="i === 0" class="badge badge-light pull-right">masthead</span>
+          	</div>
+          	<div class="row" *ngIf="i !== 0">
+							<div class="col">
+								{{ '#Show in menu' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="item.shownInMenu"></ui-switch>
+							</div>
+							<div class="col text-right">
+								{{ '#Is Link' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="item.isLink"></ui-switch>
+							</div>
+						</div>
+						<hr />
+
+						<div class="row" *ngIf="item.isLink && i !== 0">
+							<div class="col-md-3">
+									<div class="form-group">
+										<label>{{ '#Menu title' | dgTranslate }}</label>
+										<input type="text" class="form-control" [(ngModel)]="item.menuTitle">
+									</div>
+								</div>
+							<div class="col-md-9">
+								<div class="form-group">
+									<label>{{ '#Link' | dgTranslate }}</label>
+									<input type="text" class="form-control" [(ngModel)]="item.linkUrl">
+								</div>
+							</div>
+          	</div>
+
+						<div *ngIf="!item.isLink">
+	          	<div class="row" *ngIf="i !== 0">
+								<div class="col">
+									<div class="form-group">
+										<label>{{ '#Menu title' | dgTranslate }}</label>
+										<input type="text" class="form-control" [(ngModel)]="item.menuTitle">
+									</div>
+								</div>
+								<div class="col">
+									<div class="form-group">
+										<label>{{ '#Id' | dgTranslate }}</label>
+										<input type="text" class="form-control" [(ngModel)]="item.divId">
+									</div>
+								</div>
+	          	</div>
+
+	          	<hr />
+
+							<div class="row">
+								<div class="col">
+									<div class="form-group">
+										<label>{{ '#Background image' | dgTranslate }}</label>
+										<input type="text" class="form-control" [(ngModel)]="item.backgroundImage">
+									</div>
+								</div>
+	          	</div>
+	          	<hr />
+	          	<div>
+								<img class="img-fluid" [ngStyle]="{'opacity': (item.backgroundOpacity / 100)}" *ngIf="item.backgroundImage" [src]="item.backgroundImage" />
+	          	</div>
+	          	<hr />
+
+							<label>{{ '#Content' | dgTranslate }}</label>
+							<tinymce [(ngModel)]="item.body" [config]="tinymceConfig"></tinymce>
+						</div>
+          </li>
+        </ul>
+
+        <div class="text-center mt-4">
+    			<button class="btn btn-light" (click)="addPage()"><fa-icon icon="plus"></fa-icon> {{ '#Add a block' | dgTranslate }}</button>
+    		</div>
+    	</div>
+    </ng-template>
+  </ngb-tab>
+
+	<ngb-tab>
+    <ng-template ngbTabTitle><fa-icon icon="share-alt"></fa-icon> {{ '#Social Network' | dgTranslate }}</ng-template>
+    <ng-template ngbTabContent>
+			<div class="card mt-4">
+  			<div class="card-header">
+  				{{ '#Social Network' | dgTranslate }}
+  			</div>
+  			<div class="card-body">
+  				<div class="row">
+  					<div class="col-md-6">
+  						<div class="form-group">
+								<label>{{ '#Facebook' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.facebook" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#Twitter' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.twitter" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#Linkedin' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.linkedin" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#Telegram' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.telegram" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#Instagram' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.instagram" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#Youtube' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.youtube" />
+							</div>
+  					</div>
+  					<div class="col-md-6">
+							<div class="form-group">
+								<label>{{ '#Wechat' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.wechat" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#Weibo' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.weibo" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#Douyin' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.douyin" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#VKontakte' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.vkontakte" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#OdnoKlassniki' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.odnoKlassniki" />
+							</div>
+							<div class="form-group">
+								<label>{{ '#Whatsapp' | dgTranslate }}</label>
+								<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].socialNetwork.whatsapp" />
+							</div>
+  					</div>
+  				</div>
+
+  			</div>
+  		</div>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab>
+    <ng-template ngbTabTitle><fa-icon icon="palette"></fa-icon> {{ '#Theme' | dgTranslate }}</ng-template>
+    <ng-template ngbTabContent>
+    	<div class="p-2 mt-4">
+    		<div class="row">
+    			<div class="col-md-6">
+    				<div class="card">
+    					<div class="card-header">
+    						{{ 'CSS' | dgTranslate }}
+    					</div>
+    					<div class="card-body">
+								<textarea class="form-control " [(ngModel)]="domain[currentLocale].meta.css"></textarea>
+    					</div>
+    				</div>
+					</div>
+					<div class="col-md-6">
+    				<div class="card">
+    					<div class="card-header">
+    						{{ 'JS' | dgTranslate }}
+    					</div>
+    					<div class="card-body">
+								<textarea [(ngModel)]="domain[currentLocale].meta.js" class="form-control"></textarea>
+    					</div>
+    				</div>
     			</div>
     		</div>
+    	</div>
+    </ng-template>
+  </ngb-tab>
 
-    		<div class="card mt-4">
+  <ngb-tab>
+    <ng-template ngbTabTitle><fa-icon icon="map-marker-alt"></fa-icon> {{ '#Location' | dgTranslate }}</ng-template>
+    <ng-template ngbTabContent>
+    	<div class="p-2 mt-4">
+    		<div class="card">
     			<div class="card-header">
     				{{ '#Location' | dgTranslate }}
     			</div>
@@ -199,116 +326,54 @@
     					<div class="col-md-12">
 		    				<div class="form-group">
 									<label>{{ '#Address' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.address" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.address" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>{{ '#Region' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.region" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.region" />
 								</div>
 								<div class="form-group">
 									<label>{{ '#Zipcode' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.zipcode" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.zipcode" />
 								</div>
 								<div class="form-group">
 									<label>{{ '#City' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.city" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.city" />
 								</div>
 								<div class="form-group">
 									<label>{{ '#Country' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.country" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.country" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>{{ '#Longitude' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.longitude" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.longitude" />
 								</div>
 								<div class="form-group">
 									<label>{{ '#Latitude' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.latitude" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.latitude" />
 								</div>
 
 		    				<div class="form-group">
 									<label>{{ '#Phone' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.phone" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.phone" />
 								</div>
 								<div class="form-group">
 									<label>{{ '#E-mail' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.location.email" />
+									<input type="text" class="form-control" [(ngModel)]="domain[currentLocale].location.email" />
 								</div>
 							</div>
 						</div>
     			</div>
     		</div>
-
-    		<div class="card mt-4">
-    			<div class="card-header">
-    				{{ '#Social Network' | dgTranslate }}
-    			</div>
-    			<div class="card-body">
-    				<div class="row">
-    					<div class="col-md-6">
-    						<div class="form-group">
-									<label>{{ '#Facebook' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.facebook" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#Twitter' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.twitter" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#Linkedin' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.linkedin" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#Telegram' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.telegram" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#Instagram' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.instagram" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#Youtube' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.youtube" />
-								</div>
-    					</div>
-    					<div class="col-md-6">
-								<div class="form-group">
-									<label>{{ '#Wechat' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.wechat" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#Weibo' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.weibo" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#Douyin' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.douyin" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#VKontakte' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.vkontakte" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#OdnoKlassniki' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.odnoKlassniki" />
-								</div>
-								<div class="form-group">
-									<label>{{ '#Whatsapp' | dgTranslate }}</label>
-									<input type="text" class="form-control" [(ngModel)]="domain.socialNetwork.whatsapp" />
-								</div>
-    					</div>
-    				</div>
-
-    			</div>
-    		</div>
-    		<div class="text-center mt-4">
-					<button class="btn btn-primary" (click)="openDomainUpdateModal()">{{ '#Save' | dgTranslate }}</button>
-				</div>
     	</div>
     </ng-template>
   </ngb-tab>
 </ngb-tabset>
+
+<div class="text-center mt-4 mb-4">
+	<button class="btn btn-primary" (click)="openDomainUpdateModal()">{{ '#Save' | dgTranslate }}</button>
+</div>

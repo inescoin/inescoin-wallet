@@ -63,7 +63,6 @@ export class WalletService {
         publicKey: data.publicKey
       };
 
-      console.log('this.accounts[address]', this.accounts[address], data);
       this.saveToStorage();
       saveAs(blob, address + '.wallet');
     } catch(e) {

@@ -68,11 +68,9 @@ export class MessengerComponent implements OnInit {
   	this._scrollToBottom();
 
     this.socket.fromEvent('message').subscribe((message) => {
-      //console.log('message', message);
     });
 
     this.socket.fromEvent('new-message').subscribe((message) => {
-      console.log('new-message', message);
       this._checkMessageHistory(message);
     });
   }
@@ -83,7 +81,6 @@ export class MessengerComponent implements OnInit {
 
   getMessages() {
     this.messageService.getMessages(this.current.from.address).subscribe((data: any) => {
-      //console.log('data', data);
       data && data.messages && data.messages.forEach((message: any) => {
         this._checkMessageHistory(message);
       })
@@ -95,7 +92,6 @@ export class MessengerComponent implements OnInit {
 
   	let conversations = [];
   	for(let channel of Object.keys(this.history)) {
-  		//console.log('this.history[channel]', this.history[channel]);
   		conversations.push({
   			id: this.history[channel].id,
   			from: this.history[channel].from.address,
@@ -105,7 +101,6 @@ export class MessengerComponent implements OnInit {
   	}
 
     this.conversations = _.orderBy(conversations, ['date'], ['desc']);
-    console.log(this.conversations, conversations);
     this.changeDetectorRef.detectChanges();
   }
 
@@ -126,12 +121,10 @@ export class MessengerComponent implements OnInit {
     if (!this.current.id && this.conversations[0]) {
       this.current = this.conversations[0];
     }
-    console.log('startChat::this.current', this.current)
   	this._loadMessages(this.current.id);
 
     if (this.wallets) {
       let addresses = Object.keys(this.wallets);
-      console.log('addresses', addresses);
 
       this.socket.emit('authentication', {
         address: addresses.join(',')
@@ -168,7 +161,6 @@ export class MessengerComponent implements OnInit {
   		this.password
   	);
 
-    console.log('decrypted', decrypted);
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
@@ -184,16 +176,13 @@ export class MessengerComponent implements OnInit {
 
       let messageToPush = Object.assign({}, message, messageData);
 
-      console.log('messageToPush', messageToPush, messageData);
 
       this.current.messages.push(messageToPush);
 
-      //console.log('this.current.from', this.current.from);
       this.messengerService.pushMessage(this.current.id, messageToPush);
 
       this.changeDetectorRef.detectChanges();
     } else {
-      //console.log('Error: Bad password');
       this.inProgress = false;
     }
 
@@ -237,7 +226,6 @@ export class MessengerComponent implements OnInit {
   private _checkMessageHistory(message) {
     let passed = this.messageService.ecVerify(message.hash, message.signature, message.publicKey);
     if (!passed) {
-      console.log('Bad signature => ', message.signature);
       return;
     }
 
@@ -253,7 +241,6 @@ export class MessengerComponent implements OnInit {
     let idDERTo = CryptoJS.SHA256(message.from + message.to).toString();
 
     if (this.messengerService.messageExists(idDERFrom, message)) {
-      console.log('Message already exists => ', message);
       return;
     }
 
@@ -296,17 +283,13 @@ export class MessengerComponent implements OnInit {
           }
 
           this.messengerService.saveHistoryToStorage();
-          console.log('SaveHistoryToStorage: ' + message.body);
         } else {
-          console.log('ERROR: body empty');
         }
       } else {
-          console.log('ERROR: Bad password', this.wallets[message.to]);
       }
     }
 
     if (this.wallets[message.from]) {
-      console.log('Message from me => ', message.signature);
     }
 
 
@@ -348,7 +331,6 @@ export class MessengerComponent implements OnInit {
       this.message = this.message + event.emoji.native;
       this.showEmojiPicker = false;
     }
-    console.log('addEmoji', event);
   }
 
   private _scrollToBottom(): void {

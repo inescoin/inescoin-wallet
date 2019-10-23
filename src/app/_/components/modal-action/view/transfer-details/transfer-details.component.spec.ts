@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TranfserDetailsComponent } from './transfer-details.component';
+import { TransferDetailsComponent } from './transfer-details.component';
 
-describe('TranfserDetailsComponent', () => {
-  let component: TranfserDetailsComponent;
-  let fixture: ComponentFixture<TranfserDetailsComponent>;
+describe('TransferDetailsComponent', () => {
+  let component: TransferDetailsComponent;
+  let fixture: ComponentFixture<TransferDetailsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TranfserDetailsComponent ]
+      declarations: [ TransferDetailsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TranfserDetailsComponent);
+    fixture = TestBed.createComponent(TransferDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

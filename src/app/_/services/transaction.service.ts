@@ -122,11 +122,12 @@ export class TransactionService {
     sign.setPrivateKey(privateKey);
     let date: any = Math.floor(Date.now() / 1000);
 
+    let toDoOutput = (!!encryptedTodos ? (CryptoJS.SHA256(encryptedTodos)).toString() : '');
     let completeMessage = CryptoJS.SHA256(
       bankHash
       + this.blockchainConfigHash
       + from
-      + encryptedTodos
+      + toDoOutput
       + encrypted
       + this.amount
       + date);
@@ -139,6 +140,7 @@ export class TransactionService {
       from: from,
       bankHash: bankHash,
       toDo: encryptedTodos,
+      toDoHash: toDoOutput,
       transfers: encrypted,
       signature: signature.toDER('hex'),
       publicKey: publicKey,

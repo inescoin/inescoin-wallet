@@ -103,7 +103,6 @@ export class WalletAccountComponent implements OnInit {
   }
 
   openModal(name, option) {
-    console.log('openModal', name, option);
     this.modalActionService.open(name, option);
   }
 }

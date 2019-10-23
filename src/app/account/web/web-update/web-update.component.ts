@@ -52,6 +52,8 @@ export class WebUpdateComponent implements OnInit {
     walletId: ''
   }];
 
+  subjects: any = {};
+
   constructor(
     private router: Router,
     private toastrService: ToastrService,
@@ -80,6 +82,17 @@ export class WebUpdateComponent implements OnInit {
     if (this.addresses[this.from]) {
       this.address = this.addresses[this.from];
     }
+
+    this.subjects.remoteResponse = this.transactionService.onRemoteResponse.subscribe((remoteResponse) => {
+      this.inProgress = false;
+      if (remoteResponse[0] && remoteResponse[0].error) {
+        this.error = remoteResponse[0].error;
+        this.toastrService.error(this.doorgetsTranslateService.instant(remoteResponse[0].error));
+      } else {
+        this.toastrService.success(this.doorgetsTranslateService.instant('#Transaction sent!'));
+        this.ngbActiveModal.dismiss();
+      }
+    });
   }
 
   getAdressesArray() {
@@ -132,7 +145,6 @@ export class WebUpdateComponent implements OnInit {
   }
 
   send() {
-    console.log('Send Transaction', this.transfers, this.from);
     this.inProgress = true;
     this.badPassword = false;
 

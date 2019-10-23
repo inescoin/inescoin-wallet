@@ -21,17 +21,19 @@ export class WebComponent implements OnInit {
 
   ngOnInit() {
     this.domainList = this.webService.getFromStorage();
-    console.log('domain', this.domainList);
     this.wallet = this.walletService.accounts;
 
     this.webService.getWalletAdressesInfos(this.getWalletAdressesInfos())
       .subscribe((addresses: any) => {
-        console.log('webService:addresses', addresses && addresses.domainList);
         if (addresses && addresses.domainList) {
           this.webService.domain = addresses.domainList;
-          this.webService.saveToStorage();
           this.domainList = addresses.domainList;
+        } else {
+          this.webService.domain = [];
+          this.domainList = [];
         }
+
+        this.webService.saveToStorage();
     });
   }
 
@@ -46,7 +48,8 @@ export class WebComponent implements OnInit {
   openDomainCreateModal() {
     this.modalActionService.open('domainAdd', {
       component: 'web',
-      size: 'lg'
+      size: 'lg',
+      type: 'create'
     });
   }
 

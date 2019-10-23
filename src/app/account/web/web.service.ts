@@ -45,4 +45,10 @@ export class WebService {
       walletAddresses: addresses
     })
   }
+
+  getUrlInfos(url) {
+    return this.httpService.post('get-domain-url', {
+      url: url
+    })
+  }
 }

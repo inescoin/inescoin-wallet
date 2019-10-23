@@ -17,7 +17,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
 import { UiSwitchModule } from 'ngx-ui-switch';
-
+import { DragulaModule } from 'ng2-dragula';
 import 'hammerjs';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -181,7 +181,7 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     HttpModule,
     HttpClientModule,
     NgxTinymceModule.forRoot({
-      baseURL: '//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.0/'
+      baseURL: '//cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.16/'
     }),
     ColorPickerModule,
     CollapseModule.forRoot(),
@@ -192,6 +192,7 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
       useFactory: (newNgTranslate),
       deps: [Http]
     }),
+    DragulaModule.forRoot(),
     ToastrModule.forRoot(),
     TypeaheadModule.forRoot(),
     BrowserAnimationsModule,

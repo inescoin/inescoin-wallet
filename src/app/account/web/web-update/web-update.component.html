@@ -10,11 +10,8 @@
   <div class="alert alert-danger" *ngIf="badPassword">{{ '#Bad password' | dgTranslate }}</div>
 
   <div class="card mb-4">
-    <div class="card-header">
-      {{ '#Domain' | dgTranslate }} : {{ domain.name }}
-    </div>
     <div class="card-body">
-      dqsd
+      {{ '#Domain' | dgTranslate }} : {{ domain.name }}
     </div>
   </div>
 
@@ -26,6 +23,6 @@
   </div>
   <hr />
 
-  <button class="btn btn-light" (click)="back()">{{ '#Retour' | dgTranslate }}</button>
-  <button class="btn btn-success ml-2" (click)="createDomain()">{{ '#Update domain' | dgTranslate }}</button>
+  <button class="btn btn-light" [disabled]="inProgress" (click)="back()">{{ '#Retour' | dgTranslate }}</button>
+  <button class="btn btn-success ml-2" [disabled]="inProgress" (click)="createDomain()">{{ '#Update domain' | dgTranslate }}</button>
 </div>

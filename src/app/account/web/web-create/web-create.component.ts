@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DoorgetsTranslateService } from 'doorgets-ng-translate';
 
+import { ModalActionService } from '../../../_/components/modal-action/modal-action.service';
 import { WalletService } from '../../wallet/wallet.service';
 import { TransactionService } from '../../../_/services/transaction.service';
 import { inescoinConfig } from '../../../config/inescoin.config';
@@ -14,8 +15,18 @@ import { inescoinConfig } from '../../../config/inescoin.config';
   styleUrls: ['./web-create.component.scss']
 })
 export class WebCreateComponent implements OnInit {
+  type: string = 'create';
+  modalOptions: any = {};
+
+  @Input('actionType') actionType = 'create';
+
 	error: string = '';
-	amount: number = 1;
+
+  amount: number = 300;
+
+  amountMonth: number = 100;
+  amountThreeMonths: number = 200;
+	amountSixMonths: number = 300;
 
 	to: string = '0x5967a4016501465CD951a1e3984F772AfDeB5207';
 
@@ -48,9 +59,12 @@ export class WebCreateComponent implements OnInit {
     walletId: ''
 	}];
 
+  subjects: any = {};
+
   constructor(
     private router: Router,
     private toastrService: ToastrService,
+    private modalActionService: ModalActionService,
     private doorgetsTranslateService: DoorgetsTranslateService,
     private walletService: WalletService,
     private ngbActiveModal: NgbActiveModal,
@@ -58,6 +72,28 @@ export class WebCreateComponent implements OnInit {
   	) { }
 
   ngOnInit() {
+    this.modalOptions = this.modalActionService.options;
+
+    this.subjects.remoteResponse = this.transactionService.onRemoteResponse.subscribe((remoteResponse) => {
+      this.inProgress = false;
+      if (remoteResponse[0] && remoteResponse[0].error) {
+        this.error = remoteResponse[0].error;
+        this.toastrService.error(this.doorgetsTranslateService.instant(remoteResponse[0].error));
+      } else {
+        this.toastrService.success(this.doorgetsTranslateService.instant('#Transaction sent!'));
+        this.ngbActiveModal.dismiss();
+      }
+    });
+
+    this.from = this.modalOptions.from;
+    this.domain.name = this.modalOptions.url;
+    this.domain.action = this.modalOptions.type;
+    this.publicKey = this.modalOptions.publicKey;
+    this.data = this.modalOptions.data;
+  }
+
+  ngOnDestroy() {
+    this.subjects.remoteResponse && this.subjects.remoteResponse.unsubscribe();
   }
 
   getAdressesArray() {
@@ -109,7 +145,6 @@ export class WebCreateComponent implements OnInit {
   }
 
   send() {
-    console.log('Send Transaction', this.transfers, this.from);
     this.inProgress = true;
     this.badPassword = false;
 
@@ -121,6 +156,8 @@ export class WebCreateComponent implements OnInit {
       this.badPassword = true;
       return;
     }
+
+    this.transfers[0].amount = this.amount - this.fee;
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
@@ -142,23 +179,29 @@ export class WebCreateComponent implements OnInit {
     })
   }
 
-  next() {
-  	console.log('from', this.from);
-  	console.log('data', this.data);
-  	console.log('publicKey', this.publicKey);
-  	console.log('domain', this.domain);
-  	console.log('address', this.address);
+  isAlphaNum(data) {
+    if (!data) {
+      return false;
+    }
 
+    let cd;
+    let i;
+
+    for (let i = 0; i < data.length; i++) {
+      cd = data.charCodeAt(i);
+      if (!(cd > 47 && cd < 58) && !(cd > 64 && cd < 91) && !(cd > 96 && cd < 123)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  next() {
   	this.isSummaryStep = true;
   }
 
   back() {
-  	console.log('from', this.from);
-  	console.log('data', this.data);
-  	console.log('publicKey', this.publicKey);
-  	console.log('domain', this.domain);
-  	console.log('address', this.address);
-
   	this.isSummaryStep = false;
   }
 }

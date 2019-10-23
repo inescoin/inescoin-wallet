@@ -4,6 +4,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalActionService } from '../../modal-action.service';
 
 @Component({
   selector: 'app-domain-create',
@@ -12,9 +13,14 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DomainCreateComponent implements OnInit {
 
-  constructor(private ngbActiveModal: NgbActiveModal,) { }
+  options: any = {}
+
+  constructor(
+    private ngbActiveModal: NgbActiveModal,
+    private modalActionService: ModalActionService) { }
 
   ngOnInit() {
+    this.options = this.modalActionService.options;
   }
 
   close() {

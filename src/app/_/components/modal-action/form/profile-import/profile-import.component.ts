@@ -68,7 +68,6 @@ export class ProfileImportComponent implements OnInit {
     fileReader.onload = (e) => {
       let content = fileReader.result;
       let profile = this.settingsProfileService.open(content, this.password);
-      console.log('profile', profile);
       if (!profile) {
         this.error.file = 'File or password error';
       }

@@ -1,6 +1,6 @@
 <div *ngIf="!isSummaryStep">
 	<h6>{{ '#Owner' | dgTranslate }}</h6>
-	<div class="form-group">
+	<div class="form-group" *ngIf="actionType === 'create'">
 		<select class="form-control" [(ngModel)]="from" (change)="onFromChange($event)">
 			<option value="">
 		      -
@@ -11,19 +11,55 @@
 		</select>
 	</div>
 
-	<div class="form-group">
-		<label>{{ '#Name' | dgTranslate }}</label>
-		<input type="text" class="form-control" [(ngModel)]="domain.name">
+	<div class="form-group" *ngIf="actionType === 'delete' || actionType === 'renew'">
+		{{ modalOptions.from }}
+	</div>
+	<hr />
+
+	<h6>{{ '#Name' | dgTranslate }} <small>({{ '#Alphanumeric' | dgTranslate }})</small></h6>
+	<div class="form-group" *ngIf="actionType === 'create'">
+		<input type="text" class="form-control" maxlength="70" [(ngModel)]="domain.name">
 	</div>
 
-	<div class="card">
+	<div class="form-group" *ngIf="actionType === 'delete' || actionType === 'renew'">
+		{{ modalOptions.url }}
+	</div>
+	<hr />
+
+	<div class="row text-center" *ngIf="actionType === 'renew' || actionType === 'create'">
+		<div class="col">
+			<label>
+				<input type="radio" [(ngModel)]="amount" [value]="amountMonth" name="quantity">
+				<div class="amount-month-selection">{{ '#1 Month' | dgTranslate }}</div>
+				<div class="amount-month-selection">250,000 {{ '#Blocks' | dgTranslate }}</div>
+			</label>
+		</div>
+		<div class="col">
+			<label>
+				<input type="radio" [(ngModel)]="amount" [value]="amountThreeMonths" name="quantity">
+				<div class="amount-month-selection">{{ '#3 Months' | dgTranslate }}</div>
+				<div class="amount-month-selection">750,000 {{ '#Blocks' | dgTranslate }}</div>
+			</label>
+		</div>
+		<div class="col">
+			<label>
+				<input type="radio" [(ngModel)]="amount" [value]="amountSixMonths" name="quantity">
+				<div class="amount-month-selection">{{ '#6 Months' | dgTranslate }}</div>
+				<div class="amount-month-selection">1,500,000 {{ '#Blocks' | dgTranslate }}</div>
+			</label>
+		</div>
+	</div>
+
+	<div class="card mt-4">
 		<div class="card-body text-center">
 			<h6>{{ '#Fee' | dgTranslate }}</h6>
 			{{ amount }} {{ inescoinConfig.symbol }}
 		</div>
 	</div>
 	<hr />
-	<button class="btn btn-success" (click)="next()">{{ '#Create domain' | dgTranslate }}</button>
+	<button class="btn btn-success" [disabled]="!this.from || !isAlphaNum(domain.name) || (!domain.name || domain.name.length <7 || domain.name.length > 70)" *ngIf="actionType === 'create'" (click)="next()">{{ '#Create domain' | dgTranslate }}</button>
+	<button class="btn btn-success" *ngIf="actionType === 'renew'" (click)="next()">{{ '#Renew domain' | dgTranslate }}</button>
+	<button class="btn btn-success" *ngIf="actionType === 'delete'" (click)="next()">{{ '#Delete domain' | dgTranslate }}</button>
 </div>
 
 <div *ngIf="isSummaryStep">
@@ -46,6 +82,8 @@
 		</div>
 	</div>
 
+
+
 	<div class="card">
 		<div class="card-body text-center">
 			<h6>{{ '#Fee' | dgTranslate }}</h6>
@@ -54,6 +92,6 @@
 	</div>
 	<hr />
 
-	<button class="btn btn-light" (click)="back()">{{ '#Retour' | dgTranslate }}</button>
-	<button class="btn btn-success ml-2" (click)="createDomain()">{{ '#Create domain' | dgTranslate }}</button>
+	<button class="btn btn-light" [disabled]="inProgress || !this.from || !isAlphaNum(domain.name) || (!domain.name || domain.name.length <7 || domain.name.length > 70)" (click)="back()">{{ '#Retour' | dgTranslate }}</button>
+	<button class="btn btn-success ml-2" [disabled]="inProgress" (click)="createDomain()">{{ '#Send to node' | dgTranslate }}</button>
 </div>

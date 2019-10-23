@@ -36,8 +36,6 @@ export class ContactsComponent implements OnInit {
 
       this.contacts = [...this.contactsService.contacts];
       this.temp = [...this.contactsService.contacts];
-
-      console.log('contacts', this.contacts, this.temp);
     });
   }
 
@@ -47,11 +45,9 @@ export class ContactsComponent implements OnInit {
 
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
-    console.log(val);
 
     // filter our data
     const temp = this.temp.filter(function(d) {
-      console.log(d);
       return d.label.toLowerCase().indexOf(val) !== -1 || !val;
     });
 

@@ -85,7 +85,6 @@ export class WalletSendComponent implements OnInit {
     });
 
     this.subjects.scan = this.qrScannerService.onScan.subscribe((result) => {
-      console.log('WalletSendComponent:qrScannerService', result);
 
       if (result.component === 'wallet-send') {
         this.transfers[result.index].to = result.wallet.address;
@@ -119,7 +118,6 @@ export class WalletSendComponent implements OnInit {
   }
 
   send() {
-    console.log('Send Transaction', this.transfers, this.from);
     this.inProgress = true;
     this.badPassword = false;
 
@@ -135,7 +133,6 @@ export class WalletSendComponent implements OnInit {
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
       this.transactionService.sendTransaction(this.fee, this.transfers.map((transfer) => {
-        console.log('transfer', transfer);
 
         return {
           amount: transfer.amount,
@@ -177,7 +174,6 @@ export class WalletSendComponent implements OnInit {
     if (event.item) {
       this.transfers[index].item = event.item;
       this.transfers[index].walletId = event.item && event.item.walletId;
-      console.log('event', event.item, index);
     }
   }
 

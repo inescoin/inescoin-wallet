@@ -38,8 +38,6 @@ export class ContactsCreateComponent implements OnInit {
 
   ngOnInit() {
     this.subjects.scan = this.qrScannerService.onScan.subscribe((result) => {
-      console.log('ContactsCreateComponent:qrScannerService', result);
-
       if (result.component === 'contacts-create') {
         this.contact = result.contact;
       }

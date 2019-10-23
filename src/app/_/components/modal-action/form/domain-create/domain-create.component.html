@@ -1,9 +1,11 @@
 <div class="modal-header">
-  <h4 class="modal-title">{{ '#Create a domain' | dgTranslate }}</h4>
+  <h4 class="modal-title" *ngIf="options.type === 'create'">{{ '#Create a domain' | dgTranslate }}</h4>
+  <h4 class="modal-title" *ngIf="options.type === 'renew'">{{ '#Renew a domain' | dgTranslate }}</h4>
+  <h4 class="modal-title" *ngIf="options.type === 'delete'">{{ '#Delete a domain' | dgTranslate }}</h4>
   <button type="button" class="close" aria-label="Close" (click)="dismiss()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-	<app-web-create></app-web-create>
+	<app-web-create [actionType]="options.type"></app-web-create>
 </div>

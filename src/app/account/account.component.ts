@@ -36,7 +36,6 @@ export class AccountComponent implements OnInit {
   }
 
   changeLanguage() {
-    console.log('language', this.chooseLanguage)
     if (this.chooseLanguage) {
       this.doorGetTranslateService.setCurrent(this.chooseLanguage);
 
@@ -47,7 +46,6 @@ export class AccountComponent implements OnInit {
   collapse() {
     if (window.screen.width < 768) {
       this.isCollapsed = !this.isCollapsed;
-      console.log(window.screen.width);
     }
   }
 }

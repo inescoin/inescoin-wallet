@@ -11,7 +11,6 @@ import { inescoinConfig } from '../../config/inescoin.config';
 export class ConfigService {
 
 	constructor() {
-		console.log('inescoinConfig', inescoinConfig.name);
 	}
 
 	setLanguage(langue) {

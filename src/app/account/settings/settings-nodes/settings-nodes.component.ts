@@ -32,8 +32,6 @@ export class SettingsNodesComponent implements OnInit {
 
       this.nodes = [...this.settingsNodesService.nodes];
       this.temp = [...this.settingsNodesService.nodes];
-
-      console.log('nodes', this.nodes, this.temp);
     });
   }
 

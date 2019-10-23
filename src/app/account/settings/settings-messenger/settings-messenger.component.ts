@@ -21,6 +21,5 @@ export class SettingsMessengerComponent implements OnInit {
   }
 
   onActiveMessengerChange(event) {
-  	console.log('SettingsMessengerComponent::onActiveMessengerChange', event);
   }
 }
