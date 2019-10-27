@@ -4,8 +4,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DoorgetsTranslateService } from 'doorgets-ng-translate';
 
+import { QrScannerService } from '../../../_/services/ui/qr-scanner.service';
 import { ModalActionService } from '../../../_/components/modal-action/modal-action.service';
 import { WalletService } from '../../wallet/wallet.service';
+import { ContactsService } from '../../contacts/contacts.service';
 import { TransactionService } from '../../../_/services/transaction.service';
 import { inescoinConfig } from '../../../config/inescoin.config';
 
@@ -28,7 +30,7 @@ export class WebCreateComponent implements OnInit {
   amountThreeMonths: number = 200;
 	amountSixMonths: number = 300;
 
-	to: string = '0x5967a4016501465CD951a1e3984F772AfDeB5207';
+	to: string = '0x16D6cae25f36A16ABA3482526dFabA1D69a7aB5f';
 
 	data: any = {};
 	address: any = {};
@@ -59,11 +61,14 @@ export class WebCreateComponent implements OnInit {
     walletId: ''
 	}];
 
+  contacts = [];
   subjects: any = {};
 
   constructor(
     private router: Router,
     private toastrService: ToastrService,
+    private contactsService: ContactsService,
+    private qrScannerService: QrScannerService,
     private modalActionService: ModalActionService,
     private doorgetsTranslateService: DoorgetsTranslateService,
     private walletService: WalletService,
@@ -90,10 +95,23 @@ export class WebCreateComponent implements OnInit {
     this.domain.action = this.modalOptions.type;
     this.publicKey = this.modalOptions.publicKey;
     this.data = this.modalOptions.data;
+
+    this.contacts = this.contactsService.contacts.map((contact: any) => {
+      contact.value = contact.label + ' ' + contact.address;
+      return contact;
+    });
+
+    this.subjects.scan = this.qrScannerService.onScan.subscribe((result) => {
+      if (result.component === 'wallet-create') {
+        this.domain.newOwnerAddress = result.contact.address;
+        this.domain.newOwnerPublicKey = result.contact.publicKey;
+      }
+    });
   }
 
   ngOnDestroy() {
     this.subjects.remoteResponse && this.subjects.remoteResponse.unsubscribe();
+    this.subjects.scan && this.subjects.scan.unsubscribe();
   }
 
   getAdressesArray() {
@@ -105,6 +123,13 @@ export class WebCreateComponent implements OnInit {
   	}
 
   	return addresses;
+  }
+
+  onSelectOwner(event: any, index) {
+    if (event.item) {
+      this.domain.newOwnerAddress = event.item.address;
+      this.domain.newOwnerPublicKey = event.item.publicKey;
+    }
   }
 
   onFromChange(event) {
@@ -142,6 +167,10 @@ export class WebCreateComponent implements OnInit {
 
   createDomain() {
   	this.send();
+  }
+
+  openModal(name, option) {
+    this.modalActionService.open(name, option);
   }
 
   send() {
@@ -185,8 +214,6 @@ export class WebCreateComponent implements OnInit {
     }
 
     let cd;
-    let i;
-
     for (let i = 0; i < data.length; i++) {
       cd = data.charCodeAt(i);
       if (!(cd > 47 && cd < 58) && !(cd > 64 && cd < 91) && !(cd > 96 && cd < 123)) {

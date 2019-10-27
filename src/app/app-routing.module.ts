@@ -41,11 +41,11 @@ export const routes: Routes = [ {
             pathMatch: 'full'
         },
         {
-            path: 'web',
+            path: 'domain',
             component: WebComponent
         },
         {
-            path: 'web/:hash',
+            path: 'domain/:hash',
             component: WebDetailsComponent
         },
         {

@@ -1,7 +1,7 @@
 <div class="modal-header">
-  <h4 class="modal-title" *ngIf="options.type === 'create'">{{ '#Create a domain' | dgTranslate }}</h4>
-  <h4 class="modal-title" *ngIf="options.type === 'renew'">{{ '#Renew a domain' | dgTranslate }}</h4>
-  <h4 class="modal-title" *ngIf="options.type === 'delete'">{{ '#Delete a domain' | dgTranslate }}</h4>
+  <h4 class="modal-title" *ngIf="options.type === 'create'"><fa-icon icon="plus"></fa-icon> {{ '#Create a domain' | dgTranslate }}</h4>
+  <h4 class="modal-title" *ngIf="options.type === 'renew'"><fa-icon icon="redo"></fa-icon> {{ '#Renew a domain' | dgTranslate }}</h4>
+  <h4 class="modal-title" *ngIf="options.type === 'delete'"><fa-icon icon="trash"></fa-icon> {{ '#Delete a domain' | dgTranslate }}</h4>
   <button type="button" class="close" aria-label="Close" (click)="dismiss()">
     <span aria-hidden="true">&times;</span>
   </button>

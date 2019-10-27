@@ -1,6 +1,6 @@
 <div>
   <div class="form-group">
-    <label>{{ '#Owner' | dgTranslate }} :</label> <b>{{ from }}</b>
+    <label>{{ '#From' | dgTranslate }} :</label> <b>{{ from }}</b>
   </div>
   <hr />
   <div class="form-group">
@@ -22,7 +22,8 @@
     </div>
   </div>
   <hr />
-
-  <button class="btn btn-light" [disabled]="inProgress" (click)="back()">{{ '#Retour' | dgTranslate }}</button>
-  <button class="btn btn-success ml-2" [disabled]="inProgress" (click)="createDomain()">{{ '#Update domain' | dgTranslate }}</button>
+  <div class="text-center">
+    <button class="btn btn-light" [disabled]="inProgress" (click)="back()">{{ '#Back' | dgTranslate }}</button>
+    <button class="btn btn-success ml-2" [disabled]="inProgress" (click)="updateDomain()">{{ '#Update domain' | dgTranslate }}</button>
+  </div>
 </div>

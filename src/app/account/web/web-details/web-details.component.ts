@@ -23,86 +23,98 @@ export class WebDetailsComponent implements OnInit {
   data: any = {};
 
   domain: any = {
-    en: {
-      data: {
-        timezone: '',
-        termsOfService: '',
-        termsOfSales: '',
-        privacyPolicy: '',
-        faq: '',
-        active: true,
-      },
-      meta: {
-        title: '',
-        description: '',
-        keywords: '',
-        langue: 'en'
-      },
-      pages: [],
-      products: [],
-      categories: [],
-      theme: {
-        colors: {
-          '$body-bg': '#fff',
-          '$gray-base': '#000',
-          '$brand-primary': '#428bca',
-          '$brand-success': '#5cb85c',
-          '$brand-info': '#5bc0de',
-          '$brand-warning': '#f0ad4e',
-          '$brand-danger': '#d9534f',
+    html: {
+      en: {
+        website: {
+          title: '',
+          icon: '',
+          timezone: '',
+          active: true,
+          analytics: {
+            active: false,
+            code: ''
+          },
+          meta: [{
+              type: 'name',
+              name: 'description',
+              content: '',
+            }, {
+              type: 'name',
+              name: 'keywords',
+              content: '',
+            }, {
+              type: 'name',
+              name: 'author',
+              content: '',
+          }]
         },
-        font: {
-          '$font-family-sans-serif':  '"Helvetica Neue", Helvetica, Arial, sans-serif',
-          '$font-family-serif': 'Georgia, "Times New Roman", Times, serif'
+        company: {
+          name: '',
+          slogan: '',
+          description: '',
+          logo: '',
+          year: 2019,
+          termsOfService: '',
+          termsOfSales: '',
+          privacyPolicy: '',
+          faq: '',
         },
-        buttons: {
-          '$btn-font-weight': 'normal',
-          '$btn-default-color': '#333',
-          '$btn-default-bg': '#fff',
-          '$btn-default-border': '#ccc',
-          '$btn-primary-color': '#fff',
-          '$btn-primary-bg': '#428bca',
-          '$btn-success-color': '#fff',
-          '$btn-success-bg': '#5cb85c',
-          '$btn-info-color': '#fff',
-          '$btn-info-bg': '#5bc0de',
-          '$btn-warning-color': '#fff',
-          '$btn-warning-bg': '#f0ad4e',
-          '$btn-danger-color': '#fff',
-          '$btn-danger-bg': '#d9534f',
+        location: [{
+          address: '',
+          region: '',
+          zipcode: '',
+          city: '',
+          country: '',
+          longitude: '',
+          latitude: '',
+          phone: '',
+          email: ''
+        }],
+        network: {
+          github: '',
+          facebook: '',
+          twitter: '',
+          linkedin: '',
+          youtube: '',
+          instagram: '',
+          wechat: '',
+          weibo: '',
+          douyin: '',
+          vkontakte: '',
+          odnoKlassniki: '',
+          telegram: '',
+          whatsapp: '',
+        },
+        pages: [{
+          menuTitle: '',
+          shownInMenu: true,
+          isLink: false,
+          linkUrl: '',
+          divId: '',
+          label: '',
+          body: '',
+          backgroundOpacity: 100,
+          height: '',
+          backgroundImage: ''
+        }],
+        theme: {
+          js: {
+            value: '',
+            links: [
+              { link: '//code.jquery.com/jquery-3.3.1.slim.min.js' },
+              { link: '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' },
+              { link: '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' },
+              { link: '//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js' },
+              { link: '//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js' },
+            ]
+          },
+          css: {
+            value: '',
+            links: [
+              { link: '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'},
+            ]
+          }
         }
-      },
-      company: {
-        name: '',
-        slogan: '',
-        description: '',
-        logo: '',
-        year: 2019
-      },
-      location: [{
-        address: '',
-        region: '',
-        zipcode: '',
-        city: '',
-        country: '',
-        longitude: '',
-        latitude: '',
-        phone: '',
-        email: ''
-      }],
-      socialNetwork: {
-        facebook: '',
-        twitter: '',
-        linkedin: '',
-        youtube: '',
-        instagram: '',
-        wechat: '',
-        weibo: '',
-        douyin: '',
-        vkontakte: '',
-        odnoKlassniki: '',
-        telegram: '',
-        whatsapp: '',
       },
     },
     url: '',
@@ -174,6 +186,18 @@ export class WebDetailsComponent implements OnInit {
     });
   }
 
+  openDomainChangeOwnerModal() {
+    this.modalActionService.open('domainChangeOwner', {
+      size: 'lg',
+      component: 'web',
+      type: 'changeOwner',
+      url: this.domain.url,
+      from: this.domain.ownerAddress,
+      publicKey: this.domain.ownerPublicKey,
+      data: this.data
+    });
+  }
+
   openDomainDeleteModal() {
     this.modalActionService.open('domainAdd', {
       size: 'lg',
@@ -201,31 +225,184 @@ export class WebDetailsComponent implements OnInit {
     });
   }
 
+  removePage(index) {
+    this.domain[this.currentLocale].pages.splice(index, 1)
+  }
+
+  addLocation() {
+    this.domain[this.currentLocale].location.push({
+      address: '',
+      region: '',
+      zipcode: '',
+      city: '',
+      country: '',
+      longitude: '',
+      latitude: '',
+      phone: '',
+      email: ''
+    });
+  }
+
+  removeLocation(index) {
+    this.domain[this.currentLocale].location.splice(index, 1)
+  }
+
+  addMeta() {
+    this.domain[this.currentLocale].website.meta.push({
+      type: 'name',
+      name: '',
+      content: '',
+    });
+  }
+
+  removeMeta(index) {
+    this.domain[this.currentLocale].website.meta.splice(index, 1)
+  }
+
+  addCssLink() {
+    this.domain[this.currentLocale].theme.css.links.push({
+      link: '',
+    });
+  }
+
+  removeCssLink(index) {
+    this.domain[this.currentLocale].theme.css.links.splice(index, 1)
+  }
+
+  addJsLink() {
+    this.domain[this.currentLocale].theme.js.links.push({
+      link: '',
+    });
+  }
+
+  removeJsLink(index) {
+    this.domain[this.currentLocale].theme.js.links.splice(index, 1)
+  }
+
   addCategory() {
     this.domain[this.currentLocale].categories.push({label:''});
   }
 
-  removeMovedItem(i, list) {
-    delete this.domain.categories[i];
+  removeCategory(index) {
+    this.domain[this.currentLocale].categories.splice(index, 1)
+  }
+
+  mapActive() {
+    let lgKeys = Object.keys(this.domain.html);
+    // return lgKeys;
+    return lgKeys.map((lg) => {
+      if (this.domain.html[lg].website) {
+        return {
+          lg: lg,
+          active: this.domain.html[lg].website.active
+        }
+      }
+    });
   }
 
   setCurrentLocale(locale) {
-    if (!this.domain[locale]) {
-      this.domain[locale] = _.clone(this.domain[this.currentLocale]);
-      this.domain[locale].data.active = false;
+    if (locale === this.currentLocale) {
+      return;
     }
 
-    if (!this.domain[locale].company) {
-      this.domain[locale].company = {
-        name: '',
-        slogan: '',
-        description: '',
-        year: 2019
+    if (!this.domain.html[locale]) {
+      this.domain.html[locale] = {
+        website: {
+          title: '',
+          icon: '',
+          timezone: '',
+          active: true,
+          analytics: {
+            active: false,
+            code: ''
+          },
+          meta: [{
+              type: 'name',
+              name: 'description',
+              content: '',
+            }, {
+              type: 'name',
+              name: 'keywords',
+              content: '',
+            }, {
+              type: 'name',
+              name: 'author',
+              content: '',
+          }]
+        },
+        company: {
+          name: '',
+          slogan: '',
+          description: '',
+          logo: '',
+          year: 2019,
+          termsOfService: '',
+          termsOfSales: '',
+          privacyPolicy: '',
+          faq: '',
+        },
+        location: [{
+          address: '',
+          region: '',
+          zipcode: '',
+          city: '',
+          country: '',
+          longitude: '',
+          latitude: '',
+          phone: '',
+          email: ''
+        }],
+        network: {
+          github: '',
+          facebook: '',
+          twitter: '',
+          linkedin: '',
+          youtube: '',
+          instagram: '',
+          wechat: '',
+          weibo: '',
+          douyin: '',
+          vkontakte: '',
+          odnoKlassniki: '',
+          telegram: '',
+          whatsapp: '',
+        },
+        pages: [{
+          menuTitle: '',
+          shownInMenu: true,
+          isLink: false,
+          linkUrl: '',
+          divId: '',
+          label: '',
+          body: '',
+          backgroundOpacity: 100,
+          height: '',
+          backgroundImage: ''
+        }],
+        theme: {
+          js: {
+            value: '',
+            links: [
+              { link: '//code.jquery.com/jquery-3.3.1.slim.min.js' },
+              { link: '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' },
+              { link: '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' },
+              { link: '//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js' },
+              { link: '//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js' },
+            ]
+          },
+          css: {
+            value: '',
+            links: [
+              { link: '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'},
+            ]
+          }
+        }
       };
     }
 
     this.currentLocale = locale;
   }
+
 
   openDomainUpdateModal() {
     this.modalActionService.open('domainUpdate', {

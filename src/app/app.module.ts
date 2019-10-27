@@ -93,6 +93,7 @@ import { WebUpdateComponent } from './account/web/web-update/web-update.componen
 import { DomainCreateComponent } from './_/components/modal-action/form/domain-create/domain-create.component';
 import { WebDetailsComponent } from './account/web/web-details/web-details.component';
 import { DomainUpdateComponent } from './_/components/modal-action/form/domain-update/domain-update.component';
+import { DomainChangeOwnerComponent } from './_/components/modal-action/form/domain-change-owner/domain-change-owner.component';
 
 export function newNgTranslate(http: Http) {
   return new NgTranslate(http, '../../assets/public/locale');
@@ -150,6 +151,7 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     DomainCreateComponent,
     WebDetailsComponent,
     DomainUpdateComponent,
+    DomainChangeOwnerComponent,
   ],
   entryComponents: [
     QrCodeScanComponent,
@@ -169,7 +171,8 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     ProfileResetComponent,
     TransferDetailsComponent,
     DomainCreateComponent,
-    DomainUpdateComponent
+    DomainUpdateComponent,
+    DomainChangeOwnerComponent,
   ],
   imports: [
     BrowserModule,

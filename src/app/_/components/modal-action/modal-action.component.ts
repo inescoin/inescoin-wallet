@@ -24,6 +24,7 @@ import { AccountCreateComponent } from './form/account-create/account-create.com
 import { AccountImportComponent } from './form/account-import/account-import.component';
 import { DomainCreateComponent } from './form/domain-create/domain-create.component';
 import { DomainUpdateComponent } from './form/domain-update/domain-update.component';
+import { DomainChangeOwnerComponent } from './form/domain-change-owner/domain-change-owner.component';
 import { NodeAddComponent } from './form/node-add/node-add.component';
 import { NodeEditComponent } from './form/node-edit/node-edit.component';
 import { NodeRemoveComponent } from './form/node-remove/node-remove.component';
@@ -82,6 +83,9 @@ export class ModalActionComponent implements OnInit, OnDestroy {
         break;
       case "domainUpdate":
         this.modalService.open(DomainUpdateComponent, data.option || {});
+        break;
+      case "domainChangeOwner":
+        this.modalService.open(DomainChangeOwnerComponent, data.option || {});
         break;
       case "accountCreate":
         this.modalService.open(AccountCreateComponent, data.option || {});

@@ -38,7 +38,7 @@ export class WebComponent implements OnInit {
   }
 
   openWebRoute(domain) {
-    this.router.navigate(['web', domain.hash]);
+    this.router.navigate(['domain', domain.hash]);
   }
 
   getWalletAdressesInfos() {

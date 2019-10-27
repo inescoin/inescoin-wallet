@@ -1,9 +1,9 @@
 <div class="modal-header">
-  <h4 class="modal-title"><fa-icon icon="edit"></fa-icon> {{ '#Update a domain' | dgTranslate }}</h4>
+  <h4 class="modal-title"><fa-icon icon="exchange-alt"></fa-icon> {{ '#Change owner domain' | dgTranslate }}</h4>
   <button type="button" class="close" aria-label="Close" (click)="dismiss()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-	<app-web-update></app-web-update>
+	<app-web-create [actionType]="'changeOwner'"></app-web-create>
 </div>

@@ -140,7 +140,7 @@ export class WebUpdateComponent implements OnInit {
     }
   }
 
-  createDomain() {
+  updateDomain() {
     this.send();
   }
 

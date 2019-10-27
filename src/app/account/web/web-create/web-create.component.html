@@ -1,6 +1,6 @@
 <div *ngIf="!isSummaryStep">
-	<h6>{{ '#Owner' | dgTranslate }}</h6>
-	<div class="form-group" *ngIf="actionType === 'create'">
+	<h6>{{ '#From' | dgTranslate }}</h6>
+	<div class="form-group" *ngIf="actionType === 'create' || actionType === 'renew'">
 		<select class="form-control" [(ngModel)]="from" (change)="onFromChange($event)">
 			<option value="">
 		      -
@@ -11,22 +11,48 @@
 		</select>
 	</div>
 
-	<div class="form-group" *ngIf="actionType === 'delete' || actionType === 'renew'">
+	<div class="form-group" *ngIf="actionType === 'delete' || actionType === 'changeOwner'">
 		{{ modalOptions.from }}
 	</div>
 	<hr />
 
-	<h6>{{ '#Name' | dgTranslate }} <small>({{ '#Alphanumeric' | dgTranslate }})</small></h6>
+	<h6>
+		<span class="pull-right" *ngIf="actionType === 'delete' || actionType === 'renew' || actionType === 'changeOwner'">
+			{{ modalOptions.url }}
+		</span>
+		{{ '#Name' | dgTranslate }} <small *ngIf="actionType === 'create'">({{ '#Alphanumeric' | dgTranslate }})</small>
+	</h6>
 	<div class="form-group" *ngIf="actionType === 'create'">
 		<input type="text" class="form-control" maxlength="70" [(ngModel)]="domain.name">
 	</div>
 
-	<div class="form-group" *ngIf="actionType === 'delete' || actionType === 'renew'">
-		{{ modalOptions.url }}
+	<div *ngIf="actionType === 'changeOwner'">
+		<hr />
+		<h6>{{ '#New Owner' | dgTranslate }}</h6>
+		<div class="row">
+			<div class="col-md-6">
+				<button class="pull-right" (click)="openModal('qrCodeScan', { index: i , component: 'wallet-create'})">QrCode <fa-icon icon="qrcode"></fa-icon></button>
+				<label>{{ '#Address' | dgTranslate }}</label>
+				<input [(ngModel)]="domain.newOwnerAddress"
+					   [typeahead]="contacts"
+					   [typeaheadMinLength]="0"
+					   [typeaheadScrollable]="true"
+   				   [typeaheadOptionsInScrollableView]="100"
+   				   (typeaheadOnSelect)="onSelectOwner($event, i)"
+					   typeaheadScrollable="true"
+					   typeaheadOptionField="value"
+					   autocomplete="off"
+					   class="form-control" placeholder="0x...">
+			</div>
+			<div class="col-md-6">
+				<label>{{ '#Public Key' | dgTranslate }}</label>
+			  	<input type="text" [(ngModel)]="domain.newOwnerPublicKey" class="form-control">
+			</div>
+		</div>
 	</div>
 	<hr />
 
-	<div class="row text-center" *ngIf="actionType === 'renew' || actionType === 'create'">
+	<div class="row text-center" *ngIf="actionType === 'renew' || actionType === 'create' || actionType === 'changeOwner'">
 		<div class="col">
 			<label>
 				<input type="radio" [(ngModel)]="amount" [value]="amountMonth" name="quantity">
@@ -57,9 +83,12 @@
 		</div>
 	</div>
 	<hr />
-	<button class="btn btn-success" [disabled]="!this.from || !isAlphaNum(domain.name) || (!domain.name || domain.name.length <7 || domain.name.length > 70)" *ngIf="actionType === 'create'" (click)="next()">{{ '#Create domain' | dgTranslate }}</button>
-	<button class="btn btn-success" *ngIf="actionType === 'renew'" (click)="next()">{{ '#Renew domain' | dgTranslate }}</button>
-	<button class="btn btn-success" *ngIf="actionType === 'delete'" (click)="next()">{{ '#Delete domain' | dgTranslate }}</button>
+	<div class="text-center">
+		<button class="btn btn-success" [disabled]="!this.from || !isAlphaNum(domain.name) || (!domain.name || domain.name.length <7 || domain.name.length > 70)" *ngIf="actionType === 'create'" (click)="next()">{{ '#Create domain' | dgTranslate }}</button>
+		<button class="btn btn-success" *ngIf="actionType === 'renew'" (click)="next()">{{ '#Renew domain' | dgTranslate }}</button>
+		<button class="btn btn-success" *ngIf="actionType === 'delete'" (click)="next()">{{ '#Delete domain' | dgTranslate }}</button>
+		<button class="btn btn-success" [disabled]="!domain.newOwnerAddress || !domain.newOwnerPublicKey" *ngIf="actionType === 'changeOwner'" (click)="next()">{{ '#Change owner' | dgTranslate }}</button>
+	</div>
 </div>
 
 <div *ngIf="isSummaryStep">
@@ -79,10 +108,34 @@
 		</div>
 		<div class="card-body">
 			<p>{{ '#Name' | dgTranslate }}: <b>{{ domain.name }}</b></p>
+			<p *ngIf="domain.newOwnerAddress">{{ '#New owner address' | dgTranslate }}: <b>{{ domain.newOwnerAddress }}</b></p>
+			<p *ngIf="domain.newOwnerPublicKey">{{ '#New owner public key' | dgTranslate }}: <b>{{ domain.newOwnerPublicKey }}</b></p>
 		</div>
 	</div>
 
-
+	<div class="row text-center" *ngIf="actionType === 'renew' || actionType === 'create' || actionType === 'changeOwner'">
+		<div class="col">
+			<label>
+				<input type="radio" [(ngModel)]="amount" [value]="amountMonth" name="quantity">
+				<div class="amount-month-selection">{{ '#1 Month' | dgTranslate }}</div>
+				<div class="amount-month-selection">250,000 {{ '#Blocks' | dgTranslate }}</div>
+			</label>
+		</div>
+		<div class="col">
+			<label>
+				<input type="radio" [(ngModel)]="amount" [value]="amountThreeMonths" name="quantity">
+				<div class="amount-month-selection">{{ '#3 Months' | dgTranslate }}</div>
+				<div class="amount-month-selection">750,000 {{ '#Blocks' | dgTranslate }}</div>
+			</label>
+		</div>
+		<div class="col">
+			<label>
+				<input type="radio" [(ngModel)]="amount" [value]="amountSixMonths" name="quantity">
+				<div class="amount-month-selection">{{ '#6 Months' | dgTranslate }}</div>
+				<div class="amount-month-selection">1,500,000 {{ '#Blocks' | dgTranslate }}</div>
+			</label>
+		</div>
+	</div>
 
 	<div class="card">
 		<div class="card-body text-center">
@@ -92,6 +145,8 @@
 	</div>
 	<hr />
 
-	<button class="btn btn-light" [disabled]="inProgress || !this.from || !isAlphaNum(domain.name) || (!domain.name || domain.name.length <7 || domain.name.length > 70)" (click)="back()">{{ '#Retour' | dgTranslate }}</button>
-	<button class="btn btn-success ml-2" [disabled]="inProgress" (click)="createDomain()">{{ '#Send to node' | dgTranslate }}</button>
+	<div class="text-center">
+		<button class="btn btn-light" [disabled]="inProgress || !this.from || !isAlphaNum(domain.name) || (!domain.name || domain.name.length <7 || domain.name.length > 70)" (click)="back()">{{ '#Back' | dgTranslate }}</button>
+		<button class="btn btn-success ml-2" [disabled]="inProgress" (click)="createDomain()">{{ '#Send to node' | dgTranslate }}</button>
+	</div>
 </div>

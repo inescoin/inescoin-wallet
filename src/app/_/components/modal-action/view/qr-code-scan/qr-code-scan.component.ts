@@ -54,7 +54,7 @@ export class QrCodeScanComponent implements OnInit {
           result.wallet = jsonResult;
           result.index = this.modalActionService.options.index;
           break;
-        case "contacts-create":
+        default:
           result.contact = jsonResult;
           break;
       }
