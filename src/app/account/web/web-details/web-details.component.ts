@@ -117,6 +117,10 @@ export class WebDetailsComponent implements OnInit {
           css: {
             value: '',
             links: [
+              { link: '//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css'},
+              { link: '//fonts.googleapis.com/css?family=Merriweather+Sans:400,700'},
+              { link: '//fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic'},
+              { link: '//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css'},
               { link: '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'},
             ]
           }
