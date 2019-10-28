@@ -94,6 +94,8 @@ import { DomainCreateComponent } from './_/components/modal-action/form/domain-c
 import { WebDetailsComponent } from './account/web/web-details/web-details.component';
 import { DomainUpdateComponent } from './_/components/modal-action/form/domain-update/domain-update.component';
 import { DomainChangeOwnerComponent } from './_/components/modal-action/form/domain-change-owner/domain-change-owner.component';
+import { DomainAddLangueComponent } from './_/components/modal-action/form/domain-add-langue/domain-add-langue.component';
+import { DomainRemoveLangueComponent } from './_/components/modal-action/form/domain-remove-langue/domain-remove-langue.component';
 
 export function newNgTranslate(http: Http) {
   return new NgTranslate(http, '../../assets/public/locale');
@@ -152,6 +154,8 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     WebDetailsComponent,
     DomainUpdateComponent,
     DomainChangeOwnerComponent,
+    DomainAddLangueComponent,
+    DomainRemoveLangueComponent,
   ],
   entryComponents: [
     QrCodeScanComponent,
@@ -173,6 +177,8 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     DomainCreateComponent,
     DomainUpdateComponent,
     DomainChangeOwnerComponent,
+    DomainAddLangueComponent,
+    DomainRemoveLangueComponent
   ],
   imports: [
     BrowserModule,

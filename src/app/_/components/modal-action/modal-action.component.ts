@@ -25,6 +25,8 @@ import { AccountImportComponent } from './form/account-import/account-import.com
 import { DomainCreateComponent } from './form/domain-create/domain-create.component';
 import { DomainUpdateComponent } from './form/domain-update/domain-update.component';
 import { DomainChangeOwnerComponent } from './form/domain-change-owner/domain-change-owner.component';
+import { DomainAddLangueComponent } from './form/domain-add-langue/domain-add-langue.component';
+import { DomainRemoveLangueComponent } from './form/domain-remove-langue/domain-remove-langue.component';
 import { NodeAddComponent } from './form/node-add/node-add.component';
 import { NodeEditComponent } from './form/node-edit/node-edit.component';
 import { NodeRemoveComponent } from './form/node-remove/node-remove.component';
@@ -86,6 +88,12 @@ export class ModalActionComponent implements OnInit, OnDestroy {
         break;
       case "domainChangeOwner":
         this.modalService.open(DomainChangeOwnerComponent, data.option || {});
+        break;
+      case "domainAddLangue":
+        this.modalService.open(DomainAddLangueComponent, data.option || {});
+        break;
+      case "domainRemoveLangue":
+        this.modalService.open(DomainRemoveLangueComponent, data.option || {});
         break;
       case "accountCreate":
         this.modalService.open(AccountCreateComponent, data.option || {});

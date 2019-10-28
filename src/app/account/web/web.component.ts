@@ -1,3 +1,7 @@
+// Copyright 2019 The Inescoin developers.
+// - Mounir R'Quiba
+// Licensed under the GNU Affero General Public License, version 3.
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalActionService } from '../../_/components/modal-action/modal-action.service';

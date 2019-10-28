@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Add domain langue' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="form-group">
+		<label>{{ '#Key' | dgTranslate }} </label>
+		<input [(ngModel)]="newLangue.code" maxlength="8" autocomplete="off" type="text" class="form-control" placeholder="pl">
+	</div>
+	<hr />
+
+	<div class="form-group">
+		<label>{{ '#Label' | dgTranslate }} </label>
+		<input [(ngModel)]="newLangue.label" autocomplete="off" maxlength="30" type="text" class="form-control" placeholder="Polszczyzna">
+	</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" [disabled]="!newLangue.code || !newLangue.label || (newLangue.code && domain.html[newLangue.code])" (click)="add()">{{ '#Add' | dgTranslate }}</button>
+  <button type="button" class="btn btn-light" (click)="close()">{{ '#Close' | dgTranslate }}</button>
+</div>

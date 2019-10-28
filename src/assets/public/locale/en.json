@@ -173,5 +173,10 @@
 	"#Update domain": "Update domain",
 	"#Search a domain": "Search a domain",
 	"#Create a new domain": "Create a new domain",
-	"#Expired block": "Expired block"
+	"#Expired block": "Expired block",
+
+	"#Add domain langue": "Add domain langue",
+	"#Remove domain langue": "Remove domain langue",
+	"#Key": "Key"
+
 }

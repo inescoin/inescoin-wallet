@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+// Copyright 2019 The Inescoin developers.
+// - Mounir R'Quiba
+// Licensed under the GNU Affero General Public License, version 3.
+
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WebService } from '../web.service';
-import { ModalActionService } from '../../../_/components/modal-action/modal-action.service';
 import { DiffEditorModel } from 'ngx-monaco-editor';
 import { inescoinConfig } from '../../../config/inescoin.config';
+import { ModalActionService } from '../../../_/components/modal-action/modal-action.service';
 
 import * as _ from 'lodash';
 
@@ -20,11 +24,14 @@ export class WebDetailsComponent implements OnInit {
 
   inescoinConfig = inescoinConfig;
 
+  generatedLangues: string[] = [];
+
   data: any = {};
 
   domain: any = {
     html: {
       en: {
+        label: 'English',
         website: {
           title: '',
           icon: '',
@@ -123,6 +130,13 @@ export class WebDetailsComponent implements OnInit {
     ownerPublicKey: '',
   };
 
+  languages: any = [
+    {
+      code: 'fr',
+      label: 'Français'
+    }
+  ];
+
   tinymceConfig: any = {
     height: 250,
     // powerpaste advcode toc tinymcespellchecker a11ychecker mediaembed linkchecker help
@@ -131,6 +145,9 @@ export class WebDetailsComponent implements OnInit {
       "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
       "table directionality emoticons template paste"
     ],
+    extended_valid_elements:"style,link[href|rel]",
+    custom_elements:"style,link,~link",
+    valid_children : '+body[style]',
     toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
     imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
     content_css: [
@@ -138,10 +155,13 @@ export class WebDetailsComponent implements OnInit {
     ]
   };
 
+  subjects: any = {};
+
   constructor(
     private route: ActivatedRoute,
     private modalActionService: ModalActionService,
-    private webService: WebService
+    private webService: WebService,
+    private ref: ChangeDetectorRef
   	) { }
 
   ngOnInit() {
@@ -169,9 +189,52 @@ export class WebDetailsComponent implements OnInit {
         } catch(e) {}
 
         if (_domain) {
+          console.log('_domain', _domain);
           this.domain = Object.assign({}, this.domain, _domain);
         }
+
+        this.initGeneratedLangues();
     });
+
+    this.subjects.onDomainLangueAdded = this.webService.onDomainLangueAdded.subscribe((langue) => {
+      this.setCurrentLocale(langue.code, langue.label);
+      this.initGeneratedLangues();
+      this.ref.detectChanges();
+    });
+
+    this.subjects.onDomainLangueRemoved = this.webService.onDomainLangueRemoved.subscribe((removeCode) => {
+      let lgKeys = Object.keys(this.domain.html);
+
+      if (lgKeys.length > 1 && this.domain.html[removeCode]) {
+        delete this.domain.html[removeCode];
+        this.currentLocale = lgKeys[0];
+      }
+      this.initGeneratedLangues();
+      this.ref.detectChanges();
+    });
+
+    this.initGeneratedLangues();
+  }
+
+  ngOnDestroy() {
+    this.subjects.onDomainLangueRemoved && this.subjects.onDomainLangueRemoved.unsubscribe();
+    this.subjects.onDomainLangueAddUpdated && this.subjects.onDomainLangueAddUpdated.unsubscribe();
+  }
+
+  initGeneratedLangues() {
+    let langues = [];
+    for (let langue of Object.keys(this.domain.html)) {
+      if (this.domain.html[langue].label) {
+        langues.push({
+          code: langue,
+          label: this.domain.html[langue].label
+        })
+      }
+    }
+
+
+    this.generatedLangues = langues;
+    return langues;
   }
 
   openDomainRenewModal() {
@@ -211,7 +274,7 @@ export class WebDetailsComponent implements OnInit {
   }
 
   addPage() {
-    this.domain[this.currentLocale].pages.push({
+    this.domain.html[this.currentLocale].pages.push({
       menuTitle: '',
       shownInMenu: true,
       isLink: false,
@@ -226,11 +289,11 @@ export class WebDetailsComponent implements OnInit {
   }
 
   removePage(index) {
-    this.domain[this.currentLocale].pages.splice(index, 1)
+    this.domain.html[this.currentLocale].pages.splice(index, 1)
   }
 
   addLocation() {
-    this.domain[this.currentLocale].location.push({
+    this.domain.html[this.currentLocale].location.push({
       address: '',
       region: '',
       zipcode: '',
@@ -244,11 +307,11 @@ export class WebDetailsComponent implements OnInit {
   }
 
   removeLocation(index) {
-    this.domain[this.currentLocale].location.splice(index, 1)
+    this.domain.html[this.currentLocale].location.splice(index, 1)
   }
 
   addMeta() {
-    this.domain[this.currentLocale].website.meta.push({
+    this.domain.html[this.currentLocale].website.meta.push({
       type: 'name',
       name: '',
       content: '',
@@ -256,35 +319,35 @@ export class WebDetailsComponent implements OnInit {
   }
 
   removeMeta(index) {
-    this.domain[this.currentLocale].website.meta.splice(index, 1)
+    this.domain.html[this.currentLocale].website.meta.splice(index, 1)
   }
 
   addCssLink() {
-    this.domain[this.currentLocale].theme.css.links.push({
+    this.domain.html[this.currentLocale].theme.css.links.push({
       link: '',
     });
   }
 
   removeCssLink(index) {
-    this.domain[this.currentLocale].theme.css.links.splice(index, 1)
+    this.domain.html[this.currentLocale].theme.css.links.splice(index, 1)
   }
 
   addJsLink() {
-    this.domain[this.currentLocale].theme.js.links.push({
+    this.domain.html[this.currentLocale].theme.js.links.push({
       link: '',
     });
   }
 
   removeJsLink(index) {
-    this.domain[this.currentLocale].theme.js.links.splice(index, 1)
+    this.domain.html[this.currentLocale].theme.js.links.splice(index, 1)
   }
 
   addCategory() {
-    this.domain[this.currentLocale].categories.push({label:''});
+    this.domain.html[this.currentLocale].categories.push({label:''});
   }
 
   removeCategory(index) {
-    this.domain[this.currentLocale].categories.splice(index, 1)
+    this.domain.html[this.currentLocale].categories.splice(index, 1)
   }
 
   mapActive() {
@@ -300,11 +363,12 @@ export class WebDetailsComponent implements OnInit {
     });
   }
 
-  setCurrentLocale(locale) {
+  setCurrentLocale(locale, label?) {
     if (locale === this.currentLocale) {
       return;
     }
 
+    let current = _.clone(this.domain.html[this.currentLocale]);
     if (!this.domain.html[locale]) {
       this.domain.html[locale] = {
         website: {
@@ -398,17 +462,54 @@ export class WebDetailsComponent implements OnInit {
           }
         }
       };
+
+      // this.domain.html[locale].website.title = current.website.title;
+      // this.domain.html[locale].website.meta = current.website.meta;
+      // this.domain.html[locale].website.icon = current.website.icon;
+      // this.domain.html[locale].website.active = false;
+
+      // this.domain.html[locale].company = current.company;
+      // this.domain.html[locale].location = current.location;
+      // this.domain.html[locale].network = current.network;
+      // this.domain.html[locale].pages = current.pages;
+      // this.domain.html[locale].theme = current.theme;
+
+      this.domain.html[locale]
+    }
+
+    if (label) {
+      this.domain.html[locale].label = label;
     }
 
     this.currentLocale = locale;
   }
 
+  setCurrentNewLocale(locale) {
+    this.currentLocale = locale;
+  }
 
   openDomainUpdateModal() {
     this.modalActionService.open('domainUpdate', {
       component: 'web',
       size: 'lg',
       domain: this.domain
+    });
+  }
+
+  openDomainAddLangueModal() {
+    this.modalActionService.open('domainAddLangue', {
+      component: 'web',
+      size: 'lg',
+      domain: this.domain
+    });
+  }
+
+  openDomainRemoveLangueModal() {
+    this.modalActionService.open('domainRemoveLangue', {
+      component: 'web',
+      size: 'lg',
+      domain: this.domain,
+      removeCode: this.currentLocale
     });
   }
 

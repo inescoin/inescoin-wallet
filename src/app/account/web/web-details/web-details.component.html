@@ -4,7 +4,7 @@
 		<p>{{ domain.ownerAddress }}</p>
 	</div>
 	<div class="col-md-6 text-right">
-  	<a class="btn btn-light mr-4" [routerLink]="['/web']">
+  	<a class="btn btn-light mr-4" [routerLink]="['/domain']">
   		<fa-icon icon="arrow-circle-left"></fa-icon> {{ '#Back' | dgTranslate }}
   	</a>
 		<div ngbDropdown class="d-inline-block" placement="bottom-right">
@@ -18,26 +18,13 @@
 </div>
 
 <ul class="nav justify-content-center mb-4" *ngIf="domain.ownerAddress">
-  <li class="nav-item">
-    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'fr'" [class.btn-light]="currentLocale !== 'fr'" (click)="setCurrentLocale('fr')">Français</span>
+
+  <li class="nav-item" *ngFor="let lang of generatedLangues">
+    <button class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === lang.code" [class.btn-light]="currentLocale !== lang.code" (click)="setCurrentNewLocale(lang.code)">{{ lang.label }}</button>
   </li>
+
   <li class="nav-item">
-    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'en'" [class.btn-light]="currentLocale !== 'en'" (click)="setCurrentLocale('en')">English</span>
-  </li>
-  <li class="nav-item">
-    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'it'" [class.btn-light]="currentLocale !== 'it'" (click)="setCurrentLocale('it')">Italiano</span>
-  </li>
-  <li class="nav-item">
-    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'es'" [class.btn-light]="currentLocale !== 'es'" (click)="setCurrentLocale('es')">Español</span>
-  </li>
-  <li class="nav-item">
-    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'jp'" [class.btn-light]="currentLocale !== 'jp'" (click)="setCurrentLocale('jp')">中国</span>
-  </li>
-  <li class="nav-item">
-    <span class="nav-link btn mr-2" [class.btn-secondary]="currentLocale === 'ru'" [class.btn-light]="currentLocale !== 'ru'" (click)="setCurrentLocale('ru')">русский</span>
-  </li>
-  <li class="nav-item">
-    <span class="nav-link btn" [class.btn-secondary]="currentLocale === 'cn'" [class.btn-light]="currentLocale !== 'cn'" (click)="setCurrentLocale('cn')">日本の</span>
+  	<button class="btn btn-light" (click)="openDomainAddLangueModal()"><i class="fa fa-plus"></i> {{ '#Add' | dgTranslate }}</button>
   </li>
 </ul>
 
@@ -48,8 +35,11 @@
     	<div class="p-2 mt-4">
 				<div class="card">
     			<div class="card-header">
-    				{{ '#Website' | dgTranslate }}
-    				<span class="pull-right">{{ '#Active' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="domain.html[currentLocale].website.active"></ui-switch></span>
+    				{{ '#Website' | dgTranslate }} {{ '#Active' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="domain.html[currentLocale].website.active"></ui-switch>
+    				<span class="pull-right">
+
+    					<button class="badge badge-danger" *ngIf="generatedLangues.length > 1" (click)="openDomainRemoveLangueModal()"><i class="fa fa-close"></i></button>
+    				</span>
     			</div>
     			<div class="card-body">
     				<div class="row">
@@ -456,6 +446,14 @@
     			<button class="btn btn-light" (click)="addLocation()"><fa-icon icon="plus"></fa-icon> {{ '#Add' | dgTranslate }}</button>
 	    	</div>
     	</div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab>
+    <ng-template ngbTabTitle><fa-icon icon="code"></fa-icon> JSON</ng-template>
+    <ng-template ngbTabContent>
+    	<div class="p-2 mt-4">
+	    	<pre>{{ domain.html[currentLocale] | json }}</pre>
+	    </div>
     </ng-template>
   </ngb-tab>
 </ngb-tabset>

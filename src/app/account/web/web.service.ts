@@ -2,7 +2,7 @@
 // - Mounir R'Quiba
 // Licensed under the GNU Affero General Public License, version 3.
 
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { CryptoJsService } from '../../_/services/crypto/crypto-js.service';
 import { HttpService } from '../../_/services/http/http.service';
 
@@ -14,6 +14,9 @@ import { saveAs } from 'file-saver';
 })
 export class WebService {
   domain = {};
+
+  onDomainLangueAdded = new EventEmitter();
+  onDomainLangueRemoved = new EventEmitter();
 
   constructor(
     private cryptoJsService: CryptoJsService,
