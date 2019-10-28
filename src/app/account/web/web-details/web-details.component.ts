@@ -5,7 +5,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WebService } from '../web.service';
-import { DiffEditorModel } from 'ngx-monaco-editor';
 import { inescoinConfig } from '../../../config/inescoin.config';
 import { ModalActionService } from '../../../_/components/modal-action/modal-action.service';
 
@@ -108,9 +107,9 @@ export class WebDetailsComponent implements OnInit {
           js: {
             value: '',
             links: [
-              { link: '//code.jquery.com/jquery-3.3.1.slim.min.js' },
-              { link: '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' },
+              { link: '//code.jquery.com/jquery-3.3.1.min.js' },
               { link: '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' },
+              { link: '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' },
               { link: '//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js' },
               { link: '//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js' },
             ]

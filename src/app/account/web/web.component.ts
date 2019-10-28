@@ -14,7 +14,7 @@ import { WalletService } from '../wallet/wallet.service';
   styleUrls: ['./web.component.scss']
 })
 export class WebComponent implements OnInit {
-  domainList = {};
+  domainList = [];
   wallet = {};
 
   constructor(
