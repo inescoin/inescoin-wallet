@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
 })
 export class WebService {
   domain = {};
+  website = {};
 
   onDomainLangueAdded = new EventEmitter();
   onDomainLangueRemoved = new EventEmitter();
@@ -34,10 +35,23 @@ export class WebService {
     localStorage.setItem(inescoinConfig.name + '-domain', JSON.stringify(this.domain))
   }
 
+  saveWebsiteToStorage(url, website) {
+    localStorage.setItem(inescoinConfig.name + '-domain-website-' + url, JSON.stringify(website))
+  }
+
   getFromStorage() {
     let domain = localStorage.getItem(inescoinConfig.name + '-domain');
     if (domain) {
       return JSON.parse(domain);
+    }
+
+    return {};
+  }
+
+  getWebsiteFromStorage(url) {
+    let website = localStorage.getItem(inescoinConfig.name + '-domain-website-' + url);
+    if (website) {
+      return JSON.parse(website);
     }
 
     return {};

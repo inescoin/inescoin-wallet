@@ -15,6 +15,13 @@
 		<label>{{ '#Label' | dgTranslate }} </label>
 		<input [(ngModel)]="newLangue.label" autocomplete="off" maxlength="30" type="text" class="form-control" placeholder="Polszczyzna">
 	</div>
+
+	<div class="form-group">
+		<label>{{ '#From' | dgTranslate }} </label>
+		<select [(ngModel)]="newLangue.from" class="form-control">
+			<option *ngFor="let langue of langues" value="{{ langue.code }}">{{ langue.label }}</option>
+		</select>
+	</div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-success" [disabled]="!newLangue.code || !newLangue.label || (newLangue.code && domain.html[newLangue.code])" (click)="add()">{{ '#Add' | dgTranslate }}</button>

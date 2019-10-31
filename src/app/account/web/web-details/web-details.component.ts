@@ -25,6 +25,8 @@ export class WebDetailsComponent implements OnInit {
 
   generatedLangues: string[] = [];
 
+  currentWebsite: any = {};
+
   data: any = {};
 
   domain: any = {
@@ -133,12 +135,7 @@ export class WebDetailsComponent implements OnInit {
     ownerPublicKey: '',
   };
 
-  languages: any = [
-    {
-      code: 'fr',
-      label: 'Français'
-    }
-  ];
+  isLoading: boolean = true;
 
   tinymceConfig: any = {
     height: 250,
@@ -148,6 +145,8 @@ export class WebDetailsComponent implements OnInit {
       "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
       "table directionality emoticons template paste"
     ],
+    remove_script_host : 0,
+    convert_urls : 0,
     extended_valid_elements:"style,link[href|rel]",
     custom_elements:"style,link,~link",
     valid_children : '+body[style]',
@@ -169,7 +168,7 @@ export class WebDetailsComponent implements OnInit {
 
   ngOnInit() {
   	this.hash = this.route.snapshot.params['hash'];
-  	this.domainList = this.webService.getFromStorage();
+    this.domainList = this.webService.getFromStorage();
 
   	let domain = _.find(this.domainList, {
   		hash: this.hash
@@ -177,7 +176,10 @@ export class WebDetailsComponent implements OnInit {
 
   	if (domain) {
   		this.domain = Object.assign({}, this.domain, domain);
+      this.currentWebsite = this.webService.getWebsiteFromStorage(domain.url);
   	}
+
+    this.loadFromToStorage();
 
     let wallets = this._getFromCache();
     if (wallets && wallets[this.domain.ownerAddress]) {
@@ -192,16 +194,15 @@ export class WebDetailsComponent implements OnInit {
         } catch(e) {}
 
         if (_domain) {
-          console.log('_domain', _domain);
           this.domain = Object.assign({}, this.domain, _domain);
         }
 
-        this.initGeneratedLangues();
+        this._initGeneratedLangues();
     });
 
     this.subjects.onDomainLangueAdded = this.webService.onDomainLangueAdded.subscribe((langue) => {
-      this.setCurrentLocale(langue.code, langue.label);
-      this.initGeneratedLangues();
+      this.setCurrentLocale(langue.code, langue.label, langue.from);
+      this._initGeneratedLangues();
       this.ref.detectChanges();
     });
 
@@ -212,11 +213,12 @@ export class WebDetailsComponent implements OnInit {
         delete this.domain.html[removeCode];
         this.currentLocale = lgKeys[0];
       }
-      this.initGeneratedLangues();
+      this._initGeneratedLangues();
       this.ref.detectChanges();
     });
 
-    this.initGeneratedLangues();
+    this._initGeneratedLangues();
+    this.isLoading = false;
   }
 
   ngOnDestroy() {
@@ -224,7 +226,7 @@ export class WebDetailsComponent implements OnInit {
     this.subjects.onDomainLangueAddUpdated && this.subjects.onDomainLangueAddUpdated.unsubscribe();
   }
 
-  initGeneratedLangues() {
+  private _initGeneratedLangues() {
     let langues = [];
     for (let langue of Object.keys(this.domain.html)) {
       if (this.domain.html[langue].label) {
@@ -234,7 +236,6 @@ export class WebDetailsComponent implements OnInit {
         })
       }
     }
-
 
     this.generatedLangues = langues;
     return langues;
@@ -366,118 +367,16 @@ export class WebDetailsComponent implements OnInit {
     });
   }
 
-  setCurrentLocale(locale, label?) {
+  setCurrentLocale(locale, label?, fromLocale?) {
     if (locale === this.currentLocale) {
       return;
     }
 
-    let current = _.clone(this.domain.html[this.currentLocale]);
+    fromLocale = fromLocale ? fromLocale : this.currentLocale;
+
     if (!this.domain.html[locale]) {
-      this.domain.html[locale] = {
-        website: {
-          title: '',
-          icon: '',
-          timezone: '',
-          active: true,
-          analytics: {
-            active: false,
-            code: ''
-          },
-          meta: [{
-              type: 'name',
-              name: 'description',
-              content: '',
-            }, {
-              type: 'name',
-              name: 'keywords',
-              content: '',
-            }, {
-              type: 'name',
-              name: 'author',
-              content: '',
-          }]
-        },
-        company: {
-          name: '',
-          slogan: '',
-          description: '',
-          logo: '',
-          year: 2019,
-          termsOfService: '',
-          termsOfSales: '',
-          privacyPolicy: '',
-          faq: '',
-        },
-        location: [{
-          address: '',
-          region: '',
-          zipcode: '',
-          city: '',
-          country: '',
-          longitude: '',
-          latitude: '',
-          phone: '',
-          email: ''
-        }],
-        network: {
-          github: '',
-          facebook: '',
-          twitter: '',
-          linkedin: '',
-          youtube: '',
-          instagram: '',
-          wechat: '',
-          weibo: '',
-          douyin: '',
-          vkontakte: '',
-          odnoKlassniki: '',
-          telegram: '',
-          whatsapp: '',
-        },
-        pages: [{
-          menuTitle: '',
-          shownInMenu: true,
-          isLink: false,
-          linkUrl: '',
-          divId: '',
-          label: '',
-          body: '',
-          backgroundOpacity: 100,
-          height: '',
-          backgroundImage: ''
-        }],
-        theme: {
-          js: {
-            value: '',
-            links: [
-              { link: '//code.jquery.com/jquery-3.3.1.slim.min.js' },
-              { link: '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' },
-              { link: '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' },
-              { link: '//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js' },
-              { link: '//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js' },
-            ]
-          },
-          css: {
-            value: '',
-            links: [
-              { link: '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'},
-            ]
-          }
-        }
-      };
-
-      // this.domain.html[locale].website.title = current.website.title;
-      // this.domain.html[locale].website.meta = current.website.meta;
-      // this.domain.html[locale].website.icon = current.website.icon;
-      // this.domain.html[locale].website.active = false;
-
-      // this.domain.html[locale].company = current.company;
-      // this.domain.html[locale].location = current.location;
-      // this.domain.html[locale].network = current.network;
-      // this.domain.html[locale].pages = current.pages;
-      // this.domain.html[locale].theme = current.theme;
-
-      this.domain.html[locale]
+      this.domain.html[locale] = this._clone(this.domain.html[fromLocale]);
+      this.domain.html[locale].website.active = false;
     }
 
     if (label) {
@@ -485,10 +384,7 @@ export class WebDetailsComponent implements OnInit {
     }
 
     this.currentLocale = locale;
-  }
-
-  setCurrentNewLocale(locale) {
-    this.currentLocale = locale;
+    this.ref.detectChanges();
   }
 
   openDomainUpdateModal() {
@@ -516,6 +412,16 @@ export class WebDetailsComponent implements OnInit {
     });
   }
 
+  saveWebsiteToStorage() {
+    this.webService.saveWebsiteToStorage(this.domain.url, this.domain.html);
+  }
+
+  loadFromToStorage() {
+    let html = this.webService.getWebsiteFromStorage(this.domain.url);
+    this.domain.html = html;
+    this._initGeneratedLangues();
+  }
+
   private _getFromCache() {
     let wallets = localStorage.getItem(inescoinConfig.name + '-wallets');
     if (!wallets) {
@@ -532,5 +438,9 @@ export class WebDetailsComponent implements OnInit {
     } else {
       return JSON.parse(wallets);
     }
+  }
+
+  private _clone(source) {
+    return _.cloneDeep(JSON.parse(JSON.stringify(source)));
   }
 }
