@@ -405,7 +405,6 @@ export class WebDetailsComponent implements OnInit {
   openDomainUpdateModal() {
     this.diffModel = this.deepDiffMapperService.difference(this.domain.html, this.remoteDomain.html);
 
-    console.log('this.diffModel', this.diffModel);
     this.modalActionService.open('domainUpdate', {
       component: 'web',
       size: 'lg',
@@ -434,7 +433,6 @@ export class WebDetailsComponent implements OnInit {
   saveAsDraft() {
     this.saveWebsiteToStorage();
     this.diffModel = this.deepDiffMapperService.difference(this.currentWebsite, this.domain.html);
-    console.log('this.diffModel', this.diffModel);
   }
 
   saveWebsiteToStorage() {
@@ -452,17 +450,14 @@ export class WebDetailsComponent implements OnInit {
     let html = this.webService.getWebsiteFromStorage(this.domain.url);
     this.domain.html = html;
     this.diffModel = this.deepDiffMapperService.difference(this.domain.html, copy);
-    console.log('this.diffModel', this.diffModel);
     this._initGeneratedLangues();
   }
 
   toBase64() {
     let encoded: any;
     try {
-      console.log('encoded', encoded);
       encoded = btoa(JSON.stringify(this.domain.html));
     } catch(e) {
-      console.log('encoded error', encoded);
       return '';
     }
 
@@ -473,7 +468,6 @@ export class WebDetailsComponent implements OnInit {
     let decoded: any;
     try {
       let aData = atob(data);
-      console.log('aData', aData);
       decoded = JSON.parse(aData);
     } catch(e) {
     }
@@ -491,7 +485,6 @@ export class WebDetailsComponent implements OnInit {
       this.b64Model = this.toBase64();
     }
 
-    console.log('decodedModel', decodedModel);
   }
 
   private _getFromCache() {
