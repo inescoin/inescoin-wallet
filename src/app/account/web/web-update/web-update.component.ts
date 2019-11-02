@@ -8,6 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DoorgetsTranslateService } from 'doorgets-ng-translate';
 
+import { WebService } from '..//web.service';
 import { WalletService } from '../../wallet/wallet.service';
 import { TransactionService } from '../../../_/services/transaction.service';
 import { inescoinConfig } from '../../../config/inescoin.config';
@@ -38,6 +39,7 @@ export class WebUpdateComponent implements OnInit {
     data: {}
   };
 
+  diffModel = {};
   addresses = {};
   inescoinConfig: any = inescoinConfig;
 
@@ -59,6 +61,7 @@ export class WebUpdateComponent implements OnInit {
   subjects: any = {};
 
   constructor(
+    private webService: WebService,
     private router: Router,
     private toastrService: ToastrService,
     private modalActionService: ModalActionService,
@@ -76,6 +79,7 @@ export class WebUpdateComponent implements OnInit {
 
     this.domain.name = this.modalActionService.options.domain.url;
     this.domain.data = this.modalActionService.options.domain;
+    this.diffModel = this.modalActionService.options.diff;
 
     let wallets = this._getFromCache();
     if (wallets && wallets[this.from]) {
@@ -186,6 +190,6 @@ export class WebUpdateComponent implements OnInit {
   }
 
   back() {
-    this.isSummaryStep = false;
+    this.ngbActiveModal.dismiss();
   }
 }

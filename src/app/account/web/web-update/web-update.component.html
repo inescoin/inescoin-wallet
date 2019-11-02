@@ -10,8 +10,22 @@
   <div class="alert alert-danger" *ngIf="badPassword">{{ '#Bad password' | dgTranslate }}</div>
 
   <div class="card mb-4">
+    <div class="card-header">
+      {{ '#Domain' | dgTranslate }} : <span class="badge badge-primary float-right">{{ domain.name }}</span>
+    </div>
     <div class="card-body">
-      {{ '#Domain' | dgTranslate }} : {{ domain.name }}
+      <h4>{{ '#Difference' | dgTranslate }} </h4>
+      <hr />
+      <ngx-json-viewer [json]="diffModel" [expanded]="false"></ngx-json-viewer>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      {{ '#Website' | dgTranslate }}
+    </div>
+    <div class="card-body">
+      <ngx-json-viewer [json]="domain.data" [expanded]="false"></ngx-json-viewer>
     </div>
   </div>
 
@@ -23,7 +37,7 @@
   </div>
   <hr />
   <div class="text-center">
-    <button class="btn btn-light" [disabled]="inProgress" (click)="back()">{{ '#Back' | dgTranslate }}</button>
+    <button class="btn btn-light" [disabled]="inProgress" (click)="back()">{{ '#Cancel' | dgTranslate }}</button>
     <button class="btn btn-success ml-2" [disabled]="inProgress" (click)="updateDomain()">{{ '#Update domain' | dgTranslate }}</button>
   </div>
 </div>

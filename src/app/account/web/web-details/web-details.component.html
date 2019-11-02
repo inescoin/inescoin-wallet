@@ -6,7 +6,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading && domain.html && domain.html[currentLocale]">
 	<div class="row mb-3" *ngIf="domain.ownerAddress">
 		<div class="col-md-6 text">
 			<h2><fa-icon icon="globe"></fa-icon> {{ domain.url }}</h2>
@@ -458,17 +458,52 @@
 	    </ng-template>
 	  </ngb-tab>
 	  <ngb-tab>
+	    <ng-template ngbTabTitle><fa-icon icon="code"></fa-icon> Base64</ng-template>
+	    <ng-template ngbTabContent>
+	    	<div class="p-2 mt-4 form-group">
+		    	<textarea class="form-control b64-model" [(ngModel)]="b64Model"></textarea>
+					<div class="text-center mt-4s">
+						<button class="btn btn-light mt-4 mr-2" (click)="updateModelFromB64()">{{ '#Update' | dgTranslate }}</button>
+					</div>
+		    </div>
+	    </ng-template>
+	  </ngb-tab>
+	  <ngb-tab>
 	    <ng-template ngbTabTitle><fa-icon icon="code"></fa-icon> JSON</ng-template>
 	    <ng-template ngbTabContent>
 	    	<div class="p-2 mt-4">
-		    	<pre>{{ domain.html[currentLocale] | json }}</pre>
+	    		<div class="row">
+	    			<div class="col-md-6">
+	    				<div class="card">
+			    			<div class="card-header">
+			    				{{ '#Model' | dgTranslate }}
+			    			</div>
+			    			<div class="card-body">
+			    				<ngx-json-viewer [json]="domain.html" [expanded]="false"></ngx-json-viewer>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<div class="col-md-6">
+	    				<div class="card">
+			    			<div class="card-header">
+			    				{{ '#Difference' | dgTranslate }}
+			    			</div>
+			    			<div class="card-body">
+			    				<ngx-json-viewer [json]="diffModel" [expanded]="false"></ngx-json-viewer>
+			    			</div>
+			    		</div>
+			    	</div>
+	    		</div>
 		    </div>
 	    </ng-template>
 	  </ngb-tab>
 	</ngb-tabset>
 
 	<div class="text-center mt-4 mb-4" *ngIf="domain.ownerAddress">
-		<button class="btn btn-primary mt-4" (click)="openDomainUpdateModal()">{{ '#Save' | dgTranslate }}</button>
+		<button class="btn btn-primary mt-4 mr-2" (click)="openDomainUpdateModal()">{{ '#Save' | dgTranslate }}</button>
+		<button class="btn btn-light mt-4 mr-2" (click)="saveAsDraft()">{{ '#Save as draft' | dgTranslate }}</button>
+		<button class="btn btn-light mt-4 mr-2" (click)="loadFromStorage()">{{ '#Load last draft' | dgTranslate }}</button>
+		<button class="btn btn-danger mt-4" (click)="reset()">{{ '#Reset' | dgTranslate }}</button>
 	</div>
 
 </div>

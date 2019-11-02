@@ -55,6 +55,7 @@
     "ngx-bootstrap": "^5.1.0",
     "ngx-color-picker": "^8.2.0",
     "ngx-filesaver": "^8.0.0",
+    "ngx-json-viewer": "^2.4.0",
     "ngx-qrcode2": "0.0.9",
     "ngx-socket-io": "^2.1.1",
     "ngx-tinymce": "^7.0.0",

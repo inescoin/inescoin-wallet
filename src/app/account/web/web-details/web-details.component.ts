@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WebService } from '../web.service';
 import { inescoinConfig } from '../../../config/inescoin.config';
 import { ModalActionService } from '../../../_/components/modal-action/modal-action.service';
+import { DeepDiffMapperService } from '../../../_/services/deep-diff-mapper.service';
 
 import * as _ from 'lodash';
 
@@ -29,6 +30,7 @@ export class WebDetailsComponent implements OnInit {
 
   data: any = {};
 
+  remoteDomain = {};
   domain: any = {
     html: {
       en: {
@@ -135,6 +137,10 @@ export class WebDetailsComponent implements OnInit {
     ownerPublicKey: '',
   };
 
+
+  diffModel: any = {};
+  b64Model: string = '';
+
   isLoading: boolean = true;
 
   tinymceConfig: any = {
@@ -163,7 +169,8 @@ export class WebDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private modalActionService: ModalActionService,
     private webService: WebService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private deepDiffMapperService: DeepDiffMapperService
   	) { }
 
   ngOnInit() {
@@ -179,7 +186,7 @@ export class WebDetailsComponent implements OnInit {
       this.currentWebsite = this.webService.getWebsiteFromStorage(domain.url);
   	}
 
-    this.loadFromToStorage();
+    this.loadFromStorage();
 
     let wallets = this._getFromCache();
     if (wallets && wallets[this.domain.ownerAddress]) {
@@ -195,13 +202,17 @@ export class WebDetailsComponent implements OnInit {
 
         if (_domain) {
           this.domain = Object.assign({}, this.domain, _domain);
+          this.remoteDomain = this._clone(_domain);
         }
 
+        this.loadFromStorage();
         this._initGeneratedLangues();
     });
 
     this.subjects.onDomainLangueAdded = this.webService.onDomainLangueAdded.subscribe((langue) => {
       this.setCurrentLocale(langue.code, langue.label, langue.from);
+
+      this.saveWebsiteToStorage();
       this._initGeneratedLangues();
       this.ref.detectChanges();
     });
@@ -213,6 +224,8 @@ export class WebDetailsComponent implements OnInit {
         delete this.domain.html[removeCode];
         this.currentLocale = lgKeys[0];
       }
+
+      this.saveWebsiteToStorage();
       this._initGeneratedLangues();
       this.ref.detectChanges();
     });
@@ -227,6 +240,8 @@ export class WebDetailsComponent implements OnInit {
   }
 
   private _initGeneratedLangues() {
+    this.b64Model = this.toBase64(this.domain.html);
+
     let langues = [];
     for (let langue of Object.keys(this.domain.html)) {
       if (this.domain.html[langue].label) {
@@ -388,10 +403,14 @@ export class WebDetailsComponent implements OnInit {
   }
 
   openDomainUpdateModal() {
+    this.diffModel = this.deepDiffMapperService.difference(this.domain.html, this.remoteDomain.html);
+
+    console.log('this.diffModel', this.diffModel);
     this.modalActionService.open('domainUpdate', {
       component: 'web',
       size: 'lg',
-      domain: this.domain
+      domain: this.domain,
+      diff: this.diffModel
     });
   }
 
@@ -412,14 +431,67 @@ export class WebDetailsComponent implements OnInit {
     });
   }
 
+  saveAsDraft() {
+    this.saveWebsiteToStorage();
+    this.diffModel = this.deepDiffMapperService.difference(this.currentWebsite, this.domain.html);
+    console.log('this.diffModel', this.diffModel);
+  }
+
   saveWebsiteToStorage() {
     this.webService.saveWebsiteToStorage(this.domain.url, this.domain.html);
   }
 
-  loadFromToStorage() {
+  reset() {
+    this.domain = this._clone(this.remoteDomain);
+    this.diffModel = {};
+    this._initGeneratedLangues();
+  }
+
+  loadFromStorage() {
+    let copy = this._clone(this.domain.html);
     let html = this.webService.getWebsiteFromStorage(this.domain.url);
     this.domain.html = html;
+    this.diffModel = this.deepDiffMapperService.difference(this.domain.html, copy);
+    console.log('this.diffModel', this.diffModel);
     this._initGeneratedLangues();
+  }
+
+  toBase64() {
+    let encoded: any;
+    try {
+      console.log('encoded', encoded);
+      encoded = btoa(JSON.stringify(this.domain.html));
+    } catch(e) {
+      console.log('encoded error', encoded);
+      return '';
+    }
+
+    return encoded;
+  }
+
+  fromBase64(data) {
+    let decoded: any;
+    try {
+      let aData = atob(data);
+      console.log('aData', aData);
+      decoded = JSON.parse(aData);
+    } catch(e) {
+    }
+
+    return decoded;
+  }
+
+  updateModelFromB64() {
+    let decodedModel = this.fromBase64(this.b64Model);
+
+    if (decodedModel) {
+      this.domain.html = decodedModel.html ? decodedModel.html : decodedModel;
+      this._initGeneratedLangues();
+    } else {
+      this.b64Model = this.toBase64();
+    }
+
+    console.log('decodedModel', decodedModel);
   }
 
   private _getFromCache() {

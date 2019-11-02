@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { DragulaModule } from 'ng2-dragula';
 import 'hammerjs';
@@ -192,6 +193,7 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     NgxTinymceModule.forRoot({
       baseURL: '//cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.16/'
     }),
+    NgxJsonViewerModule,
     ColorPickerModule,
     CollapseModule.forRoot(),
     BsDropdownModule.forRoot(),
