@@ -500,10 +500,17 @@
 	</ngb-tabset>
 
 	<div class="text-center mt-4 mb-4" *ngIf="domain.ownerAddress">
-		<button class="btn btn-primary mt-4 mr-2" (click)="openDomainUpdateModal()">{{ '#Save' | dgTranslate }}</button>
-		<button class="btn btn-light mt-4 mr-2" (click)="saveAsDraft()">{{ '#Save as draft' | dgTranslate }}</button>
-		<button class="btn btn-light mt-4 mr-2" (click)="loadFromStorage()">{{ '#Load last draft' | dgTranslate }}</button>
-		<button class="btn btn-danger mt-4" (click)="reset()">{{ '#Reset' | dgTranslate }}</button>
+		<button class="btn btn-primary mr-2" (click)="openDomainUpdateModal()">{{ '#Send to node' | dgTranslate }}</button>
+
+		<div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-success" ngbDropdownToggle id="dropdownBasic2" ngbDropdownToggle>Actions</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+				<button ngbDropdownItem class="btn btn-light mt-4 mr-2" (click)="saveAsDraft()">{{ '#Save as draft' | dgTranslate }}</button>
+				<button ngbDropdownItem class="btn btn-light mt-4 mr-2" (click)="loadFromStorage()">{{ '#Load last draft' | dgTranslate }}</button>
+				<button ngbDropdownItem class="btn btn-danger text-danger mt-4" (click)="reset()">{{ '#Reset' | dgTranslate }}</button>
+
+      </div>
+    </div>
 	</div>
 
 </div>

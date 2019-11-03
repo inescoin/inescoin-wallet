@@ -177,6 +177,11 @@
 
 	"#Add domain langue": "Add domain langue",
 	"#Remove domain langue": "Remove domain langue",
-	"#Key": "Key"
+	"#Key": "Key",
 
+	"#Save as draft": "Save as draft",
+	"#Load last draft": "Load last draft",
+	"#Difference": "Difference",
+	"#Model": "Model",
+	"#Update": "Update"
 }

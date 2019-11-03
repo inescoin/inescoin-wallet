@@ -194,5 +194,11 @@
 	"#Update domain": "Mettre à jour le domaine",
 	"#Search a domain": "Rechercher un domaine",
 	"#Create a new domain": "Créer un nouveau domaine",
-	"#Expired block": "Bloc expiré"
+	"#Expired block": "Bloc expiré",
+
+	"#Save as draft": "Enregistrer comme brouillon",
+	"#Load last draft": "Charger le dernier brouillon",
+	"#Difference": "Différence",
+	"#Model": "Modèle",
+	"#Update": "Mettre à jour"
 }

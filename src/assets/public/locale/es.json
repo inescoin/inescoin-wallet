@@ -186,5 +186,11 @@
 	"#Update domain": "Actualizar dominio",
 	"#Search a domain": "Busca un dominio",
 	"#Create a new domain": "Crea un nuevo dominio",
-	"#Expired block": "Bloque vencido"
+	"#Expired block": "Bloque vencido",
+
+	"#Save as draft": "Guardar como borrador",
+	"#Load last draft": "Cargar último borrador",
+	"#Difference": "Diferencia",
+	"#Model": "Modelo",
+	"#Update": "Actualizar"
 }

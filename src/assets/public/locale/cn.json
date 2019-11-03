@@ -186,5 +186,11 @@
 	"#Update domain": "更新网域",
 	"#Search a domain": "搜索域名",
 	"#Create a new domain": "创建一个新域",
-	"#Expired block": "过期的集团"
+	"#Expired block": "过期的集团",
+
+	"#Save as draft": "保存为草稿",
+	"#Load last draft": "加载最后草稿",
+	"#Difference": "区别",
+	"#Model": "模型",
+	"#Update": "更新资料"
 }

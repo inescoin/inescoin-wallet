@@ -177,5 +177,11 @@
 	"#Update domain": "Обновить домен",
 	"#Search a domain": "Поиск домена",
 	"#Create a new domain": "Создать новый домен",
-	"#Expired block": "Просроченный блок"
+	"#Expired block": "Просроченный блок",
+
+	"#Save as draft": "Сохранить как черновик",
+	"#Load last draft": "Загрузить последний черновик",
+	"#Difference": "разница",
+	"#Model": "модель",
+	"#Update": "Обновить"
 }

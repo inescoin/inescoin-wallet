@@ -186,5 +186,11 @@
 	"#Update domain": "ドメインを更新",
 	"#Search a domain": "ドメインを検索する",
 	"#Create a new domain": "新しいドメインを作成する",
-	"#Expired block": "期限切れのブロック"
+	"#Expired block": "期限切れのブロック",
+
+	"#Save as draft": "下書きとして保存",
+	"#Load last draft": "最後の下書きを読み込む",
+	"#Difference": "差",
+	"#Model": "型",
+	"#Update": "更新"
 }
