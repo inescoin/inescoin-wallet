@@ -54,7 +54,7 @@ export class WebService {
       return JSON.parse(website);
     }
 
-    return {};
+    return;
   }
 
   getWalletAdressesInfos(addresses) {

@@ -2,7 +2,7 @@
 // - Mounir R'Quiba
 // Licensed under the GNU Affero General Public License, version 3.
 
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WebService } from '../web.service';
 import { inescoinConfig } from '../../../config/inescoin.config';
@@ -14,7 +14,8 @@ import * as _ from 'lodash';
 @Component({
   selector: 'app-web-details',
   templateUrl: './web-details.component.html',
-  styleUrls: ['./web-details.component.scss']
+  styleUrls: ['./web-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WebDetailsComponent implements OnInit {
 	hash: string = '';
@@ -30,7 +31,8 @@ export class WebDetailsComponent implements OnInit {
 
   data: any = {};
 
-  remoteDomain = {};
+  remoteDomain: any = {};
+
   domain: any = {
     html: {
       en: {
@@ -201,12 +203,14 @@ export class WebDetailsComponent implements OnInit {
         } catch(e) {}
 
         if (_domain) {
-          this.domain = Object.assign({}, this.domain, _domain);
+          this.domain = Object.assign({}, this.domain, this._clone(_domain));
+
           this.remoteDomain = this._clone(_domain);
         }
 
         this.loadFromStorage();
         this._initGeneratedLangues();
+        this.ref.detectChanges();
     });
 
     this.subjects.onDomainLangueAdded = this.webService.onDomainLangueAdded.subscribe((langue) => {
@@ -232,6 +236,7 @@ export class WebDetailsComponent implements OnInit {
 
     this._initGeneratedLangues();
     this.isLoading = false;
+    this.ref.detectChanges();
   }
 
   ngOnDestroy() {
@@ -240,7 +245,7 @@ export class WebDetailsComponent implements OnInit {
   }
 
   private _initGeneratedLangues() {
-    this.b64Model = this.toBase64(this.domain.html);
+    this.b64Model = this.toBase64();
 
     let langues = [];
     for (let langue of Object.keys(this.domain.html)) {
@@ -446,11 +451,15 @@ export class WebDetailsComponent implements OnInit {
   }
 
   loadFromStorage() {
+
     let copy = this._clone(this.domain.html);
     let html = this.webService.getWebsiteFromStorage(this.domain.url);
-    this.domain.html = html;
-    this.diffModel = this.deepDiffMapperService.difference(this.domain.html, copy);
-    this._initGeneratedLangues();
+    if (html) {
+      this.domain.html = html;
+      this.diffModel = this.deepDiffMapperService.difference(this.domain.html, copy);
+      this._initGeneratedLangues();
+    }
+
   }
 
   toBase64() {
