@@ -3,7 +3,7 @@
 // Licensed under the GNU Affero General Public License, version 3.
 
 export const inescoinConfig = {
-	configHash: '19924913f08605e99f0a3aeb361b9a00',
+	configHash: 'b6a049fa61e4b40b44be1e40962c7461',
 	remoteAddres: 'https://node.inescoin.org/',
 	// remoteAddres: 'http://localhost:8086/',
 	messengerAddress: 'https://messenger.inescoin.org/',

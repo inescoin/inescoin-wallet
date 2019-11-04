@@ -10,7 +10,7 @@ import { transform, isEqual, isObject } from 'lodash';
 export class DeepDiffMapperService {
   difference(object, base) {
     return transform(object, (result, value, key) => {
-      if (!isEqual(value, base[key])) {
+      if (base && !isEqual(value, base[key])) {
         result[key] = isObject(value) && isObject(base[key]) ? this.difference(value, base[key]) : value;
       }
     });
