@@ -210,7 +210,7 @@ export class WebDetailsComponent implements OnInit {
 
         this.loadFromStorage();
         this._initGeneratedLangues();
-        this.ref.detectChanges();
+        //this.ref.detectChanges();
     });
 
     this.subjects.onDomainLangueAdded = this.webService.onDomainLangueAdded.subscribe((langue) => {
@@ -218,7 +218,7 @@ export class WebDetailsComponent implements OnInit {
 
       this.saveWebsiteToStorage();
       this._initGeneratedLangues();
-      this.ref.detectChanges();
+      //this.ref.detectChanges();
     });
 
     this.subjects.onDomainLangueRemoved = this.webService.onDomainLangueRemoved.subscribe((removeCode) => {
@@ -231,12 +231,12 @@ export class WebDetailsComponent implements OnInit {
 
       this.saveWebsiteToStorage();
       this._initGeneratedLangues();
-      this.ref.detectChanges();
+      //this.ref.detectChanges();
     });
 
     this._initGeneratedLangues();
     this.isLoading = false;
-    this.ref.detectChanges();
+    //this.ref.detectChanges();
   }
 
   ngOnDestroy() {

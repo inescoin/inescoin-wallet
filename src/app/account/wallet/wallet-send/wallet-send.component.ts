@@ -73,24 +73,27 @@ export class WalletSendComponent implements OnInit {
       return contact;
     });
 
-    this.subjects.remoteResponse = this.transactionService.onRemoteResponse.subscribe((remoteResponse) => {
-      this.inProgress = false;
-      if (remoteResponse[0] && remoteResponse[0].error) {
-        this.error = remoteResponse[0].error;
-        this.toastrService.error(this.doorgetsTranslateService.instant(remoteResponse[0].error));
-      } else {
-        this.toastrService.success(this.doorgetsTranslateService.instant('#Transaction sent!'));
-        this.ngbActiveModal.dismiss();
-      }
-    });
+    if (!this.subjects.remoteResponse) {
+      this.subjects.remoteResponse = this.transactionService.onRemoteResponse.subscribe((remoteResponse) => {
+        this.inProgress = false;
+        if (remoteResponse[0] && remoteResponse[0].error) {
+          this.error = remoteResponse[0].error;
+          this.toastrService.error(this.doorgetsTranslateService.instant(remoteResponse[0].error));
+        } else {
+          this.toastrService.success(this.doorgetsTranslateService.instant('#Transaction sent!'));
+          this.ngbActiveModal.dismiss();
+        }
+      });
+    }
 
-    this.subjects.scan = this.qrScannerService.onScan.subscribe((result) => {
-
-      if (result.component === 'wallet-send') {
-        this.transfers[result.index].to = result.wallet.address;
-        this.transfers[result.index].walletId = result.wallet.walletId;
-      }
-    });
+    if (!this.subjects.scan) {
+      this.subjects.scan = this.qrScannerService.onScan.subscribe((result) => {
+        if (result.component === 'wallet-send') {
+          this.transfers[result.index].to = result.wallet.address;
+          this.transfers[result.index].walletId = result.wallet.walletId;
+        }
+      });
+    }
   }
 
   getAdressesArray() {
@@ -203,5 +206,4 @@ export class WalletSendComponent implements OnInit {
     this.subjects.remoteResponse && this.subjects.remoteResponse.unsubscribe();
     this.subjects.scan && this.subjects.remoteResponse.unsubscribe();
   }
-
 }

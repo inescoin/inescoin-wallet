@@ -1,23 +1,43 @@
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-12 text-center">
 		<h5 class="title-address text-wrap"><fa-icon icon="wallet"></fa-icon> {{ account.address }}</h5>
 		<h6 class="title-address text-wrap"><small><fa-icon icon="key"></fa-icon> {{ account.wallet.publicKey }}</small></h6>
-	  	<div class="amount-balance"><fa-icon icon="balance-scale"></fa-icon> {{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }} <small>(<span *ngIf="account.total >= 10000">+</span>{{ account.total }} {{ '#transactions' }})</small></div>
+		<div class="card mb-4">
+			<div class="card-body">
+				<div class="amount-balance text-center">
+					{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }} <small>(<span *ngIf="account.total >= 10000">+</span>{{ account.total }} {{ '#transactions' }})</small>
+				</div>
+				<hr />
+				<div>
+			  	<button class="btn btn-light ml-2" (click)="openAccountResetPasswordModal()">
+			  		<fa-icon icon="lock"></fa-icon> {{ '#Password' | dgTranslate }}
+			  	</button>
+			  	<button class="btn btn-light ml-2" (click)="openAccountKeysModal()">
+			  		<fa-icon icon="eye-slash"></fa-icon> {{ '#Show keys' | dgTranslate }}
+			  	</button>
+			  	<button class="btn btn-danger ml-2" (click)="openAccountRemoveModal()">
+			  		<fa-icon icon="trash"></fa-icon> {{ '#Remove' | dgTranslate }}
+			  	</button>
+				</div>
+			</div>
+		</div>
+  	<div class="canvas-qr-code">
+			<input type="type" class="form-control" autocomplete="new-password" placeholder="{{ '#Label' | dgTranslate }}" [(ngModel)]="account.wallet.label" />
+			<ngx-qrcode
+			      qrc-element-type="canvas"
+			      [qrc-value]="getQrCodeAddress()"
+			      qrc-class="aclass"
+			      qrc-errorCorrectionLevel="L">
+			</ngx-qrcode>
+			<input type="type" class="form-control mb-3" autocomplete="new-password" placeholder="{{ '#Wallet Id' | dgTranslate }}" [(ngModel)]="account.wallet.walletId" />
+		</div>
 	</div>
-	<div class="col-md-3 mt-3 text-center">
-		<input type="type" class="form-control" placeholder="{{ '#Label' | dgTranslate }}" [(ngModel)]="account.wallet.label" />
-		<ngx-qrcode
-		      qrc-element-type="canvas"
-		      [qrc-value]="getQrCodeAddress()"
-		      qrc-class="aclass"
-		      qrc-errorCorrectionLevel="L">
-		</ngx-qrcode>
-		<input type="type" class="form-control mb-3" placeholder="{{ '#Wallet Id' | dgTranslate }}" [(ngModel)]="account.wallet.walletId" />
-	</div>
+
 </div>
 
 <div *ngIf="account.transactions && account.transactions.length || account.transactionsPool && account.transactionsPool.length">
-	<h3><fa-icon icon="exchange-alt"></fa-icon> {{ '#Last 100 transfers' | dgTranslate }}</h3>
+	<hr />
+	<h3 class="text-center"><fa-icon icon="exchange-alt"></fa-icon> {{ '#Last 100 transfers' | dgTranslate }}</h3>
 	<div class="list-group list-group-flush">
 		<div class="list-group-item link-item text-center" *ngFor="let transfer of account.transactionsPool" (click)="openModal('transferDetails', { transfer: transfer, component: 'wallet', size: 'lg'})">
 			<h3 [class.text-danger]="account.address === transfer.from" [class.text-success]="account.address !== transfer.from" >

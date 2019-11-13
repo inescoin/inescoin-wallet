@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h4 class="modal-title"><fa-icon icon="key"></fa-icon> {{ '#Account keys' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body text-center">
+	<p class="text-center"><fa-icon icon="wallet"></fa-icon> {{ options.account.address }}</p>
+	<ngx-qrcode
+	      qrc-element-type="canvas"
+	      [qrc-value]="qrCodeKeys"
+	      qrc-class="aclass"
+	      qrc-errorCorrectionLevel="L">
+	</ngx-qrcode>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-light" (click)="dismiss()">{{ '#Close' | dgTranslate }}</button>
+</div>

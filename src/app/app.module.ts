@@ -97,6 +97,9 @@ import { DomainUpdateComponent } from './_/components/modal-action/form/domain-u
 import { DomainChangeOwnerComponent } from './_/components/modal-action/form/domain-change-owner/domain-change-owner.component';
 import { DomainAddLangueComponent } from './_/components/modal-action/form/domain-add-langue/domain-add-langue.component';
 import { DomainRemoveLangueComponent } from './_/components/modal-action/form/domain-remove-langue/domain-remove-langue.component';
+import { AccountKeysComponent } from './_/components/modal-action/form/account-keys/account-keys.component';
+import { AccountRemoveComponent } from './_/components/modal-action/form/account-remove/account-remove.component';
+import { AccountResetPasswordComponent } from './_/components/modal-action/form/account-reset-password/account-reset-password.component';
 
 export function newNgTranslate(http: Http) {
   return new NgTranslate(http, '../../assets/public/locale');
@@ -157,6 +160,9 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     DomainChangeOwnerComponent,
     DomainAddLangueComponent,
     DomainRemoveLangueComponent,
+    AccountKeysComponent,
+    AccountRemoveComponent,
+    AccountResetPasswordComponent,
   ],
   entryComponents: [
     QrCodeScanComponent,
@@ -179,7 +185,10 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     DomainUpdateComponent,
     DomainChangeOwnerComponent,
     DomainAddLangueComponent,
-    DomainRemoveLangueComponent
+    DomainRemoveLangueComponent,
+    AccountKeysComponent,
+    AccountRemoveComponent,
+    AccountResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

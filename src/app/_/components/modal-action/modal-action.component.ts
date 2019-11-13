@@ -22,6 +22,9 @@ import { ContactEditComponent } from './form/contact-edit/contact-edit.component
 import { ContactRemoveComponent } from './form/contact-remove/contact-remove.component';
 import { AccountCreateComponent } from './form/account-create/account-create.component';
 import { AccountImportComponent } from './form/account-import/account-import.component';
+import { AccountKeysComponent } from './form/account-keys/account-keys.component';
+import { AccountRemoveComponent } from './form/account-remove/account-remove.component';
+import { AccountResetPasswordComponent } from './form/account-reset-password/account-reset-password.component';
 import { DomainCreateComponent } from './form/domain-create/domain-create.component';
 import { DomainUpdateComponent } from './form/domain-update/domain-update.component';
 import { DomainChangeOwnerComponent } from './form/domain-change-owner/domain-change-owner.component';
@@ -100,6 +103,15 @@ export class ModalActionComponent implements OnInit, OnDestroy {
         break;
       case "accountImport":
         this.modalService.open(AccountImportComponent, data.option || {});
+        break;
+      case "accountKeys":
+        this.modalService.open(AccountKeysComponent, data.option || {});
+        break;
+      case "accountRemove":
+        this.modalService.open(AccountRemoveComponent, data.option || {});
+        break;
+      case "accountResetPassword":
+        this.modalService.open(AccountResetPasswordComponent, data.option || {});
         break;
       case "contactAdd":
         this.modalService.open(ContactAddComponent, data.option || {});

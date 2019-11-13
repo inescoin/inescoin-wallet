@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h4 class="modal-title"><fa-icon icon="trash"></fa-icon> {{ '#Remove account' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<p class="alert alert-info text-center"><fa-icon icon="wallet"></fa-icon> {{ options.account.address }}</p>
+
+	<div class="alert alert-danger text-center" *ngIf="badPassword">{{ '#Bad password' | dgTranslate }}</div>
+
+	<div class="form-group" >
+		{{ '#Password' | dgTranslate }}
+		<input class="form-control" type="password" name="password" [(ngModel)]="password" autocomplete="new-password">
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-light" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
+	<button class="btn btn-danger mr-2" (click)="remove()">{{ '#Delete now!' | dgTranslate }}</button>
+</div>

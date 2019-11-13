@@ -25,6 +25,8 @@ export class WalletComponent implements OnInit {
   wallet = {};
   addresses = {};
 
+  subjects: any = {};
+
   constructor(
     private ref: ChangeDetectorRef,
     private router: Router,
@@ -32,10 +34,22 @@ export class WalletComponent implements OnInit {
     private walletService: WalletService) { }
 
   ngOnInit() {
+    this.load();
+
+    this.subjects.onListUpdated = this.walletService.onListUpdated.subscribe(() => {
+      this.load();
+    })
+  }
+
+  private load() {
     this.wallet = this.walletService.accounts;
     this.addresses = this.walletService.getFromHomeStorage();
 
-    this.walletService.getWalletAdressesInfos(this.getWalletAdressesInfos())
+    if (this.subjects.getWalletAdressesInfos) {
+      this.subjects.getWalletAdressesInfos.unsubscribe();
+    }
+
+    this.subjects.getWalletAdressesInfos = this.walletService.getWalletAdressesInfos(this.getWalletAdressesInfos())
       .subscribe((addresses) => {
         this.walletService.saveToHomeStorage(addresses);
         this.addresses = addresses;
@@ -70,5 +84,10 @@ export class WalletComponent implements OnInit {
 
   openModal(name, option) {
     this.modalActionService.open(name, option);
+  }
+
+  ngOnDestroy() {
+    this.subjects.onListUpdated && this.subjects.onListUpdated.unsubscribe();
+    this.subjects.getWalletAdressesInfos && this.subjects.getWalletAdressesInfos.unsubscribe();
   }
 }

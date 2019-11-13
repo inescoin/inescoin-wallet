@@ -3,6 +3,7 @@
 // Licensed under the GNU Affero General Public License, version 3.
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { WalletService } from '../wallet.service';
 import { ActivatedRoute } from '@angular/router';
 import { inescoinConfig } from '../../../config/inescoin.config';
@@ -33,7 +34,10 @@ export class WalletAccountComponent implements OnInit {
     totalPool: 0,
 	};
 
+  subjects: any = {};
+
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private modalActionService: ModalActionService,
     private walletService: WalletService) { }
@@ -46,7 +50,7 @@ export class WalletAccountComponent implements OnInit {
   		this.account.address = address;
   		this.account.wallet = this.walletService.accounts[address];
 
-  		this.walletService.getWalletInfos(address).subscribe((walletInfos: any) => {
+  		this.subjects.getWalletInfos = this.walletService.getWalletInfos(address).subscribe((walletInfos: any) => {
   			if (!walletInfos.error) {
 	  			this.account.amount = walletInfos.amount;
 			    this.account.address = walletInfos.address;
@@ -64,9 +68,17 @@ export class WalletAccountComponent implements OnInit {
   				localStorage.removeItem(inescoinConfig.name + '-account-' + address)
   			}
 	    });
-  	}
 
+      this.subjects.onListUpdated = this.walletService.onListUpdated.subscribe(() => {
+        this.account = this._getFromCache(address);
+        this.account.address = address;
+        this.account.wallet = this.walletService.accounts[address];
 
+        console.log('Wallet updated', this.account);
+      });
+  	} else {
+      this.router.navigate(['/wallet']);
+    }
   }
 
   private _getFromCache(address) {
@@ -89,6 +101,22 @@ export class WalletAccountComponent implements OnInit {
   	}
   }
 
+  openAccountKeysModal() {
+    this.openModal('accountKeys', {
+      account: this.account
+    });
+  }
+  openAccountRemoveModal() {
+    this.openModal('accountRemove', {
+      account: this.account
+    });
+  }
+  openAccountResetPasswordModal() {
+    this.openModal('accountResetPassword', {
+      account: this.account
+    });
+  }
+
   getQrCodeAddress() {
   	return JSON.stringify({
     	address: this.account.address,
@@ -104,5 +132,10 @@ export class WalletAccountComponent implements OnInit {
 
   openModal(name, option) {
     this.modalActionService.open(name, option);
+  }
+
+  ngOnDestroy() {
+    this.subjects.getWalletInfos && this.subjects.getWalletInfos.unsubscribe();
+    this.subjects.onListUpdated && this.subjects.onListUpdated.unsubscribe();
   }
 }

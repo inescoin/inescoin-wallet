@@ -2,7 +2,7 @@
 // - Mounir R'Quiba
 // Licensed under the GNU Affero General Public License, version 3.
 
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { CryptoJsService } from '../../_/services/crypto/crypto-js.service';
 import { HttpService } from '../../_/services/http/http.service';
 
@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
 })
 export class WalletService {
   accounts = {};
+  onListUpdated: any = new EventEmitter();
 
   constructor(
     private cryptoJsService: CryptoJsService,
@@ -69,8 +70,47 @@ export class WalletService {
     }
   }
 
+  openData(data, password) {
+    let result = null;
+    try {
+      let wallet = this.cryptoJsService.decryptFromPassword(data, password);
+      result = wallet ? JSON.parse(wallet) : null;
+    } catch(e) {}
+
+    return result;
+  }
+
+  removeWallet(address) {
+    let home = localStorage.getItem(inescoinConfig.name + '-home');
+    let wallets = localStorage.getItem(inescoinConfig.name + '-wallets');
+
+    if (home) {
+      home = JSON.parse(home);
+    }
+
+    if (wallets) {
+      wallets = JSON.parse(wallets);
+    }
+
+    if (home[address]) {
+      delete home[address];
+      localStorage.setItem(inescoinConfig.name + '-home', JSON.stringify(home));
+    }
+
+    if (wallets[address]) {
+      delete wallets[address];
+      this.accounts = wallets;
+      localStorage.setItem(inescoinConfig.name + '-wallets', JSON.stringify(wallets));
+    }
+
+    localStorage.removeItem(inescoinConfig.name + '-account-' + address);
+
+    this.onListUpdated.emit(true);
+  }
+
   saveToStorage() {
     localStorage.setItem(inescoinConfig.name + '-wallets', JSON.stringify(this.accounts))
+    this.onListUpdated.emit(true);
   }
 
   saveToHomeStorage(accounts) {
