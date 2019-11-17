@@ -9,6 +9,8 @@ import { HttpService } from '../../_/services/http/http.service';
 import { inescoinConfig } from '../../config/inescoin.config';
 import { saveAs } from 'file-saver';
 
+import * as _ from 'lodash';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -70,6 +72,19 @@ export class WalletService {
     }
   }
 
+  updatePassword(address, data, password) {
+    try {
+      let _data = JSON.stringify(data);
+      let encrypted = this.cryptoJsService.encryptFromPassword(_data, password);
+      let blob = new Blob([encrypted], {type: "text/plain;charset=utf-8"});
+
+      this.accounts[address].data = encrypted;
+      this.saveToStorage();
+      saveAs(blob, address + '.wallet');
+    } catch(e) {
+    }
+  }
+
   openData(data, password) {
     let result = null;
     try {
@@ -81,8 +96,8 @@ export class WalletService {
   }
 
   removeWallet(address) {
-    let home = localStorage.getItem(inescoinConfig.name + '-home');
-    let wallets = localStorage.getItem(inescoinConfig.name + '-wallets');
+    let home: any = localStorage.getItem(inescoinConfig.name + '-home');
+    let wallets: any = localStorage.getItem(inescoinConfig.name + '-wallets');
 
     if (home) {
       home = JSON.parse(home);
@@ -93,14 +108,14 @@ export class WalletService {
     }
 
     if (home[address]) {
-      delete home[address];
-      localStorage.setItem(inescoinConfig.name + '-home', JSON.stringify(home));
+      let _home: any = _.omit(home, address);
+      localStorage.setItem(inescoinConfig.name + '-home', JSON.stringify(_home));
     }
 
     if (wallets[address]) {
-      delete wallets[address];
-      this.accounts = wallets;
-      localStorage.setItem(inescoinConfig.name + '-wallets', JSON.stringify(wallets));
+      let _wallets: any = _.omit(wallets, address);
+      this.accounts = _wallets;
+      localStorage.setItem(inescoinConfig.name + '-wallets', JSON.stringify(_wallets));
     }
 
     localStorage.removeItem(inescoinConfig.name + '-account-' + address);

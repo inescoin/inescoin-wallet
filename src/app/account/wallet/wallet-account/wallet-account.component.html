@@ -5,7 +5,7 @@
 		<div class="card mb-4">
 			<div class="card-body">
 				<div class="amount-balance text-center">
-					{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }} <small>(<span *ngIf="account.total >= 10000">+</span>{{ account.total }} {{ '#transactions' }})</small>
+					{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }} <small>(<span *ngIf="account.total >= 10000">+</span>{{ account.total }} {{ '#transactions' | dgTranslate }})</small>
 				</div>
 				<hr />
 				<div>

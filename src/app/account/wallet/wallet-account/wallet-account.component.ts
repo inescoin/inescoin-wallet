@@ -73,8 +73,6 @@ export class WalletAccountComponent implements OnInit {
         this.account = this._getFromCache(address);
         this.account.address = address;
         this.account.wallet = this.walletService.accounts[address];
-
-        console.log('Wallet updated', this.account);
       });
   	} else {
       this.router.navigate(['/wallet']);

@@ -25,6 +25,7 @@ export class WalletComponent implements OnInit {
   wallet = {};
   addresses = {};
 
+  accountList: any = [];
   subjects: any = {};
 
   constructor(
@@ -38,13 +39,14 @@ export class WalletComponent implements OnInit {
 
     this.subjects.onListUpdated = this.walletService.onListUpdated.subscribe(() => {
       this.load();
-    })
+    });
   }
 
   private load() {
     this.wallet = this.walletService.accounts;
     this.addresses = this.walletService.getFromHomeStorage();
 
+    this.loadAccounts();
     if (this.subjects.getWalletAdressesInfos) {
       this.subjects.getWalletAdressesInfos.unsubscribe();
     }
@@ -64,9 +66,9 @@ export class WalletComponent implements OnInit {
     return Object.keys(this.wallet).join(',');
   }
 
-  getAccounts() {
+  loadAccounts() {
     let i = 1;
-    let wallet = [];
+    let wallet: any = [];
     let total = 0;
     for (let key of Object.keys(this.wallet)) {
       wallet.push({
@@ -79,7 +81,9 @@ export class WalletComponent implements OnInit {
     }
 
     this.total = total;
-    return _.orderBy(wallet, ['amount'], ['desc']);
+    _.orderBy(wallet, ['amount'], ['desc'])
+    this.accountList = wallet;
+    return;
   }
 
   openModal(name, option) {

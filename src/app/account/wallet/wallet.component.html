@@ -2,7 +2,7 @@
 	<h1 class="total-amount-wallet">{{ total | cryptoAmount }} {{ inescoinConfig.symbol }}</h1>
 </div>
 
-<div class="row" *ngIf="getAccounts().length">
+<div class="row" *ngIf="accountList.length">
 	<div class="col-md-6">
 		<div class="form-group mb-3 mr-5">
 			<div class="input-group input-group-seamless">
@@ -26,8 +26,8 @@
 
 </div>
 
-<div class="row" *ngIf="getAccounts().length">
-	<div class="col-md-6 mb-2" *ngFor="let account of getAccounts()" (click)="openAccountDetail(account)">
+<div class="row" *ngIf="accountList.length">
+	<div class="col-md-6 mb-2" *ngFor="let account of accountList" (click)="openAccountDetail(account)">
 		<div class="card account-card">
 		  	<div class="card-body">
 				<h6 class="card-subtitle mb-2 text-muted"><fa-icon icon="wallet" pull="left"></fa-icon> {{ account.address }}</h6>
@@ -38,7 +38,7 @@
 </div>
 
 
-<div class="card" *ngIf="!getAccounts().length">
+<div class="card" *ngIf="!accountList.length">
 	<div class="card-body">
 		<h4 class="text-center mb-4">{{ '#No account yet, Welcome into InesCoin Network.' | dgTranslate }}</h4>
 		<p class="text-center">

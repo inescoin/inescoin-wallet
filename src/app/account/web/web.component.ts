@@ -17,6 +17,8 @@ export class WebComponent implements OnInit {
   domainList = [];
   wallet = {};
 
+  subjects: any = {};
+
   constructor(
     private modalActionService: ModalActionService,
     private walletService: WalletService,
@@ -27,7 +29,7 @@ export class WebComponent implements OnInit {
     this.domainList = this.webService.getFromStorage();
     this.wallet = this.walletService.accounts;
 
-    this.webService.getWalletAdressesInfos(this.getWalletAdressesInfos())
+    this.subjects.getWalletAdressesInfos = this.webService.getWalletAdressesInfos(this.getWalletAdressesInfos())
       .subscribe((addresses: any) => {
         if (addresses && addresses.domainList) {
           this.webService.domain = addresses.domainList;
@@ -57,7 +59,9 @@ export class WebComponent implements OnInit {
     });
   }
 
-  updateFilter(e) {
+  updateFilter(e) {}
 
+  ngOnDestroy() {
+    this.subjects.getWalletAdressesInfos && this.subjects.getWalletAdressesInfos.unsubscribe();
   }
 }

@@ -192,5 +192,27 @@
 	"#Load last draft": "Cargar último borrador",
 	"#Difference": "Diferencia",
 	"#Model": "Modelo",
-	"#Update": "Actualizar"
+	"#Update": "Actualizar",
+
+	"#transactions": "actas",
+	"#On": "En",
+	"#Off": "Apagado",
+	"#Messenger": "Mensajero",
+	"#Reset profile & Clear cache": "Restablecer perfil y borrar caché",
+	"#File name": "Nombre del archivo",
+	"#Save to file": "Guardar en archivo",
+	"#Wallet deleted": "Billetera eliminada",
+	"#Wallet created": "Billetera creada",
+	"#Reset password": "Restablecer la contraseña",
+	"#Current password": "Contraseña actual",
+	"#New password": "Nueva contraseña",
+	"#Confirm password": "Confirmar contraseña",
+	"#Confirm new password": "Confirmar nueva contraseña",
+	"#Password updated": "Contraseña actualiza",
+	"#Wallet removed": "Billetera eliminada",
+	"#Create from QRCode": "Crear desde QRCode",
+	"#Show keys": "Mostrar llaves",
+	"#Account keys": "Claves de cuenta",
+	"#Remove account": "Eliminar cuenta",
+	"#Remove": "Eliminar"
 }

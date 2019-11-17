@@ -51,7 +51,7 @@ export class AccountResetPasswordComponent implements OnInit {
   	let data = this.walletService.openData(this.options.account.wallet.data, this.currentPassword);
 
   	if (data) {
-  		this.walletService.save(this.options.account.address, data, this.currentPassword);
+  		this.walletService.updatePassword(this.options.account.address, data, this.newPassword);
       this.toastrService.success(this.doorgetsTranslateService.instant('#Password updated'));
 	  	this.badPassword = false;
   		this.dismiss();

@@ -1,9 +1,9 @@
-<h5 class="setting-title">{{ '#Messenger'}}</h5>
+<h5 class="setting-title">{{ '#Messenger' | dgTranslate }}</h5>
 
 <div class="card mb-4">
 	<div class="card-body">
 		<div>
-			{{ '#Activer messenger'}}
+			{{ '#Active' | dgTranslate }}
 			<ui-switch class="pull-right"
 								 [(ngModel)]="config.activeMessenger"
 							   (changeEvent)="onActiveMessengerChange($event)"

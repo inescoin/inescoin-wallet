@@ -192,5 +192,27 @@
 	"#Load last draft": "加载最后草稿",
 	"#Difference": "区别",
 	"#Model": "模型",
-	"#Update": "更新资料"
+	"#Update": "更新资料",
+
+	"#transactions": "交易",
+	"#On": "上",
+	"#Off": "关",
+	"#Messenger": "信使",
+	"#Reset profile & Clear cache": "重置配置文件并清除缓存",
+	"#File name": "文档名称",
+	"#Save to file": "保存到文件",
+	"#Wallet deleted": "钱包已删除",
+	"#Wallet created": "钱包已创建",
+	"#Reset password": "重设密码",
+	"#Current password": "当前密码",
+	"#New password": "新密码",
+	"#Confirm password": "确认密码",
+	"#Confirm new password": "确认新密码",
+	"#Password updated": "密码已更新",
+	"#Wallet removed": "钱包已删除",
+	"#Create from QRCode": "从QRCode创建",
+	"#Show keys": "显示按键",
+	"#Account keys": "帐号键",
+	"#Remove account": "删除帐户",
+	"#Remove": "去掉"
 }

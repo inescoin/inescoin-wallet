@@ -195,7 +195,7 @@ export class WebDetailsComponent implements OnInit {
       this.data = wallets[this.domain.ownerAddress].data;
     }
 
-    this.webService.getUrlInfos(this.domain.url)
+    this.subjects.getUrlInfos = this.webService.getUrlInfos(this.domain.url)
       .subscribe((ulrData: any) => {
         let _domain;
         try {
@@ -210,7 +210,7 @@ export class WebDetailsComponent implements OnInit {
 
         this.loadFromStorage();
         this._initGeneratedLangues();
-        //this.ref.detectChanges();
+        this.ref.detectChanges();
     });
 
     this.subjects.onDomainLangueAdded = this.webService.onDomainLangueAdded.subscribe((langue) => {
@@ -218,7 +218,7 @@ export class WebDetailsComponent implements OnInit {
 
       this.saveWebsiteToStorage();
       this._initGeneratedLangues();
-      //this.ref.detectChanges();
+      this.ref.detectChanges();
     });
 
     this.subjects.onDomainLangueRemoved = this.webService.onDomainLangueRemoved.subscribe((removeCode) => {
@@ -231,7 +231,7 @@ export class WebDetailsComponent implements OnInit {
 
       this.saveWebsiteToStorage();
       this._initGeneratedLangues();
-      //this.ref.detectChanges();
+      this.ref.detectChanges();
     });
 
     this._initGeneratedLangues();
@@ -240,6 +240,7 @@ export class WebDetailsComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.subjects.getUrlInfos && this.subjects.getUrlInfos.unsubscribe();
     this.subjects.onDomainLangueRemoved && this.subjects.onDomainLangueRemoved.unsubscribe();
     this.subjects.onDomainLangueAddUpdated && this.subjects.onDomainLangueAddUpdated.unsubscribe();
   }

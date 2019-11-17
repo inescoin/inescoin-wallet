@@ -183,5 +183,27 @@
 	"#Load last draft": "Загрузить последний черновик",
 	"#Difference": "разница",
 	"#Model": "модель",
-	"#Update": "Обновить"
+	"#Update": "Обновить",
+
+	"#transactions": "операции",
+	"#On": "На",
+	"#Off": "от",
+	"#Messenger": "посыльный",
+	"#Reset profile & Clear cache": "Сбросить профиль и очистить кеш",
+	"#File name": "Имя файла",
+	"#Save to file": "Сохранить в файл",
+	"#Wallet deleted": "Кошелек удален",
+	"#Wallet created": "Кошелек создан",
+	"#Reset password": "Сброс пароля",
+	"#Current password": "Текущий пароль",
+	"#New password": "Новый пароль",
+	"#Confirm password": "Подтвердить Пароль",
+	"#Confirm new password": "Подтвердите новый пароль",
+	"#Password updated": "Пароль обновлен",
+	"#Wallet removed": "Кошелек удален",
+	"#Create from QRCode": "Создать из QRCode",
+	"#Show keys": "Показать ключи",
+	"#Account keys": "Ключи аккаунта",
+	"#Remove account": "Удалить учетную запись",
+	"#Remove": "Удалить"
 }

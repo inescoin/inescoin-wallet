@@ -192,5 +192,27 @@
 	"#Load last draft": "最後の下書きを読み込む",
 	"#Difference": "差",
 	"#Model": "型",
-	"#Update": "更新"
+	"#Update": "更新",
+
+	"#transactions": "取引",
+	"#On": "オン",
+	"#Off": "オフ",
+	"#Messenger": "メッセンジャー",
+	"#Reset profile & Clear cache": "プロファイルをリセットしてキャッシュをクリア",
+	"#File name": "ファイル名",
+	"#Save to file": "ファイルに保存",
+	"#Wallet deleted": "ウォレットを削除しました",
+	"#Wallet created": "ウォレットが作成されました",
+	"#Reset password": "パスワードを再設定する",
+	"#Current password": "現在のパスワード",
+	"#New password": "新しいパスワード",
+	"#Confirm password": "パスワードを認証する",
+	"#Confirm new password": "新しいパスワードを確認",
+	"#Password updated": "パスワードが更新されました",
+	"#Wallet removed": "ウォレットを削除しました",
+	"#Create from QRCode": "QRCodeから作成",
+	"#Show keys": "キーを表示",
+	"#Account keys": "アカウントキー",
+	"#Remove account": "アカウントを削除",
+	"#Remove": "削除する"
 }

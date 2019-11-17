@@ -192,5 +192,27 @@
 	"#Load last draft": "Carica l'ultima bozza",
 	"#Difference": "Differenza",
 	"#Model": "Modello",
-	"#Update": "Aggiornare"
+	"#Update": "Aggiornare",
+
+	"#transactions": "transazioni",
+	"#On": "Sopra",
+	"#Off": "via",
+	"#Messenger": "Messaggero",
+	"#Reset profile & Clear cache": "Ripristina profilo e cancella cache",
+	"#File name": "Nome del file",
+	"#Save to file": "Salva su file",
+	"#Wallet deleted": "Portafoglio eliminato",
+	"#Wallet created": "Portafoglio creato",
+	"#Reset password": "Resetta la password",
+	"#Current password": "Password attuale",
+	"#New password": "Nuova password",
+	"#Confirm password": "Conferma password",
+	"#Confirm new password": "Conferma la nuova password",
+	"#Password updated": "password aggiornata",
+	"#Wallet removed": "Portafoglio rimosso",
+	"#Create from QRCode": "Crea da QRCode",
+	"#Show keys": "Mostra le chiavi",
+	"#Account keys": "Chiavi dell'account",
+	"#Remove account": "Rimuovi l'account",
+	"#Remove": "Rimuovere"
 }

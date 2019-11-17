@@ -58,17 +58,6 @@ export class WalletCreateComponent implements OnInit {
   }
 
   create() {
-    if (this.password && this.password === this.confirmPassword) {
-      let wallet = this.walletService.create(this.password);
-      if (wallet) {
-        this.password = '';
-        this.toastrService.success(this.doorgetsTranslateService.instant('#Account created!'));
-        this.ngbActiveModal.dismiss();
-      }
-    }
-  }
-
-  create() {
     if (this.password) {
       if (this.wallet && this.wallet.address) {
         let wallet = this.walletService.open(this.wallet.data, this.password);
@@ -86,7 +75,7 @@ export class WalletCreateComponent implements OnInit {
         let wallet = this.walletService.create(this.password);
         if (wallet) {
           this.password = '';
-          this.toastrService.success(this.doorgetsTranslateService.instant('#Account created!'));
+          this.toastrService.success(this.doorgetsTranslateService.instant('#Wallet created') + ' !');
           this.ngbActiveModal.dismiss();
         }
       }
