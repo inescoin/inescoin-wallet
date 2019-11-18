@@ -99,6 +99,12 @@ export class WalletAccountComponent implements OnInit {
   	}
   }
 
+  openAccountRequestModal() {
+    this.openModal('accountRequest', {
+      account: this.account
+    });
+  }
+
   openAccountKeysModal() {
     this.openModal('accountKeys', {
       account: this.account

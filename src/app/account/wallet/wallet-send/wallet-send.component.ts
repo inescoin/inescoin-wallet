@@ -45,7 +45,7 @@ export class WalletSendComponent implements OnInit {
 
 	transfers = [{
 		to: '',
-		amount: 0.000,
+		amount: 0.0000,
     item: null,
     walletId: ''
 	}];
@@ -53,6 +53,8 @@ export class WalletSendComponent implements OnInit {
   contacts = [];
 
   subjects: any = {};
+
+  addressesArray: any = [];
 
   constructor(
     private router: Router,
@@ -94,9 +96,11 @@ export class WalletSendComponent implements OnInit {
         }
       });
     }
+
+    this._loadAdressesArray();
   }
 
-  getAdressesArray() {
+  private _loadAdressesArray() {
     this.addresses = this.walletService.getFromHomeStorage();
 
   	let addresses = [];
@@ -104,7 +108,7 @@ export class WalletSendComponent implements OnInit {
   		addresses.push(this.addresses[address]);
   	}
 
-  	return addresses;
+    this.addressesArray = addresses;
   }
 
   addTransfer() {

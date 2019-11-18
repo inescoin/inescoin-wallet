@@ -1,4 +1,4 @@
-<div class="card" *ngIf="!getAdressesArray().length">
+<div class="card" *ngIf="!addressesArray.length">
 	<div class="card-body">
 		<h4 class="text-center mb-4">{{ '#No account yet, Welcome into InesCoin Network.' | dgTranslate }}</h4>
 		<p class="text-center">
@@ -17,7 +17,7 @@
 	</div>
 </div>
 
-<div *ngIf="getAdressesArray().length && !isSummaryStep">
+<div *ngIf="addressesArray.length && !isSummaryStep">
 	<h6>{{ '#From' | dgTranslate }}</h6>
 	<div class="card">
 		<div class="card-body">
@@ -26,7 +26,7 @@
 					<option value="">
 				      -
 				    </option>
-				    <option *ngFor="let address of getAdressesArray()" [value]="address.address">
+				    <option *ngFor="let address of addressesArray" [value]="address.address">
 				      {{ address.address }} - {{ address.amount | cryptoAmount}} {{ inescoinConfig.symbol }}
 				    </option>
 				</select>
@@ -60,7 +60,7 @@
 				</div>
 				<div class="col-md-3">
 					<label>{{ '#Amount' | dgTranslate }}</label>
-				  	<input type="number" min="0.002" max="999999999.999999999" step=".000000001" [(ngModel)]="transfer.amount" class="form-control" placeholder="0.000000000">
+				  	<input type="number" min="0.002" max="999999999.9999" step=".0001" [(ngModel)]="transfer.amount" class="form-control" placeholder="0.0000">
 				</div>
 				<div class="col-md-1">
 					<label>{{ '#Action' | dgTranslate }}</label>
@@ -80,7 +80,7 @@
 
 	<div class="text-center form-group send-fee-box">
 		<label>{{ '#Fee' | dgTranslate }}</label>
-		<input class="form-control" type="range" step=".000000001" min="0.001" max="1" [(ngModel)]="fee" />
+		<input class="form-control" type="range" step=".001" min="0.001" max="1" [(ngModel)]="fee" />
 	</div>
 	<hr />
 

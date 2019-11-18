@@ -24,6 +24,7 @@ import { AccountCreateComponent } from './form/account-create/account-create.com
 import { AccountImportComponent } from './form/account-import/account-import.component';
 import { AccountKeysComponent } from './form/account-keys/account-keys.component';
 import { AccountRemoveComponent } from './form/account-remove/account-remove.component';
+import { AccountRequestComponent } from './form/account-request/account-request.component';
 import { AccountResetPasswordComponent } from './form/account-reset-password/account-reset-password.component';
 import { DomainCreateComponent } from './form/domain-create/domain-create.component';
 import { DomainUpdateComponent } from './form/domain-update/domain-update.component';
@@ -106,6 +107,9 @@ export class ModalActionComponent implements OnInit, OnDestroy {
         break;
       case "accountKeys":
         this.modalService.open(AccountKeysComponent, data.option || {});
+        break;
+      case "accountRequest":
+        this.modalService.open(AccountRequestComponent, data.option || {});
         break;
       case "accountRemove":
         this.modalService.open(AccountRemoveComponent, data.option || {});

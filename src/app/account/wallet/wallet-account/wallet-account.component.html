@@ -9,6 +9,9 @@
 				</div>
 				<hr />
 				<div>
+			  	<button class="btn btn-light ml-2" (click)="openAccountRequestModal()">
+			  		<fa-icon icon="bullhorn"></fa-icon> {{ '#Request payment' | dgTranslate }}
+			  	</button>
 			  	<button class="btn btn-light ml-2" (click)="openAccountResetPasswordModal()">
 			  		<fa-icon icon="lock"></fa-icon> {{ '#Password' | dgTranslate }}
 			  	</button>
