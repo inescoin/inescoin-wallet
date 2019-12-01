@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Update a category' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-12">
+			<div class="form-group" >
+				{{ '#Key' | dgTranslate }}
+				<input class="form-control" type="text" [(ngModel)]="category.title" autocomplete="new-password">
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="form-group">
+				{{ '#Parent' | dgTranslate }}
+				<select [(ngModel)]="category.parent" class="form-control">
+					<option value=""></option>
+					<option *ngFor="let category of categories" [value]="category.sku">{{ category.title }}</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="form-group" >
+				{{ '#Image' | dgTranslate }}
+				<input class="form-control" type="text" [(ngModel)]="category.image" autocomplete="new-password">
+			</div>
+			<img *ngIf="category.image" class="img-fluid" [src]="category.image">
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary mr-2" (click)="update()" [disabled]="!category.title">{{ '#Update' | dgTranslate }}</button>
+	<button class="btn btn-secondary" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
+</div>

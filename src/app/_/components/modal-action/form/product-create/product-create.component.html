@@ -1,0 +1,61 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ '#Create a product' | dgTranslate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col">
+			<div class="form-group" >
+				{{ 'SKU' }}
+				<input class="form-control" type="text" [(ngModel)]="product.sku" autocomplete="new-password">
+			</div>
+		</div>
+		<div class="col">
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group" >
+						{{ '#Amount' | dgTranslate }}
+						<input class="form-control" type="number" min="0.1" max="1000000" step=".1" placeholder="0" [(ngModel)]="product.amount" autocomplete="new-password">
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group" >
+						{{ '#Currency' | dgTranslate }}
+						<select class="form-control" [(ngModel)]="product.currency">
+							<option value="eur">Euro</option>
+							<option value="usd">Dollar (USD)</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-12">
+			<div class="form-group" >
+				{{ '#Title' | dgTranslate }}
+				<input class="form-control" type="text" [(ngModel)]="product.title" autocomplete="new-password">
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="form-group" >
+				{{ '#Description' | dgTranslate }}
+				<textarea class="form-control" [(ngModel)]="product.description"></textarea>
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="form-group" >
+				{{ '#Image' | dgTranslate }}
+				<input class="form-control" [(ngModel)]="product.image">
+			</div>
+			<img *ngIf="product.image" class="img-fluid" [src]="product.image">
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary mr-2" (click)="add()" [disabled]="!product.sku || !product.amount || !product.title || !product.description">{{ '#Save' | dgTranslate }}</button>
+	<button class="btn btn-secondary" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
+</div>

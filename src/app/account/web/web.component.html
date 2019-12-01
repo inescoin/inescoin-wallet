@@ -17,13 +17,13 @@
 <div class="row" *ngIf="domainList.length">
 	<div class="col-md-6 mb-2" *ngFor="let domain of domainList" (click)="openWebRoute(domain)">
 		<div class="card domain-card">
-		  	<div class="card-body">
+	  	<div class="card-body">
 				<h6 class="card-subtitle mb-2 text-muted"><fa-icon icon="globe" pull="left"></fa-icon> {{ domain.url }}</h6>
 				<p>
 					{{ domain.ownerAddress }}
 					<br /><small>{{ '#Expired block' | dgTranslate }}: {{ domain.blockHeightEnd }}</small>
 				</p>
-		  	</div>
+	  	</div>
 		</div>
 	</div>
 </div>

@@ -37,7 +37,7 @@
 	  </li>
 	</ul>
 
-	<ngb-tabset [justify]="currentJustify" *ngIf="domain.ownerAddress">
+	<ngb-tabset [justify]="currentJustify" (tabChange)="onTabChange($event)" *ngIf="domain.ownerAddress">
 	  <ngb-tab>
 	    <ng-template ngbTabTitle><fa-icon icon="home"></fa-icon> {{ '#Website' | dgTranslate }}</ng-template>
 	    <ng-template ngbTabContent>
@@ -258,6 +258,86 @@
 	    </ng-template>
 	  </ngb-tab>
 
+	  <ngb-tab>
+	    <ng-template ngbTabTitle><fa-icon icon="store-alt"></fa-icon> {{ '#Store' | dgTranslate }}</ng-template>
+	    <ng-template ngbTabContent>
+	    	<div class="row mt-4 mb-3">
+					<div class="col-md-6 form-inline">
+						<input 	class="form-control mb-2 mr-sm-2"
+					         	type="text"
+					        	placeholder="{{ '#Search' | dgTranslate }}"
+										(keyup)="updateFilter($event)"
+						/>
+						<div class="form-check form-check-inline">
+					  	<input [disabled]="filters.active.on && filters.active.off && filters.active.all" class="form-check-input" type="checkbox" name="productActiveAll" id="productActiveAll" [(ngModel)]="filters.active.all" value="all" (change)="onActiveHandler('all')">
+						  <label class="form-check-label" for="productActiveAll">{{ '#All' | dgTranslate }}</label>
+						</div>
+						<div class="form-check form-check-inline">
+					  	<input class="form-check-input" type="checkbox" name="productActiveOn" id="productActiveOn" [(ngModel)]="filters.active.on" value="on" (change)="onActiveHandler('on')">
+						  <label class="form-check-label" for="productActiveOn">{{ '#Active' | dgTranslate }}</label>
+						</div>
+						<div class="form-check form-check-inline">
+					  	<input class="form-check-input" type="checkbox" name="productActiveOff" id="productActiveOff" [(ngModel)]="filters.active.off" value="off" (change)="onActiveHandler('off')">
+						  <label class="form-check-label" for="productActiveOff">{{ '#Deactivate' | dgTranslate }}</label>
+						</div>
+					</div>
+					<div class="col-md-6 text-right">
+						<button class="btn btn-light mr-2" (click)="openProductImportModal()"><fa-icon icon="file-csv"></fa-icon> {{ '#Import' | dgTranslate }}</button>
+						<button class="btn btn-light" (click)="openProductCreateModal()"><fa-icon icon="plus"></fa-icon> {{ '#Add product' | dgTranslate }}</button>
+					</div>
+				</div>
+
+	    	<div class="row">
+		    	<div class="col-3">
+	    			{{ '#Categories' | dgTranslate }}
+						<button class="btn btn-link" (click)="openCategoriesCreateModal()"><fa-icon icon="plus"></fa-icon> {{ '#Add' | dgTranslate }}</button>
+						<app-store-categories
+							[categories]="domain.html[currentLocale].categories"
+							[preload]="true"
+							[canEdit]="true"></app-store-categories>
+
+
+		    	</div>
+		    	<div class="col-9">
+		    		<div class="store-content">
+				      <div class="mb-4 text-center">
+		    				<h3>{{ domain.html[currentLocale].products.length }} {{ '#products' | dgTranslate }}</h3>
+				      	<pagination-controls class="mb-4" (pageChange)="p = $event"></pagination-controls>
+				      </div>
+				      <ul class="list-group shadow" *ngIf="domain.html[currentLocale].products">
+				        <li class="list-group-item box-product-item" *ngFor="let product of domain.html[currentLocale].products | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+				          <!-- Custom content-->
+				          <div class="media align-items-lg-center flex-column flex-lg-row p-3" (click)="openProductUpdateModal(product, i)">
+				            <div class="media-body order-2 order-lg-1">
+				              <h5 class="mt-0 font-weight-bold mb-2">
+				              	<small><fa-icon icon="eye{{ (product.active) ? '' : '-slash'}}" [class.text-warning]="!product.active" [class.text-success]="product.active"></fa-icon> {{ product.sku }}</small>
+				              	 <br /> {{ product.title }}
+				              	<span *ngIf="product.code" class="badge badge-info">{{ product.code }}</span>
+				              </h5>
+				              <p class="font-italic text-muted mb-0 small">{{ product.description }}</p>
+				              <div class="d-flex align-items-center justify-content-between mt-1">
+				                <h6 class="font-weight-bold my-2">
+													<small *ngIf="product.quantity">{{ '#Quantity' | dgTranslate }}: {{ product.quantity }}</small> <br />
+				                	€ {{ product.amount }} <br />
+				                </h6>
+												<div *ngIf="product.tags">
+													<span class="badge badge-light" *ngFor="let tag of product.tags">{{ tag }}</span>
+												</div>
+				              </div>
+				            </div>
+				            <img *ngIf="product.image" [src]="product.image" width="200" class="ml-lg-5 order-1 order-lg-2">
+				          </div>
+				          <!-- End -->
+				        </li>
+				      </ul>
+				      <div class="mt-4 text-center">
+					      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+				      </div>
+			    	</div>
+		    	</div>
+		    </div>
+	    </ng-template>
+	  </ngb-tab>
 		<ngb-tab>
 	    <ng-template ngbTabTitle><fa-icon icon="share-alt"></fa-icon> {{ '#Network' | dgTranslate }}</ng-template>
 	    <ng-template ngbTabContent>

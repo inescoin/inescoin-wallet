@@ -37,6 +37,13 @@ import { NodeRemoveComponent } from './form/node-remove/node-remove.component';
 import { ProfileExportComponent } from './form/profile-export/profile-export.component';
 import { ProfileImportComponent } from './form/profile-import/profile-import.component';
 import { ProfileResetComponent } from './form/profile-reset/profile-reset.component';
+import { ProductCreateComponent } from './form/product-create/product-create.component';
+import { ProductUpdateComponent } from './form/product-update/product-update.component';
+import { ProductRemoveComponent } from './form/product-remove/product-remove.component';
+import { ProductImportComponent } from './form/product-import/product-import.component';
+import { CategoriesCreateComponent } from './form/categories-create/categories-create.component';
+import { CategoriesUpdateComponent } from './form/categories-update/categories-update.component';
+import { CategoriesRemoveComponent } from './form/categories-remove/categories-remove.component';
 
 @Component({
   selector: 'app-modal-action',
@@ -116,6 +123,27 @@ export class ModalActionComponent implements OnInit, OnDestroy {
         break;
       case "accountResetPassword":
         this.modalService.open(AccountResetPasswordComponent, data.option || {});
+        break;
+      case "productCreate":
+        this.modalService.open(ProductCreateComponent, data.option || {});
+        break;
+      case "productUpdate":
+        this.modalService.open(ProductUpdateComponent, data.option || {});
+        break;
+      case "productRemove":
+        this.modalService.open(ProductRemoveComponent, data.option || {});
+        break;
+      case "productImport":
+        this.modalService.open(ProductImportComponent, data.option || {});
+        break;
+      case "categoriesCreate":
+        this.modalService.open(CategoriesCreateComponent, data.option || {});
+        break;
+      case "categoriesUpdate":
+        this.modalService.open(CategoriesUpdateComponent, data.option || {});
+        break;
+      case "categoriesRemove":
+        this.modalService.open(CategoriesRemoveComponent, data.option || {});
         break;
       case "contactAdd":
         this.modalService.open(ContactAddComponent, data.option || {});

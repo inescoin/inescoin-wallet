@@ -1,0 +1,105 @@
+<div class="modal-header">
+  <h4 class="modal-title"><ui-switch class="align-middle" [(ngModel)]="product.active"></ui-switch> {{ product.title }} <small>{{ product.sku }}</small></h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" *ngIf="!deleteMode">
+	<div class="row mt-4">
+
+		<div class="col-6">
+			<div class="row">
+
+				<div class="col-12">
+					<div class="form-group">
+						{{ '#Title' | dgTranslate }}
+						<input class="form-control" type="text" [(ngModel)]="product.title" autocomplete="new-password">
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="form-group">
+						{{ '#Description' | dgTranslate }}
+						<textarea class="form-control" [(ngModel)]="product.description"></textarea>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="form-group">
+						{{ '#Tags' | dgTranslate }}
+						<ngx-tags-input class="form-control input-lg" (onTagsChanged)="onTagsChangedEventHandler($event)"  [(ngModel)]="ngModelParam" name="tags"></ngx-tags-input>
+					</div>
+				</div>
+
+				<div class="col-12">
+					<div class="row">
+						<div class="col-6">
+							<div class="form-group" >
+								{{ '#Simple' | dgTranslate }}
+								<input class="form-control" type="text" maxlength="4" placeholder="A1" [(ngModel)]="product.code" autocomplete="new-password">
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group" >
+								{{ '#Quantity' | dgTranslate }}
+								<input class="form-control" type="number" placeholder="1" [(ngModel)]="product.quantity" autocomplete="new-password">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-12">
+					<div class="form-group">
+						{{ '#Composition' | dgTranslate }}
+						<ngx-tags-input class="form-control input-lg" (onTagsChanged)="onCompositionChangedEventHandler($event)"  [(ngModel)]="ngModelCompositionParam" name="composition"></ngx-tags-input>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="row">
+				<div class="col-12">
+					<div class="row">
+						<div class="col-6">
+							<div class="form-group" >
+								{{ '#Amount' | dgTranslate }}
+								<input class="form-control" type="number" min="0.1" max="1000000" step=".1" placeholder="0" [(ngModel)]="product.amount" autocomplete="new-password">
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group" >
+								{{ '#Currency' | dgTranslate }}
+								<select class="form-control" [(ngModel)]="product.currency">
+									<option value="eur">Euro</option>
+									<option value="usd">Dollar (USD)</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-12 mb-2">
+					<label>{{ '#In stock' | dgTranslate }}</label>
+					<ui-switch class="align-middle" [(ngModel)]="product.inStock"></ui-switch>
+				</div>
+				<div class="col-12">
+					{{ '#Categories' | dgTranslate }}
+					<app-store-categories [categories]="categories" [productCategories]="product.categories" [preload]="true" (onUpdated)="onUpdatedProduct($event)"></app-store-categories>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="form-group" >
+				{{ '#Image' | dgTranslate }}
+				<input class="form-control" [(ngModel)]="product.image">
+			</div>
+			<div class="text-center">
+				<img *ngIf="product.image" class="img-fluid" [src]="product.image">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-danger float-left" [class.btn-light]="deleteMode" (click)="deteleToggle()">{{ (deleteMode) ? '#Back' : '#Delete' | dgTranslate }}</button>
+	<button class="btn btn-primary mr-2" [class.btn-danger]="deleteMode" (click)="update()" [disabled]="!product.sku || !product.amount || !product.title || !product.description">{{ (deleteMode) ? '#Delete now!' : '#Save' | dgTranslate }}</button>
+	<button class="btn btn-secondary" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
+</div>
+

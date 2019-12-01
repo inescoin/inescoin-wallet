@@ -17,6 +17,17 @@ export class WebService {
   website = {};
 
   onDomainLangueAdded = new EventEmitter();
+
+  onDomainProductAdded = new EventEmitter();
+  onDomainProductsAdded = new EventEmitter();
+  onDomainProductUpdated = new EventEmitter();
+  onDomainProductRemoved = new EventEmitter();
+
+  onDomainCategoriesAdded = new EventEmitter();
+  onDomainCategoriesUpdated = new EventEmitter();
+  onDomainCategoriesRemoved = new EventEmitter();
+
+  onDomainTagAdded = new EventEmitter();
   onDomainLangueRemoved = new EventEmitter();
 
   constructor(

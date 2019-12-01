@@ -6,6 +6,15 @@
 
 	<app-start-conversation *ngIf="currentName === 'startConversation'" ></app-start-conversation>
 
+	<app-product-create *ngIf="currentName === 'productCreate'"></app-product-create>
+	<app-product-update *ngIf="currentName === 'productUpdate'"></app-product-update>
+	<app-product-remove *ngIf="currentName === 'productRemove'"></app-product-remove>
+	<app-product-import *ngIf="currentName === 'productImport'"></app-product-import>
+
+	<app-categories-create *ngIf="currentName === 'categoriesCreate'"></app-categories-create>
+	<app-categories-update *ngIf="currentName === 'categoriesUpdate'"></app-categories-update>
+	<app-categories-remove *ngIf="currentName === 'categoriesRemove'"></app-categories-remove>
+
 	<app-account-create *ngIf="currentName === 'accountCreate'"></app-account-create>
 	<app-account-import *ngIf="currentName === 'accountImport'"></app-account-import>
 	<app-account-keys *ngIf="currentName === 'accountKeys'"></app-account-keys>

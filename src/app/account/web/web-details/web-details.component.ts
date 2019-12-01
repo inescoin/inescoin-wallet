@@ -15,9 +15,10 @@ import * as _ from 'lodash';
   selector: 'app-web-details',
   templateUrl: './web-details.component.html',
   styleUrls: ['./web-details.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WebDetailsComponent implements OnInit {
+  p: number = 1;
 	hash: string = '';
 	domainList: any[] = [];
   currentLocale: string = 'en';
@@ -28,10 +29,20 @@ export class WebDetailsComponent implements OnInit {
   generatedLangues: string[] = [];
 
   currentWebsite: any = {};
+  tempProducts: any[];
+  tempSearchProducts: any[];
 
   data: any = {};
 
   remoteDomain: any = {};
+
+  filters: any = {
+    active: {
+      all: true,
+      on: true,
+      off: true
+    }, // all|yes|no
+  }
 
   domain: any = {
     html: {
@@ -109,6 +120,7 @@ export class WebDetailsComponent implements OnInit {
           height: '',
           backgroundImage: ''
         }],
+        products: [],
         theme: {
           js: {
             value: '',
@@ -185,7 +197,34 @@ export class WebDetailsComponent implements OnInit {
 
   	if (domain) {
   		this.domain = Object.assign({}, this.domain, domain);
+      if (!this.domain.html[this.currentLocale].products) {
+        this.domain.html[this.currentLocale].products = [];
+      }
+
+      if (!this.domain.html[this.currentLocale].categories) {
+        this.domain.html[this.currentLocale].categories = [];
+      }
+
+      if (!this.domain.html[this.currentLocale].tags) {
+        this.domain.html[this.currentLocale].tags = [];
+      }
+
       this.currentWebsite = this.webService.getWebsiteFromStorage(domain.url);
+      if (!this.currentWebsite) {
+        this.currentWebsite = this._clone(this.domain.html);
+      }
+
+      if (!this.currentWebsite[this.currentLocale].products) {
+        this.currentWebsite[this.currentLocale].products = [];
+      }
+
+      if (!this.currentWebsite[this.currentLocale].categories) {
+        this.currentWebsite[this.currentLocale].categories = [];
+      }
+
+      if (!this.currentWebsite[this.currentLocale].tags) {
+        this.currentWebsite[this.currentLocale].tags = [];
+      }
   	}
 
     this.loadFromStorage();
@@ -204,8 +243,31 @@ export class WebDetailsComponent implements OnInit {
 
         if (_domain) {
           this.domain = Object.assign({}, this.domain, this._clone(_domain));
-
           this.remoteDomain = this._clone(_domain);
+
+          if (!this.domain.html[this.currentLocale].products) {
+            this.domain.html[this.currentLocale].products = [];
+          }
+
+          if (!this.remoteDomain.html[this.currentLocale].products) {
+            this.remoteDomain.html[this.currentLocale].products = [];
+          }
+
+          if (!this.domain.html[this.currentLocale].categories) {
+            this.domain.html[this.currentLocale].categories = [];
+          }
+
+          if (!this.remoteDomain.html[this.currentLocale].categories) {
+            this.remoteDomain.html[this.currentLocale].categories = [];
+          }
+
+          if (!this.domain.html[this.currentLocale].tags) {
+            this.domain.html[this.currentLocale].tags = [];
+          }
+
+          if (!this.remoteDomain.html[this.currentLocale].tags) {
+            this.remoteDomain.html[this.currentLocale].tags = [];
+          }
         }
 
         this.loadFromStorage();
@@ -221,6 +283,178 @@ export class WebDetailsComponent implements OnInit {
       this.ref.detectChanges();
     });
 
+    this.subjects.onDomainProductAdded = this.webService.onDomainProductAdded.subscribe((product) => {
+      console.log('product', product);
+      if (!this.domain.html[this.currentLocale].products) {
+        this.domain.html[this.currentLocale].products = [];
+      }
+
+      this.domain.html[this.currentLocale].products.unshift(product);
+      this.ref.detectChanges();
+
+      this.saveWebsiteToStorage();
+    });
+
+    this.subjects.onDomainProductsAdded = this.webService.onDomainProductsAdded.subscribe((products) => {
+      console.log('products', products);
+      if (!this.domain.html[this.currentLocale].products) {
+        this.domain.html[this.currentLocale].products = [];
+      }
+
+      _.forEach(products, (product) => {
+        if (product.sku && product.title && product.amount && product.currency && product.description) {
+          this.domain.html[this.currentLocale].products.unshift(product);
+          this.ref.detectChanges();
+        }
+      });
+
+      this.saveWebsiteToStorage();
+    });
+
+    this.subjects.onDomainProductUpdated = this.webService.onDomainProductUpdated.subscribe((data) => {
+      console.log('data', data);
+      if (data.product && data.index !== -1) {
+        this.domain.html[this.currentLocale].products[data.index] = data.product;
+        this.ref.detectChanges();
+        this.saveWebsiteToStorage();
+      }
+    });
+
+    this.subjects.onDomainProductRemoved = this.webService.onDomainProductRemoved.subscribe((data) => {
+      console.log('data', data);
+      if (data.product) {
+        _.remove(this.domain.html[this.currentLocale].products, {
+          sku: data.product.sku
+        });
+
+        this.ref.detectChanges();
+        this.saveWebsiteToStorage();
+      }
+    });
+
+
+
+    this.subjects.onDomainCategoriesAdded = this.webService.onDomainCategoriesAdded.subscribe((category) => {
+      console.log('category', category);
+      if (!this.domain.html[this.currentLocale].categories) {
+        this.domain.html[this.currentLocale].categories = [];
+      }
+
+      if (!category.parent) {
+        this.domain.html[this.currentLocale].categories.unshift(category);
+      } else {
+        let parentCategoryIndex = _.findIndex(this.domain.html[this.currentLocale].categories, {
+          sku: category.parent
+        });
+
+        if (parentCategoryIndex !== -1) {
+          if (!this.domain.html[this.currentLocale].categories[parentCategoryIndex].children) {
+            this.domain.html[this.currentLocale].categories[parentCategoryIndex].children = [];
+          }
+
+          this.domain.html[this.currentLocale].categories[parentCategoryIndex].children.unshift(category);
+        }
+      }
+
+
+      this.ref.detectChanges();
+      this.saveWebsiteToStorage();
+    });
+
+    this.subjects.onDomainCategoriesUpdated = this.webService.onDomainCategoriesUpdated.subscribe((models) => {
+      console.log('models', models);
+      let category = models.category;
+      let parentSKU = models.parent;
+
+      if (!category) {
+        console.log('category not found.', category);
+        return;
+      }
+
+      if (!parentSKU && parentSKU !== '') {
+        console.log('parentSKU not found.', parentSKU);
+        return;
+      }
+
+      let parentCategory;
+      let parentCategoryIndex;
+      if (parentSKU) {
+        parentCategoryIndex = _.findIndex(this.domain.html[this.currentLocale].categories, {
+          sku: parentSKU
+        });
+
+        if (parentCategoryIndex !== -1) {
+          parentCategory = this.domain.html[this.currentLocale].categories[parentCategoryIndex];
+
+          if (category.parent !== parentCategory.sku) {
+             _.remove(this.domain.html[this.currentLocale].categories[parentCategoryIndex].children, {
+              sku: category.sku
+            });
+
+            if (category.parent) {
+              let index = _.findIndex(this.domain.html[this.currentLocale].categories, {
+                sku: category.parent
+              });
+
+              if (index !== -1) {
+                if (!this.domain.html[this.currentLocale].categories[index].children) {
+                  this.domain.html[this.currentLocale].categories[index].children = [];
+                }
+
+                this.domain.html[this.currentLocale].categories[index].children.unshift(category);
+              }
+            } else {
+              this.domain.html[this.currentLocale].categories.unshift(category);
+            }
+          }
+        }
+      } else {
+        if (!parentSKU && category.parent) {
+           _.remove(this.domain.html[this.currentLocale].categories, {
+            sku: category.sku
+           });
+
+           let parentCategoryIndex = _.findIndex(this.domain.html[this.currentLocale].categories, {
+             sku: category.parent
+           });
+
+          if (parentCategoryIndex !== -1) {
+            if (!this.domain.html[this.currentLocale].categories[parentCategoryIndex].children) {
+              this.domain.html[this.currentLocale].categories[parentCategoryIndex].children = [];
+            }
+
+            this.domain.html[this.currentLocale].categories[parentCategoryIndex].children.unshift(category);
+          }
+        }
+      }
+
+      this.ref.detectChanges();
+      this.saveWebsiteToStorage();
+    });
+
+    this.subjects.onDomainCategoriesRemoved = this.webService.onDomainCategoriesRemoved.subscribe((category) => {
+      console.log('remove category:', category);
+
+      if (!category.parent) {
+        _.remove(this.domain.html[this.currentLocale].categories, {
+          sku: category.sku
+        });
+      } else {
+        let index = _.findIndex(this.domain.html[this.currentLocale].categories, {
+          sku: category.parent
+        });
+
+        if (index !== -1) {
+          _.remove(this.domain.html[this.currentLocale].categories[index].children, {
+            sku: category.sku
+          });
+        }
+      }
+
+      this.ref.detectChanges();
+      this.saveWebsiteToStorage();
+    });
+
     this.subjects.onDomainLangueRemoved = this.webService.onDomainLangueRemoved.subscribe((removeCode) => {
       let lgKeys = Object.keys(this.domain.html);
 
@@ -231,6 +465,7 @@ export class WebDetailsComponent implements OnInit {
 
       this.saveWebsiteToStorage();
       this._initGeneratedLangues();
+
       this.ref.detectChanges();
     });
 
@@ -243,20 +478,29 @@ export class WebDetailsComponent implements OnInit {
     this.subjects.getUrlInfos && this.subjects.getUrlInfos.unsubscribe();
     this.subjects.onDomainLangueRemoved && this.subjects.onDomainLangueRemoved.unsubscribe();
     this.subjects.onDomainLangueAddUpdated && this.subjects.onDomainLangueAddUpdated.unsubscribe();
+    this.subjects.onDomainProductAdded && this.subjects.onDomainProductAdded.unsubscribe();
+    this.subjects.onDomainProductsAdded && this.subjects.onDomainProductsAdded.unsubscribe();
+    this.subjects.onDomainProductUpdated && this.subjects.onDomainProductUpdated.unsubscribe();
+    this.subjects.onDomainProductRemoved && this.subjects.onDomainProductRemoved.unsubscribe();
+    this.subjects.onDomainCategoriesAdded && this.subjects.onDomainCategoriesAdded.unsubscribe();
+    this.subjects.onDomainCategoriesRemoved && this.subjects.onDomainCategoriesRemoved.unsubscribe();
   }
 
   private _initGeneratedLangues() {
     this.b64Model = this.toBase64();
 
     let langues = [];
-    for (let langue of Object.keys(this.domain.html)) {
-      if (this.domain.html[langue].label) {
-        langues.push({
-          code: langue,
-          label: this.domain.html[langue].label
-        })
+    if (this.domain.html) {
+      for (let langue of Object.keys(this.domain.html)) {
+        if (this.domain.html[langue].label) {
+          langues.push({
+            code: langue,
+            label: this.domain.html[langue].label
+          })
+        }
       }
     }
+
 
     this.generatedLangues = langues;
     return langues;
@@ -295,6 +539,47 @@ export class WebDetailsComponent implements OnInit {
       from: this.domain.ownerAddress,
       publicKey: this.domain.ownerPublicKey,
       data: this.data
+    });
+  }
+
+  openProductCreateModal() {
+    this.modalActionService.open('productCreate', {
+      component: 'web',
+      products: this.domain.html[this.currentLocale].products
+    });
+  }
+
+  openProductImportModal() {
+    this.modalActionService.open('productImport', {
+      size: 'lg',
+      component: 'web',
+      products: this.domain.html[this.currentLocale].products
+    });
+  }
+
+
+  openProductUpdateModal(product, index) {
+    this.modalActionService.open('productUpdate', {
+      component: 'web',
+      product: product,
+      categories: this.domain.html[this.currentLocale].categories,
+      index: index,
+      size: 'lg',
+    });
+  }
+
+  openProductRemoveModal(product, index) {
+    this.modalActionService.open('productUpdate', {
+      component: 'web',
+      product: product,
+      index: index
+    });
+  }
+
+  openCategoriesCreateModal() {
+    this.modalActionService.open('categoriesCreate', {
+      component: 'web',
+      categories: this.domain.html[this.currentLocale].categories
     });
   }
 
@@ -400,6 +685,18 @@ export class WebDetailsComponent implements OnInit {
       this.domain.html[locale].website.active = false;
     }
 
+    if (!this.domain.html[locale].products) {
+      this.domain.html[locale].products = [];
+    }
+
+    if (!this.domain.html[locale].categories) {
+      this.domain.html[locale].categories = [];
+    }
+
+    if (!this.domain.html[locale].tags) {
+      this.domain.html[locale].tags = [];
+    }
+
     if (label) {
       this.domain.html[locale].label = label;
     }
@@ -442,6 +739,8 @@ export class WebDetailsComponent implements OnInit {
   }
 
   saveWebsiteToStorage() {
+    this.tempProducts = this._clone(this.domain.html[this.currentLocale].products)
+    this.tempSearchProducts = this._clone(this.domain.html[this.currentLocale].products)
     this.webService.saveWebsiteToStorage(this.domain.url, this.domain.html);
   }
 
@@ -495,6 +794,80 @@ export class WebDetailsComponent implements OnInit {
       this.b64Model = this.toBase64();
     }
 
+  }
+
+  onTabChange(event) {
+    //console.log('onTabChange::', event);
+  }
+
+  updateFilterActive(event) {
+
+  }
+
+  onActiveHandler(type) {
+    if (!this.tempProducts) {
+      this.tempProducts = this._clone(this.domain.html[this.currentLocale].products);
+    }
+
+    if (type === 'all') {
+      if (this.filters.active.all) {
+        this.filters.active.on = true;
+        this.filters.active.off = true;
+        this.domain.html[this.currentLocale].products = this._clone(this.tempProducts);
+      }
+
+      return;
+    }
+
+    let tempProducts: any;
+    if (type === 'on') {
+      tempProducts  = this.tempProducts.filter((d) => {
+        return (d.active && this.filters.active.on)  || (!d.active && this.filters.active.off);
+      });
+
+      this.filters.active.all = this.filters.active.on && this.filters.active.off;
+    }
+
+    if (type === 'off') {
+        tempProducts  = this.tempProducts.filter((d) => {
+          return !d.active && this.filters.active.off || (d.active && this.filters.active.on);;
+        });
+
+      this.filters.active.all = this.filters.active.on && this.filters.active.off;
+    }
+
+    if (type === 'search') {
+        return this.tempProducts.filter((d) => {
+          return !d.active && this.filters.active.off || (d.active && this.filters.active.on);;
+        });
+    }
+
+    if (tempProducts) {
+      this.p = 1;
+      this.domain.html[this.currentLocale].products = this._clone(tempProducts);
+    }
+  }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+    if (!this.tempSearchProducts) {
+      this.tempSearchProducts = this._clone(this.domain.html[this.currentLocale].products);
+    }
+
+    let data = this.tempSearchProducts.filter((d) => {
+      return !d.active && this.filters.active.off || (d.active && this.filters.active.on);;
+    });
+
+    const tempProducts = data.filter(function(d) {
+      return d.title.toLowerCase().indexOf(val) !== -1
+        || d.sku.toLowerCase().indexOf(val) !== -1
+        || d.description.toLowerCase().indexOf(val) !== -1
+        || !val;
+    });
+
+    this.p = 1;
+    this.domain.html[this.currentLocale].products = this._clone(tempProducts);
+    this.tempProducts = null;
   }
 
   private _getFromCache() {

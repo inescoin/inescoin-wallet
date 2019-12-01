@@ -19,6 +19,9 @@ import localeFr from '@angular/common/locales/fr';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { DragulaModule } from 'ng2-dragula';
+
+import { NgxPaginationModule } from 'ngx-pagination';
+
 import 'hammerjs';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -28,14 +31,20 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 
+import { NgxTagsInputModule } from 'ngx-tags-input';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DoorgetsTruncateModule } from 'doorgets-ng-truncate';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ToastrModule } from 'ngx-toastr';
 import { DoorgetsTranslateModule , NgTranslate, NgTranslateAbstract } from 'doorgets-ng-translate';
-
+import { DoorgetsTruncateModule } from 'doorgets-ng-truncate';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NgxTinymceModule } from 'ngx-tinymce';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AccountComponent } from './account/account.component';
 
@@ -52,13 +61,6 @@ import { ContactsComponent } from './account/contacts/contacts.component';
 import { ContactsCreateComponent } from './account/contacts/contacts-create/contacts-create.component';
 import { ContactsUpdateComponent } from './account/contacts/contacts-update/contacts-update.component';
 import { ContactsDetailsComponent } from './account/contacts/contacts-details/contacts-details.component';
-
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
-import { NgxTinymceModule } from 'ngx-tinymce';
-import { ColorPickerModule } from 'ngx-color-picker';
 
 import { SettingsComponent } from './account/settings/settings.component';
 
@@ -101,6 +103,14 @@ import { AccountKeysComponent } from './_/components/modal-action/form/account-k
 import { AccountRemoveComponent } from './_/components/modal-action/form/account-remove/account-remove.component';
 import { AccountResetPasswordComponent } from './_/components/modal-action/form/account-reset-password/account-reset-password.component';
 import { AccountRequestComponent } from './_/components/modal-action/form/account-request/account-request.component';
+import { ProductCreateComponent } from './_/components/modal-action/form/product-create/product-create.component';
+import { ProductUpdateComponent } from './_/components/modal-action/form/product-update/product-update.component';
+import { ProductRemoveComponent } from './_/components/modal-action/form/product-remove/product-remove.component';
+import { CategoriesRemoveComponent } from './_/components/modal-action/form/categories-remove/categories-remove.component';
+import { CategoriesCreateComponent } from './_/components/modal-action/form/categories-create/categories-create.component';
+import { CategoriesUpdateComponent } from './_/components/modal-action/form/categories-update/categories-update.component';
+import { StoreCategoriesComponent } from './_/components/ui/store-categories/store-categories.component';
+import { ProductImportComponent } from './_/components/modal-action/form/product-import/product-import.component';
 
 export function newNgTranslate(http: Http) {
   return new NgTranslate(http, '../../assets/public/locale');
@@ -126,7 +136,6 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     ContactsUpdateComponent,
     ContactsDetailsComponent,
     CryptoAmountPipe,
-
     MessengerChatComponent,
     ModalActionComponent,
     QrCodeScanComponent,
@@ -165,6 +174,14 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     AccountRemoveComponent,
     AccountResetPasswordComponent,
     AccountRequestComponent,
+    ProductCreateComponent,
+    ProductUpdateComponent,
+    ProductRemoveComponent,
+    CategoriesRemoveComponent,
+    CategoriesCreateComponent,
+    CategoriesUpdateComponent,
+    StoreCategoriesComponent,
+    ProductImportComponent,
   ],
   entryComponents: [
     QrCodeScanComponent,
@@ -192,6 +209,13 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     AccountRemoveComponent,
     AccountResetPasswordComponent,
     AccountRequestComponent,
+    ProductCreateComponent,
+    ProductUpdateComponent,
+    ProductRemoveComponent,
+    ProductImportComponent,
+    CategoriesRemoveComponent,
+    CategoriesCreateComponent,
+    CategoriesUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -226,7 +250,9 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     SocketIoModule.forRoot(config),
     UiSwitchModule,
     PasswordStrengthBarModule,
-    PickerModule
+    PickerModule,
+    NgxTagsInputModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
