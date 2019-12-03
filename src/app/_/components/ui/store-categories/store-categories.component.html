@@ -1,20 +1,41 @@
 <div class="store-left-menu">
 	<div class="just-padding">
 		<ul class="list-group list-group-root well" *ngIf="categories">
+			<li class="list-group-item" *ngIf="!isProduct">
+				<label>
+					<input type="checkbox" [(ngModel)]="checked.all" (click)="allChecked()" />
+			 		{{ '#All' | dgTranslate }}
+			 	</label>
+			</li>
 			<li class="list-group-item" *ngFor="let category of categories; let i = index">
-					<fa-icon class="float-right" *ngIf="category.children && category.children.length && !categoriesMenuCollapsed[category.sku]" icon="angle-up" (click)="categoriesMenuCollapsed[category.sku] = !categoriesMenuCollapsed[category.sku]"></fa-icon>
-			 		<fa-icon class="float-right" *ngIf="category.children && category.children.length && categoriesMenuCollapsed[category.sku]" icon="angle-down" (click)="categoriesMenuCollapsed[category.sku] = !categoriesMenuCollapsed[category.sku]"></fa-icon>
+				<fa-icon class="float-right" icon="angle-up"
+					*ngIf="category.children && category.children.length && !categoriesMenuCollapsed[category.sku]"
+					(click)="categoriesMenuCollapsed[category.sku] = !categoriesMenuCollapsed[category.sku]"></fa-icon>
+		 		<fa-icon class="float-right" icon="angle-down"
+		 			*ngIf="category.children && category.children.length && categoriesMenuCollapsed[category.sku]"
+		 			(click)="categoriesMenuCollapsed[category.sku] = !categoriesMenuCollapsed[category.sku]"></fa-icon>
 
-					<label>
-						<input type="checkbox" [checked]="productCategories.indexOf(category.sku) !== -1" (click)="setCurrent(category.sku)" />
-				 		{{ category.title }}
-				 		<fa-icon *ngIf="canEdit" icon="pen" class="fa-icon-edit text-info" (click)="edit($event, category)"></fa-icon>
-				 		<fa-icon *ngIf="canEdit" icon="times" class="fa-icon-edit text-danger" (click)="remove($event, category)"></fa-icon>
-				 	</label>
+				<label>
+					<input *ngIf="!isProduct" type="checkbox"
+						(click)="emitModel()"
+						[(ngModel)]="checked[category.sku]" />
+					<input *ngIf="isProduct" type="checkbox"
+						[checked]="productCategories.indexOf(category.sku) !== -1"
+						(click)="categoriesUpdate(category.sku)" />
+			 		{{ category.title }}
+			 		<fa-icon *ngIf="canEdit" icon="pen" class="fa-icon-edit text-info" (click)="edit($event, category)"></fa-icon>
+			 		<fa-icon *ngIf="canEdit" icon="times" class="fa-icon-edit text-danger" (click)="remove($event, category)"></fa-icon>
+			 	</label>
+
 				<ul class="list-group children-group-item" [class.collapse]="!categoriesMenuCollapsed[category.sku]" *ngIf="category.children">
 					<li href="#" class="list-group-item" *ngFor="let _category of category.children; let ix = index">
 						<label>
-							<input type="checkbox" [checked]="productCategories.indexOf(_category.sku) !== -1" (click)="setCurrent(_category.sku)" />
+							<input *ngIf="!isProduct" type="checkbox"
+								(click)="emitModel()"
+								[(ngModel)]="checked[_category.sku]" />
+							<input *ngIf="isProduct" type="checkbox"
+								[checked]="productCategories.indexOf(_category.sku) !== -1"
+								(click)="categoriesUpdate(_category.sku)" />
 							{{ _category.title }}
 				 			<fa-icon *ngIf="canEdit" icon="pen" class="fa-icon-edit text-info" (click)="edit($event, _category)"></fa-icon>
 				 			<fa-icon *ngIf="canEdit" icon="times" class="fa-icon-edit text-danger" (click)="remove($event, _category)"></fa-icon>

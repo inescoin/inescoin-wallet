@@ -11,5 +11,6 @@ export const inescoinConfig = {
 	website: 'https://inescoin.org/',
 	unit: 1000000000,
 	symbol: 'INES',
+	icoPrice: 0.0042,
 	name: 'inescoin',
 }

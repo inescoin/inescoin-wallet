@@ -294,6 +294,7 @@
 						<app-store-categories
 							[categories]="domain.html[currentLocale].categories"
 							[preload]="true"
+							(onChecked)="onCatagoriesChecked($event)"
 							[canEdit]="true"></app-store-categories>
 
 
@@ -317,8 +318,7 @@
 				              <p class="font-italic text-muted mb-0 small">{{ product.description }}</p>
 				              <div class="d-flex align-items-center justify-content-between mt-1">
 				                <h6 class="font-weight-bold my-2">
-													<small *ngIf="product.quantity">{{ '#Quantity' | dgTranslate }}: {{ product.quantity }}</small> <br />
-				                	€ {{ product.amount }} <br />
+													<span *ngIf="product.currency === 'usd'">$</span> {{ product.amount }} <span *ngIf="product.currency === 'eur'">€</span> - {{ product.amount | cryptoConverter }}<br />
 				                </h6>
 												<div *ngIf="product.tags">
 													<span class="badge badge-light" *ngFor="let tag of product.tags">{{ tag }}</span>

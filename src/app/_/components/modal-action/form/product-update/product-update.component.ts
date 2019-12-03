@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalActionService } from '../../modal-action.service';
 import { WebService } from '../../../../../account/web/web.service';
+import { inescoinConfig } from '../../../../../config/inescoin.config';
 
 @Component({
   selector: 'app-product-update',
@@ -19,6 +20,8 @@ export class ProductUpdateComponent implements OnInit {
 
   ngModelParam = [];
   ngModelCompositionParam = [];
+
+  inescoinConfig: any = inescoinConfig;
 
   constructor(
   	private ngbActiveModal: NgbActiveModal,
@@ -77,7 +80,7 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     this.product.composition = [];
-    console.log('this.ngModelCompositionParam', this.ngModelCompositionParam);
+
   	for (var i = this.ngModelCompositionParam.length - 1; i >= 0; i--) {
     	this.product.composition.push(this.ngModelCompositionParam[i].displayValue);
     }
@@ -102,8 +105,6 @@ export class ProductUpdateComponent implements OnInit {
   	} else {
   		this.product.categories.splice(index, 1);
   	}
-
-  	console.log('event', event)
   }
 
   onTagsChangedEventHandler(event: any): void {

@@ -26,6 +26,7 @@ export class WebService {
   onDomainCategoriesAdded = new EventEmitter();
   onDomainCategoriesUpdated = new EventEmitter();
   onDomainCategoriesRemoved = new EventEmitter();
+  onDomainCategoriesChecked = new EventEmitter();
 
   onDomainTagAdded = new EventEmitter();
   onDomainLangueRemoved = new EventEmitter();

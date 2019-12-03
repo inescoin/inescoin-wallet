@@ -29,8 +29,10 @@ export class WebDetailsComponent implements OnInit {
   generatedLangues: string[] = [];
 
   currentWebsite: any = {};
+
   tempProducts: any[];
   tempSearchProducts: any[];
+  tempCategoriesProducts: any[];
 
   data: any = {};
 
@@ -41,7 +43,10 @@ export class WebDetailsComponent implements OnInit {
       all: true,
       on: true,
       off: true
-    }, // all|yes|no
+    },
+    categories: {
+      all: true
+    },
   }
 
   domain: any = {
@@ -561,7 +566,7 @@ export class WebDetailsComponent implements OnInit {
   openProductUpdateModal(product, index) {
     this.modalActionService.open('productUpdate', {
       component: 'web',
-      product: product,
+      product: this._clone(product),
       categories: this.domain.html[this.currentLocale].categories,
       index: index,
       size: 'lg',
@@ -739,8 +744,6 @@ export class WebDetailsComponent implements OnInit {
   }
 
   saveWebsiteToStorage() {
-    this.tempProducts = this._clone(this.domain.html[this.currentLocale].products)
-    this.tempSearchProducts = this._clone(this.domain.html[this.currentLocale].products)
     this.webService.saveWebsiteToStorage(this.domain.url, this.domain.html);
   }
 
@@ -846,6 +849,9 @@ export class WebDetailsComponent implements OnInit {
       this.p = 1;
       this.domain.html[this.currentLocale].products = this._clone(tempProducts);
     }
+
+    this.tempSearchProducts = null;
+    this.tempCategoriesProducts = null;
   }
 
   updateFilter(event) {
@@ -854,20 +860,51 @@ export class WebDetailsComponent implements OnInit {
       this.tempSearchProducts = this._clone(this.domain.html[this.currentLocale].products);
     }
 
-    let data = this.tempSearchProducts.filter((d) => {
-      return !d.active && this.filters.active.off || (d.active && this.filters.active.on);;
+    let data = this.tempSearchProducts.filter((product) => {
+      return !product.active && this.filters.active.off || (product.active && this.filters.active.on);;
     });
 
-    const tempProducts = data.filter(function(d) {
-      return d.title.toLowerCase().indexOf(val) !== -1
-        || d.sku.toLowerCase().indexOf(val) !== -1
-        || d.description.toLowerCase().indexOf(val) !== -1
+    const tempProducts = data.filter(function(product) {
+      return product.title.toLowerCase().indexOf(val) !== -1
+        || product.sku.toLowerCase().indexOf(val) !== -1
+        || product.description.toLowerCase().indexOf(val) !== -1
         || !val;
     });
 
     this.p = 1;
     this.domain.html[this.currentLocale].products = this._clone(tempProducts);
     this.tempProducts = null;
+    this.tempCategoriesProducts = null;
+  }
+
+  updateCategoriesFilter() {
+    if (!this.tempCategoriesProducts) {
+      this.tempCategoriesProducts = this._clone(this.domain.html[this.currentLocale].products);
+    }
+
+    if (this.filters.categories.all) {
+      this.domain.html[this.currentLocale].products = this._clone(this.tempCategoriesProducts);
+      return;
+    }
+
+    let categorriesKeys = Object.keys(this.filters.categories);
+    let tempKeys = [];
+
+    for(let i = 0; categorriesKeys.length > i; i++) {
+      if (this.filters.categories[categorriesKeys[i]]) {
+        tempKeys.push(categorriesKeys[i]);
+      }
+    }
+
+    const tempProducts = this.tempCategoriesProducts.filter(function(product) {
+      return product.categories && (_.intersection(product.categories, tempKeys)).length;
+    });
+
+    this.p = 1;
+    this.domain.html[this.currentLocale].products = this._clone(tempProducts);
+    this.tempProducts = null;
+    this.tempSearchProducts = null;
+
   }
 
   private _getFromCache() {
@@ -886,6 +923,24 @@ export class WebDetailsComponent implements OnInit {
     } else {
       return JSON.parse(wallets);
     }
+  }
+
+  onCatagoriesChecked(filtersCategories) {
+    setTimeout(() => {
+      let keys = Object.keys(filtersCategories);
+      let checkAll = true;
+      for (let i = keys.length - 1; i >= 0; i--) {
+        if (keys[i] !== 'all' && !filtersCategories[keys[i]]) {
+          checkAll = false;
+        }
+      }
+
+      filtersCategories.all = checkAll;
+
+      this.filters.categories = this._clone(filtersCategories);
+
+      this.updateCategoriesFilter();
+    }, 300);
   }
 
   private _clone(source) {

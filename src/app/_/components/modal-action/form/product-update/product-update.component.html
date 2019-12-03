@@ -62,6 +62,7 @@
 							<div class="form-group" >
 								{{ '#Amount' | dgTranslate }}
 								<input class="form-control" type="number" min="0.1" max="1000000" step=".1" placeholder="0" [(ngModel)]="product.amount" autocomplete="new-password">
+								<small>{{ product.amount | cryptoConverter }}</small>
 							</div>
 						</div>
 						<div class="col-6">
@@ -78,11 +79,20 @@
 				</div>
 				<div class="col-12 mb-2">
 					<label>{{ '#In stock' | dgTranslate }}</label>
-					<ui-switch class="align-middle" [(ngModel)]="product.inStock"></ui-switch>
+					<ui-switch
+						class="align-middle"
+						[(ngModel)]="product.inStock"
+					></ui-switch>
 				</div>
 				<div class="col-12">
 					{{ '#Categories' | dgTranslate }}
-					<app-store-categories [categories]="categories" [productCategories]="product.categories" [preload]="true" (onUpdated)="onUpdatedProduct($event)"></app-store-categories>
+					<app-store-categories
+						[categories]="categories"
+						[productCategories]="product.categories"
+						[preload]="true"
+						[isProduct]="true"
+						(onCatagoriesUpdated)="onUpdatedProduct($event)"
+					></app-store-categories>
 				</div>
 			</div>
 		</div>
