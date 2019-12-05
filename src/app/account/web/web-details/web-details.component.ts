@@ -30,9 +30,8 @@ export class WebDetailsComponent implements OnInit {
 
   currentWebsite: any = {};
 
+  tempSearch: any[];
   tempProducts: any[];
-  tempSearchProducts: any[];
-  tempCategoriesProducts: any[];
 
   data: any = {};
 
@@ -47,6 +46,8 @@ export class WebDetailsComponent implements OnInit {
     categories: {
       all: true
     },
+    query: '',
+
   }
 
   domain: any = {
@@ -846,65 +847,55 @@ export class WebDetailsComponent implements OnInit {
     }
 
     if (tempProducts) {
-      this.p = 1;
-      this.domain.html[this.currentLocale].products = this._clone(tempProducts);
+      this.doSearch(tempProducts);
     }
-
-    this.tempSearchProducts = null;
-    this.tempCategoriesProducts = null;
   }
 
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
-    if (!this.tempSearchProducts) {
-      this.tempSearchProducts = this._clone(this.domain.html[this.currentLocale].products);
+  doSearch(tempProductsFrom?) {
+    this.tempSearch = tempProductsFrom || this.tempSearch;
+
+    if (!this.tempSearch) {
+      this.tempSearch = this._clone(this.domain.html[this.currentLocale].products);
     }
 
-    let data = this.tempSearchProducts.filter((product) => {
-      return !product.active && this.filters.active.off || (product.active && this.filters.active.on);;
-    });
-
-    const tempProducts = data.filter(function(product) {
-      return product.title.toLowerCase().indexOf(val) !== -1
-        || product.sku.toLowerCase().indexOf(val) !== -1
-        || product.description.toLowerCase().indexOf(val) !== -1
-        || !val;
-    });
-
-    this.p = 1;
-    this.domain.html[this.currentLocale].products = this._clone(tempProducts);
-    this.tempProducts = null;
-    this.tempCategoriesProducts = null;
-  }
-
-  updateCategoriesFilter() {
-    if (!this.tempCategoriesProducts) {
-      this.tempCategoriesProducts = this._clone(this.domain.html[this.currentLocale].products);
+    if (this.filters.categories.all && this.filters.active.all && !this.filters.query && this.tempSearch) {
+      this.domain.html[this.currentLocale].products = this._clone(this.tempSearch);
     }
 
-    if (this.filters.categories.all) {
-      this.domain.html[this.currentLocale].products = this._clone(this.tempCategoriesProducts);
-      return;
-    }
+    let tempProducts: any[] = this._clone(this.tempSearch);
 
-    let categorriesKeys = Object.keys(this.filters.categories);
-    let tempKeys = [];
+    // Filters on categories
+    if (!this.filters.categories.all) {
+      let categorriesKeys = Object.keys(this.filters.categories);
 
-    for(let i = 0; categorriesKeys.length > i; i++) {
-      if (this.filters.categories[categorriesKeys[i]]) {
-        tempKeys.push(categorriesKeys[i]);
+      if (categorriesKeys.length > 1) {
+        let tempKeys = [];
+
+        for(let i = 0; categorriesKeys.length > i; i++) {
+          if (this.filters.categories[categorriesKeys[i]]) {
+            tempKeys.push(categorriesKeys[i]);
+          }
+        }
+
+        tempProducts = tempProducts.filter(function(product) {
+          return product.categories && (_.intersection(product.categories, tempKeys)).length;
+        });
       }
     }
 
-    const tempProducts = this.tempCategoriesProducts.filter(function(product) {
-      return product.categories && (_.intersection(product.categories, tempKeys)).length;
-    });
+    // Filters on query
+    if (this.filters.query) {
+      tempProducts  = tempProducts.filter((product) => {
+        return product.title.toLowerCase().indexOf(this.filters.query) !== -1
+          || product.sku.toLowerCase().indexOf(this.filters.query) !== -1
+          || product.description.toLowerCase().indexOf(this.filters.query) !== -1;
+      });
+    }
 
     this.p = 1;
-    this.domain.html[this.currentLocale].products = this._clone(tempProducts);
-    this.tempProducts = null;
-    this.tempSearchProducts = null;
-
+    if (tempProducts) {
+      this.domain.html[this.currentLocale].products = this._clone(tempProducts);
+    }
   }
 
   private _getFromCache() {
@@ -939,11 +930,16 @@ export class WebDetailsComponent implements OnInit {
 
       this.filters.categories = this._clone(filtersCategories);
 
-      this.updateCategoriesFilter();
+      this.doSearch();
     }, 300);
   }
 
   private _clone(source) {
-    return _.cloneDeep(JSON.parse(JSON.stringify(source)));
+    let _source: any;
+    try {
+      _source = JSON.parse(JSON.stringify(source))
+    } catch(e) {}
+
+    return _source;
   }
 }

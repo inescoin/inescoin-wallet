@@ -266,7 +266,8 @@
 						<input 	class="form-control mb-2 mr-sm-2"
 					         	type="text"
 					        	placeholder="{{ '#Search' | dgTranslate }}"
-										(keyup)="updateFilter($event)"
+										(keyup)="doSearch()"
+										[(ngModel)]="filters.query"
 						/>
 						<div class="form-check form-check-inline">
 					  	<input [disabled]="filters.active.on && filters.active.off && filters.active.all" class="form-check-input" type="checkbox" name="productActiveAll" id="productActiveAll" [(ngModel)]="filters.active.all" value="all" (change)="onActiveHandler('all')">
