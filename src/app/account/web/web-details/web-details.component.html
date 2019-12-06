@@ -284,20 +284,28 @@
 					</div>
 					<div class="col-md-6 text-right">
 						<button class="btn btn-light mr-2" (click)="openProductImportModal()"><fa-icon icon="file-csv"></fa-icon> {{ '#Import' | dgTranslate }}</button>
-						<button class="btn btn-light" (click)="openProductCreateModal()"><fa-icon icon="plus"></fa-icon> {{ '#Add product' | dgTranslate }}</button>
+						<button class="btn btn-light" (click)="openProductCreateModal()"><fa-icon icon="plus"></fa-icon> {{ '#Add a product' | dgTranslate }}</button>
 					</div>
 				</div>
 
 	    	<div class="row">
 		    	<div class="col-3">
-	    			{{ '#Categories' | dgTranslate }}
-						<button class="btn btn-link" (click)="openCategoriesCreateModal()"><fa-icon icon="plus"></fa-icon> {{ '#Add' | dgTranslate }}</button>
+		    		<div class="form-group">
+							<div class="label-facette range-amount-label">{{ '#Amount' | dgTranslate }}</div>
+							<ngx-slider-moby [max_value]="filters.amount.max" [min_value]="filters.amount.min" [range]="true" [step]="1" [value_from]="filters.amount.from" [value_to]="filters.amount.to" (valueChange)="rangeChanged($event)"></ngx-slider-moby>
+						</div>
+
+	    			<div>
+	    				<span class="label-facette">{{ '#Categories' | dgTranslate }}</span>
+	    				<button class="btn btn-link" (click)="openCategoriesCreateModal()"><fa-icon icon="plus"></fa-icon> {{ '#Add' | dgTranslate }}</button>
+	    			</div>
+
+
 						<app-store-categories
 							[categories]="domain.html[currentLocale].categories"
 							[preload]="true"
 							(onChecked)="onCatagoriesChecked($event)"
 							[canEdit]="true"></app-store-categories>
-
 
 		    	</div>
 		    	<div class="col-9">

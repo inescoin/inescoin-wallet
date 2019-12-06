@@ -30,7 +30,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
-
+import { NgxSliderMobyModule } from 'ngx-slider-moby';
 import { NgxTagsInputModule } from 'ngx-tags-input';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -255,6 +255,7 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     PickerModule,
     NgxTagsInputModule,
     NgxPaginationModule,
+    NgxSliderMobyModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

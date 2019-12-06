@@ -47,7 +47,12 @@ export class WebDetailsComponent implements OnInit {
       all: true
     },
     query: '',
-
+    amount: {
+      from: 1,
+      to: 1000,
+      min: 1,
+      max: 2
+    }
   }
 
   domain: any = {
@@ -278,6 +283,8 @@ export class WebDetailsComponent implements OnInit {
 
         this.loadFromStorage();
         this._initGeneratedLangues();
+        this._initRangeAmount();
+
         this.ref.detectChanges();
     });
 
@@ -286,6 +293,7 @@ export class WebDetailsComponent implements OnInit {
 
       this.saveWebsiteToStorage();
       this._initGeneratedLangues();
+      this._initRangeAmount();
       this.ref.detectChanges();
     });
 
@@ -337,8 +345,6 @@ export class WebDetailsComponent implements OnInit {
         this.saveWebsiteToStorage();
       }
     });
-
-
 
     this.subjects.onDomainCategoriesAdded = this.webService.onDomainCategoriesAdded.subscribe((category) => {
       console.log('category', category);
@@ -471,11 +477,14 @@ export class WebDetailsComponent implements OnInit {
 
       this.saveWebsiteToStorage();
       this._initGeneratedLangues();
+      this._initRangeAmount();
 
       this.ref.detectChanges();
     });
 
     this._initGeneratedLangues();
+    this._initRangeAmount();
+
     this.isLoading = false;
     //this.ref.detectChanges();
   }
@@ -507,9 +516,23 @@ export class WebDetailsComponent implements OnInit {
       }
     }
 
-
     this.generatedLangues = langues;
+
     return langues;
+  }
+
+  private _initRangeAmount() {
+    if (this.domain.html && this.domain.html[this.currentLocale] && this.domain.html[this.currentLocale].products) {
+      _.forEach(this.domain.html[this.currentLocale].products, (product) => {
+        if (product.amount > this.filters.amount.max) {
+           this.filters.amount.max = product.amount;
+        }
+
+        if (product.amount < this.filters.amount.min) {
+           this.filters.amount.min = product.amount;
+        }
+      });
+    }
   }
 
   openDomainRenewModal() {
@@ -752,6 +775,7 @@ export class WebDetailsComponent implements OnInit {
     this.domain = this._clone(this.remoteDomain);
     this.diffModel = {};
     this._initGeneratedLangues();
+    this._initRangeAmount();
   }
 
   loadFromStorage() {
@@ -762,6 +786,7 @@ export class WebDetailsComponent implements OnInit {
       this.domain.html = html;
       this.diffModel = this.deepDiffMapperService.difference(this.domain.html, copy);
       this._initGeneratedLangues();
+      this._initRangeAmount();
     }
 
   }
@@ -794,6 +819,7 @@ export class WebDetailsComponent implements OnInit {
     if (decodedModel) {
       this.domain.html = decodedModel.html ? decodedModel.html : decodedModel;
       this._initGeneratedLangues();
+      this._initRangeAmount();
     } else {
       this.b64Model = this.toBase64();
     }
@@ -825,24 +851,24 @@ export class WebDetailsComponent implements OnInit {
 
     let tempProducts: any;
     if (type === 'on') {
-      tempProducts  = this.tempProducts.filter((d) => {
-        return (d.active && this.filters.active.on)  || (!d.active && this.filters.active.off);
+      tempProducts  = this.tempProducts.filter((product) => {
+        return (product.active && this.filters.active.on)  || (!product.active && this.filters.active.off);
       });
 
       this.filters.active.all = this.filters.active.on && this.filters.active.off;
     }
 
     if (type === 'off') {
-        tempProducts  = this.tempProducts.filter((d) => {
-          return !d.active && this.filters.active.off || (d.active && this.filters.active.on);;
+        tempProducts  = this.tempProducts.filter((product) => {
+          return !product.active && this.filters.active.off || (product.active && this.filters.active.on);;
         });
 
       this.filters.active.all = this.filters.active.on && this.filters.active.off;
     }
 
     if (type === 'search') {
-        return this.tempProducts.filter((d) => {
-          return !d.active && this.filters.active.off || (d.active && this.filters.active.on);;
+        return this.tempProducts.filter((product) => {
+          return !product.active && this.filters.active.off || (product.active && this.filters.active.on);;
         });
     }
 
@@ -892,6 +918,11 @@ export class WebDetailsComponent implements OnInit {
       });
     }
 
+    // Filters on amount min max
+    tempProducts  = tempProducts.filter((product) => {
+      return product.amount >= this.filters.amount.from  && product.amount <= this.filters.amount.to;
+    });
+
     this.p = 1;
     if (tempProducts) {
       this.domain.html[this.currentLocale].products = this._clone(tempProducts);
@@ -932,6 +963,13 @@ export class WebDetailsComponent implements OnInit {
 
       this.doSearch();
     }, 300);
+  }
+
+  rangeChanged(event) {
+    this.filters.amount.from = event.value.from || this.filters.amount.from;
+    this.filters.amount.to = event.value.to || this.filters.amount.to;
+
+    this.doSearch();
   }
 
   private _clone(source) {

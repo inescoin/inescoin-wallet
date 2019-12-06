@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { ModalActionService } from '../../modal-action/modal-action.service';
-import { WebService } from '../../../account/web/web.service';
 
 @Component({
   selector: 'app-store-categories',

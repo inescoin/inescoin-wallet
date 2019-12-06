@@ -12,6 +12,9 @@ import { inescoinConfig } from '../../config/inescoin.config';
 export class CryptoConverterPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    return Number.parseFloat(value / inescoinConfig.icoPrice).toFixed(2) + ' ' + inescoinConfig.symbol;
+    return Number
+    	.parseFloat((value / inescoinConfig.icoPrice).toString())
+    	.toFixed(2)
+    	+ ' ' + inescoinConfig.symbol;
   }
 }
