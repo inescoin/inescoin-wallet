@@ -206,5 +206,26 @@
 	"#Account keys": "Account keys",
 	"#Remove account": "Remove account",
 	"#Request payment": "Request payment",
-	"#Remove": "Remove"
+	"#Remove": "Remove",
+
+	"#products": "products",
+	"#All": "All",
+	"#Categories": "Categories",
+	"#Deactivate": "Deactivate",
+	"#Search": "Search",
+	"#Add a product": "Add a product",
+	"#Next": "Next",
+	"#Previous": "Previous",
+	"#Currency": "Currency",
+	"#Image": "Image",
+	"#Tags": "Tags",
+	"#Simple": "Simple",
+	"#Composition": "Composition",
+	"#Quantity": "Quantity",
+	"#Package": "Package",
+	"#In stock": "In stock",
+	"#Store": "Store",
+	"#Parse": "Parse",
+	"#Update a category": "Update a category",
+	"#Remove a category": "Remove a category"
 }

@@ -215,5 +215,27 @@
 	"#Account keys": "アカウントキー",
 	"#Remove account": "アカウントを削除",
 	"#Request payment": "支払いをリクエスト",
-	"#Remove": "削除する"
+	"#Remove": "削除する",
+
+	"#products": "製品",
+	"#All": "すべて",
+	"#Categories": "カテゴリー",
+	"#Deactivate": "無効化",
+	"#Search": "サーチ",
+	"#Add a product": "製品を追加する",
+	"#Next": "次",
+	"#Previous": "前",
+	"#Currency": "通貨",
+	"#Image": "画像",
+	"#Tags": "タグ",
+	"#Simple": "シンプル",
+	"#Composition": "組成",
+	"#Quantity": "量",
+	"#Package": "パッケージ",
+	"#In stock": "在庫あり",
+	"#Categories": "カテゴリー",
+	"#Store": "格納",
+	"#Parse": "解析",
+	"#Update a category": "カテゴリーを更新する",
+	"#Remove a category": "カテゴリーを削除する"
 }

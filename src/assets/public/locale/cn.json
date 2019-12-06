@@ -215,5 +215,26 @@
 	"#Account keys": "帐号键",
 	"#Remove account": "删除帐户",
 	"#Request payment": "请求付款",
-	"#Remove": "去掉"
+	"#Remove": "去掉",
+
+	"#products": "产品展示",
+	"#All": "所有",
+	"#Categories": "分类目录",
+	"#Deactivate": "停用",
+	"#Search": "搜索",
+	"#Add a product": "添加产品",
+	"#Next": "下一个",
+	"#Previous": "以前",
+	"#Currency": "货币",
+	"#Image": "图片",
+	"#Tags": "标签",
+	"#Simple": "简单",
+	"#Composition": "组成",
+	"#Quantity": "数量",
+	"#Package": "包",
+	"#In stock": "有现货",
+	"#Store": "商店",
+	"#Parse": "解析",
+	"#Update a category": "更新类别",
+	"#Remove a category": "删除类别"
 }

@@ -215,5 +215,26 @@
 	"#Account keys": "Claves de cuenta",
 	"#Remove account": "Eliminar cuenta",
 	"#Request payment": "Solicitar pago",
-	"#Remove": "Eliminar"
+	"#Remove": "Eliminar",
+
+	"#products": "productos",
+	"#All": "Todos",
+	"#Categories": "Categorias",
+	"#Deactivate": "Desactivar",
+	"#Search": "Buscar",
+	"#Add a product": "Agregar un producto",
+	"#Next": "próximo",
+	"#Previous": "Anterior",
+	"#Currency": "Moneda",
+	"#Image": "Imagen",
+	"#Tags": "Etiquetas",
+	"#Simple": "Simple",
+	"#Composition": "Composición",
+	"#Quantity": "Cantidad",
+	"#Package": "Paquete",
+	"#In stock": "En stock",
+	"#Store": "Almacenar",
+	"#Parse": "Analizar gramaticalmente",
+	"#Update a category": "Actualizar una categoría",
+	"#Remove a category": "Eliminar una categoría"
 }

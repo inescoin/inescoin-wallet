@@ -206,5 +206,27 @@
 	"#Account keys": "Ключи аккаунта",
 	"#Remove account": "Удалить учетную запись",
 	"#Request payment": "Запросить оплату",
-	"#Remove": "Удалить"
+	"#Remove": "Удалить",
+
+	"#products": "продукты",
+	"#All": "Все",
+	"#Categories": "категории",
+	"#Deactivate": "Деактивировать",
+	"#Search": "Поиск",
+	"#Add a product": "Добавить товар",
+	"#Next": "следующий",
+	"#Previous": "предыдущий",
+	"#Currency": "валюта",
+	"#Image": "Образ",
+	"#Tags": "Теги",
+	"#Simple": "просто",
+	"#Composition": "Состав",
+	"#Quantity": "Количество",
+	"#Package": "пакет",
+	"#In stock": "В наличии",
+	"#Categories": "категории",
+	"#Store": "хранить",
+	"#Parse": "Анализировать",
+	"#Update a category": "Обновить категорию",
+	"#Remove a category": "Удалить категорию"
 }
