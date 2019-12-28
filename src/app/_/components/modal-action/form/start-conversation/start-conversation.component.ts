@@ -37,10 +37,10 @@ export class StartConversationComponent implements OnInit {
   ngOnInit() {
     this.addresses = this.walletService.getFromWalletStorage();
 
-    this.contacts = this.contactsService.contacts.map((contact: any) => {
+    this.contacts = this.contactsService.contacts && this.contactsService.contacts.map((contact: any) => {
       contact.value = contact.label + ' ' + contact.address;
       return contact;
-    });
+    }) || [];
   }
 
   close() {

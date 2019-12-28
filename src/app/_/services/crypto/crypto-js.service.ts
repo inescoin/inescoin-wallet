@@ -43,10 +43,7 @@ export class CryptoJsService {
   ec = new Elliptic.ec('secp256k1');
   utils = new UtilsService();
 
-  constructor() {
-    // this.generateKeys();
-    // this.encryptFromPassword('Hello', 'Moon');
-  }
+  constructor() {}
 
   encrypt(message, publicKey) {
     let encrypt = new JSEncryptModule.JSEncrypt();

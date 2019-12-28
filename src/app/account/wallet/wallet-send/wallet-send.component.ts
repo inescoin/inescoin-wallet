@@ -70,10 +70,10 @@ export class WalletSendComponent implements OnInit {
   ngOnInit() {
   	this.addresses = this.walletService.getFromHomeStorage();
 
-    this.contacts = this.contactsService.contacts.map((contact: any) => {
+    this.contacts = this.contactsService.contacts && this.contactsService.contacts.map((contact: any) => {
       contact.value = contact.label + ' ' + contact.address;
       return contact;
-    });
+    }) || [];
 
     if (!this.subjects.remoteResponse) {
       this.subjects.remoteResponse = this.transactionService.onRemoteResponse.subscribe((remoteResponse) => {

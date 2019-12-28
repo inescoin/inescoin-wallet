@@ -100,10 +100,10 @@ export class WebCreateComponent implements OnInit {
     this.publicKey = this.modalOptions.publicKey;
     this.data = this.modalOptions.data;
 
-    this.contacts = this.contactsService.contacts.map((contact: any) => {
+    this.contacts = this.contactsService.contacts && this.contactsService.contacts.map((contact: any) => {
       contact.value = contact.label + ' ' + contact.address;
       return contact;
-    });
+    }) || [];
 
     this.subjects.scan = this.qrScannerService.onScan.subscribe((result) => {
       if (result.component === 'wallet-create') {

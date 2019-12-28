@@ -312,7 +312,6 @@
 		    		<div class="store-content">
 				      <div class="mb-4 text-center">
 		    				<h3>{{ domain.html[currentLocale].products.length }} {{ '#products' | dgTranslate }}</h3>
-				      	<pagination-controls class="mb-4" (pageChange)="p = $event"></pagination-controls>
 				      </div>
 				      <ul class="list-group shadow" *ngIf="domain.html[currentLocale].products">
 				        <li class="list-group-item box-product-item" *ngFor="let product of domain.html[currentLocale].products | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">

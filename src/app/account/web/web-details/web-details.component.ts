@@ -737,12 +737,14 @@ export class WebDetailsComponent implements OnInit {
   openDomainUpdateModal() {
     this.diffModel = this.deepDiffMapperService.difference(this.domain.html, this.remoteDomain.html);
 
-    this.modalActionService.open('domainUpdate', {
-      component: 'web',
-      size: 'lg',
-      domain: this.domain,
-      diff: this.diffModel
-    });
+    setTimeout(() => {
+      this.modalActionService.open('domainUpdate', {
+        component: 'web',
+        size: 'lg',
+        domain: this._clone(this.domain),
+        diff: this._clone(this.diffModel)
+      });
+    }, 10);
   }
 
   openDomainAddLangueModal() {
