@@ -134,6 +134,7 @@ export class WalletSendComponent implements OnInit {
 
     if (!this.password) {
       this.badPassword = true;
+      this.inProgress = false;
       return;
     }
 

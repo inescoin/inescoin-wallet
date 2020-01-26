@@ -108,7 +108,7 @@
 			</div>
 			<div class="form-group">
 				<label>{{ '#Password' | dgTranslate }}</label>
-				<input type="password" [(ngModel)]="password" autocomplete="off" class="form-control" placeholder="password">
+				<input type="password" [(ngModel)]="password" (input)="badPassword=''" autocomplete="off" class="form-control" placeholder="password">
 			</div>
 			<div class="alert alert-danger" *ngIf="badPassword">{{ '#Bad password' | dgTranslate }}</div>
 		</div>
