@@ -19,6 +19,7 @@ import { inescoinConfig } from '../../config/inescoin.config';
 export class TransactionService {
 
   onRemoteResponse = new EventEmitter();
+  onRemoteError = new EventEmitter;
 
 	blockchainConfigHash: string = inescoinConfig.configHash;
 
@@ -66,7 +67,11 @@ export class TransactionService {
 
       this.httpService.post('transaction', wrappedMessage).subscribe((res) => {
         this.onRemoteResponse.emit(res);
-      })
+      }, (error) => {
+        this.onRemoteResponse.emit([{
+          error: '#Connection not found'
+        }]);
+      });
     } else {
       console.error('Please try again');
     }

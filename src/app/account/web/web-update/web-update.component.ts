@@ -162,12 +162,20 @@ export class WebUpdateComponent implements OnInit {
 
     if (!this.password) {
       this.badPassword = true;
+      this.inProgress = false;
       return;
     }
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
-      this.transactionService.sendTransaction(this.fee, this._mapTransfer(), this.from, decrypted.publicKey, decrypted.privateKey, [this.domain]);
+      this.transactionService.sendTransaction(
+        this.fee,
+        this._mapTransfer(),
+        this.from,
+        decrypted.publicKey,
+        decrypted.privateKey,
+        [this.domain]
+      );
     } else {
       this.toastrService.error(this.doorgetsTranslateService.instant('#Error: Bad password'));
       this.inProgress = false;

