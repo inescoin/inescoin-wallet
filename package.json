@@ -65,7 +65,7 @@
     "ngx-tinymce": "^7.0.0",
     "ngx-toastr": "^9.0.2",
     "ngx-ui-switch": "^8.1.0",
-    "node-forge": "^0.8.2",
+    "node-forge": "^0.10.0",
     "rxjs": "^6.0.0",
     "rxjs-compat": "6.2.2",
     "secp256k1": "^3.7.0",
