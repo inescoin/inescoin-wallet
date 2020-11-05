@@ -36,44 +36,48 @@ export class TransactionService {
   sendToNode(messageData, publicKey, privateKey) {
     this.sendInProgress = true;
 
-    let data = btoa(JSON.stringify(messageData));
-    let dataArray = data.match(/.{1,20}/g);
-    let dataLength = data.length;
+    try {
+      let data = btoa(JSON.stringify(messageData));
+      let dataArray = data.match(/.{1,20}/g);
+      let dataLength = data.length;
 
+      let encrypted = [];
+      let ok = true;
+      dataArray.forEach((part) => {
+        let _part = this.cryptoJsService.encrypt(part, atob(this.nodePublicKey));
+        let signature = this.cryptoJsService.ecSign(_part, privateKey);
+        let signDER = signature.toDER('hex');
 
-    let encrypted = [];
-    let ok = true;
-    dataArray.forEach((part) => {
-      let _part = this.cryptoJsService.encrypt(part, atob(this.nodePublicKey));
-      let signature = this.cryptoJsService.ecSign(_part, privateKey);
-      let signDER = signature.toDER('hex');
+        let passed = this.cryptoJsService.ecVerify(_part, signDER, publicKey);
+        if (passed) {
+          encrypted.push({
+            d: this.cryptoJsService.bin2hex(_part),
+            s: signDER
+          });
+        } else {
+          ok = false;
+        }
+      })
 
-      let passed = this.cryptoJsService.ecVerify(_part, signDER, publicKey);
-      if (passed) {
-         encrypted.push({
-          d: this.cryptoJsService.bin2hex(_part),
-          s: signDER
+      if (ok) {
+        let wrappedMessage = {
+          message: encrypted,
+          publicKey: publicKey
+        };
+
+        this.httpService.post('transaction', wrappedMessage).subscribe((res) => {
+          this.onRemoteResponse.emit(res);
+        }, (error) => {
+          this.onRemoteResponse.emit([{
+            error: '#Connection not found'
+          }]);
         });
       } else {
-        ok = false;
+        console.error('Please try again');
       }
-    })
-
-    if (ok) {
-      let wrappedMessage = {
-        message: encrypted,
-        publicKey: publicKey
-      };
-
-      this.httpService.post('transaction', wrappedMessage).subscribe((res) => {
-        this.onRemoteResponse.emit(res);
-      }, (error) => {
-        this.onRemoteResponse.emit([{
-          error: '#Connection not found'
-        }]);
-      });
-    } else {
-      console.error('Please try again');
+    } catch(e) {
+      console.log(messageData);
+      console.error('Invalid Message Data Format');
     }
   }
 

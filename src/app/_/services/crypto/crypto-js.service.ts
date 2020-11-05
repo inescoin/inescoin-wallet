@@ -12,7 +12,7 @@ import * as Elliptic from 'elliptic';
 import { encrypt } from 'eccrypto';
 
 
-const secp256k1 = new Elliptic.ec("secp256k1"); // eslint-disable-line
+const secp256k1: any = new Elliptic.ec("secp256k1"); // eslint-disable-line
 import { fromPrivate } from 'eth-lib/lib/account';
 import { keccak256, keccak256s } from 'eth-lib/lib/hash';
 import { privateToPublic } from 'ethereumjs-util';
@@ -149,7 +149,6 @@ export class CryptoJsService {
     const middleHex = Bytes.concat(Bytes.concat(Bytes.random(32), innerHex), Bytes.random(32));
     const privateKey = keccak256(middleHex);
 
-
     const buffer = new Buffer(privateKey.slice(2), "hex");
     const ecKey = secp256k1.keyFromPrivate(buffer);
     const publicKey = "0x" + ecKey.getPublic(false, 'hex').slice(2);
@@ -164,7 +163,7 @@ export class CryptoJsService {
         : address[i + 2];
     }
 
-    let identity = {
+    let identity: any = {
       address: checksumAddress,
       privateKey: privateKey.slice(2),
       publicKey: ''
@@ -179,10 +178,12 @@ export class CryptoJsService {
        identity.publicKey = '04' + identity.publicKey;
     }
 
-    identity.publicKey = publicKeyConvert(
+    let _publicKeyConvert: any = publicKeyConvert(
         new Buffer(identity.publicKey, 'hex'),
         true
-    ).toString('hex');
+    );
+
+    identity.publicKey = _publicKeyConvert.toString('hex');
 
     return identity;
   }

@@ -47,40 +47,45 @@ export class MessageService {
   sendToNode(messageData, publicKey, privateKey) {
     this.sendInProgress = true;
 
-    let data = btoa(JSON.stringify(messageData));
-    let dataArray = data.match(/.{1,20}/g);
-    let dataLength = data.length;
+    try {
+      let data = btoa(JSON.stringify(messageData));
+      let dataArray = data.match(/.{1,20}/g);
+      let dataLength = data.length;
 
-    let encrypted = [];
-    let ok = true;
-    dataArray.forEach((part) => {
-      let _part = this.cryptoJsService.encrypt(part, atob(this.nodePublicKey));
-      let signature = this.cryptoJsService.ecSign(_part, privateKey);
-      let signDER = signature.toDER('hex');
+      let encrypted = [];
+      let ok = true;
+      dataArray.forEach((part) => {
+        let _part = this.cryptoJsService.encrypt(part, atob(this.nodePublicKey));
+        let signature = this.cryptoJsService.ecSign(_part, privateKey);
+        let signDER = signature.toDER('hex');
 
-      let passed = this.cryptoJsService.ecVerify(_part, signDER, publicKey);
-      if (passed) {
-         encrypted.push({
-          d: this.cryptoJsService.bin2hex(_part),
-          s: signDER
-        });
-      } else {
-        ok = false;
-      }
-    })
-
-    if (ok) {
-      let wrappedMessage = {
-        message: encrypted,
-        publicKey: publicKey
-      };
-
-
-      this.httpService.post('message', wrappedMessage).subscribe((res) => {
-        this.onRemoteResponse.emit(res);
+        let passed = this.cryptoJsService.ecVerify(_part, signDER, publicKey);
+        if (passed) {
+           encrypted.push({
+            d: this.cryptoJsService.bin2hex(_part),
+            s: signDER
+          });
+        } else {
+          ok = false;
+        }
       })
-    } else {
-      console.error('Please try again');
+
+      if (ok) {
+        let wrappedMessage = {
+          message: encrypted,
+          publicKey: publicKey
+        };
+
+
+        this.httpService.post('message', wrappedMessage).subscribe((res) => {
+          this.onRemoteResponse.emit(res);
+        })
+      } else {
+        console.error('Please try again');
+      }
+    } catch(e) {
+      console.log(messageData);
+      console.error('Invalid Message Data Format');
     }
   }
 
@@ -138,10 +143,12 @@ export class MessageService {
       mac: cipher.mac.toString('hex')
     };
 
-    let compressedKey = publicKeyConvert(
+    let _publicKeyConvert: any = publicKeyConvert(
         new Buffer(encrypted.ephemPublicKey, 'hex'),
         true
-    ).toString('hex');
+    );
+
+    let compressedKey = _publicKeyConvert.toString('hex');
 
     let ret = Buffer.concat([
         new Buffer(encrypted.iv, 'hex'), // 16bit
@@ -167,10 +174,12 @@ export class MessageService {
           ciphertext: buf.toString('hex', 81, buf.length)
       };
 
-      encryptedTwo.ephemPublicKey = publicKeyConvert(
+      let _publicKeyConvert: any = publicKeyConvert(
           new Buffer(encryptedTwo.ephemPublicKey, 'hex'),
-          false
-      ).toString('hex');
+          true
+      );
+
+      encryptedTwo.ephemPublicKey = _publicKeyConvert.toString('hex');
 
       const encryptedBuffer = {
           iv: new Buffer(encryptedTwo.iv, 'hex'),

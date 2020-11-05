@@ -25,7 +25,7 @@ export class WebUpdateComponent implements OnInit {
   error: string = '';
   amount: number = 1;
 
-  to: string = '0x5967a4016501465CD951a1e3984F772AfDeB5207';
+  to: string = inescoinConfig.webTransferTo;
 
   data: any = {};
   address: any = {};
@@ -52,7 +52,7 @@ export class WebUpdateComponent implements OnInit {
   fee = 0.001;
 
   transfers = [{
-    to: '0x5967a4016501465CD951a1e3984F772AfDeB5207',
+    to: inescoinConfig.webTransferTo,
     amount: 0.999,
     item: null,
     walletId: ''
