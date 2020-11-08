@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/blockchain-messenger",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -28,13 +29,11 @@
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              // "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -58,6 +57,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -141,5 +144,8 @@
       }
     }
   },
-  "defaultProject": "blockchain-messenger"
+  "defaultProject": "blockchain-messenger",
+  "cli": {
+    "analytics": "ef6b6811-af6a-4f11-9d08-ca1bbe4b8df0"
+  }
 }

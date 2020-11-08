@@ -16,7 +16,7 @@ import * as CryptoJS from 'crypto-js';
 })
 export class MessengerComponent implements OnInit {
 
-	@ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
+	@ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
 	password: string = 'Amelmouna!123';
 	message: string = '';

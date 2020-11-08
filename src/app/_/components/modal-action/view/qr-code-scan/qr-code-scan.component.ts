@@ -16,7 +16,7 @@ import { QrScannerService } from '../../../../services/ui/qr-scanner.service';
 })
 export class QrCodeScanComponent implements OnInit {
 
-  @ViewChild('scanner', {static: false})
+  @ViewChild('scanner')
   scanner: ZXingScannerComponent;
 
 	ngVersion = VERSION.full;

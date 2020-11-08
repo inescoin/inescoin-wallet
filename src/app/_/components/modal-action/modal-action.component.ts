@@ -55,7 +55,7 @@ export class ModalActionComponent implements OnInit, OnDestroy {
 
 	currentModal: any;
 
-	@ViewChild('modal', {static: false}) modal: NgbModal;
+	@ViewChild('modal') modal: NgbModal;
 
 	currentName: string = '';
 

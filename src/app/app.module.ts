@@ -22,8 +22,6 @@ import { DragulaModule } from 'ng2-dragula';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 
-import 'hammerjs';
-
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
