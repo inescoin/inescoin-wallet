@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
+            "aot": false,
             "outputPath": "dist/blockchain-messenger",
             "index": "src/index.html",
             "main": "src/main.ts",

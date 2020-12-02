@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpModule, Http } from '@angular/http';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
@@ -21,14 +21,15 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import { DragulaModule } from 'ng2-dragula';
 
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TimeAgoPipe } from 'time-ago-pipe';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
-import { NgxSliderMobyModule } from 'ngx-slider-moby';
+
 import { NgxTagsInputModule } from 'ngx-tags-input';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -111,7 +112,7 @@ import { CategoriesUpdateComponent } from './_/components/modal-action/form/cate
 import { StoreCategoriesComponent } from './_/components/ui/store-categories/store-categories.component';
 import { ProductImportComponent } from './_/components/modal-action/form/product-import/product-import.component';
 
-export function newNgTranslate(http: Http) {
+export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, '../../assets/public/locale');
 }
 
@@ -233,7 +234,6 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     ColorPickerModule,
     CollapseModule.forRoot(),
     BsDropdownModule.forRoot(),
-    DoorgetsTranslateModule,
     DoorgetsTranslateModule.forRoot({
       provide: NgTranslateAbstract,
       useFactory: (newNgTranslate),
@@ -253,13 +253,13 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     PickerModule,
     NgxTagsInputModule,
     NgxPaginationModule,
-    NgxSliderMobyModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() {
-    library.add(fas, far);
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+    library.addIcons(faCoffee);
   }
 }
