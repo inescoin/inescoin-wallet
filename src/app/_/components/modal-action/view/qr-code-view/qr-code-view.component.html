@@ -10,10 +10,10 @@
 	</div>
 
 	<ngx-qrcode
-	      qrc-element-type="canvas"
-	      [qrc-value]="qrCodeString"
-	      qrc-class="text-center"
-	      qrc-errorCorrectionLevel="L">
+			elementType="canvas"
+		  [value]="getQrCodeAddress()"
+		  cssClass="text-center"
+		  errorCorrectionLevel="L">
 	</ngx-qrcode>
 
 	<div class="text-center">

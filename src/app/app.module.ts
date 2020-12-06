@@ -33,7 +33,8 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { NgxTagsInputModule } from 'ngx-tags-input';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
+// import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ToastrModule } from 'ngx-toastr';
 import { DoorgetsTranslateModule , NgTranslate, NgTranslateAbstract } from 'doorgets-ng-translate';

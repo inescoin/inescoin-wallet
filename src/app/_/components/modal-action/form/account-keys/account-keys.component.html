@@ -7,10 +7,10 @@
 <div class="modal-body text-center">
 	<p class="text-center"><fa-icon icon="wallet"></fa-icon> {{ options.account.address }}</p>
 	<ngx-qrcode
-	      qrc-element-type="canvas"
-	      [qrc-value]="qrCodeKeys"
-	      qrc-class="aclass"
-	      qrc-errorCorrectionLevel="L">
+		elementType="canvas"
+		[value]="qrCodeKeys"
+		cssClass="aclass"
+		errorCorrectionLevel="L">
 	</ngx-qrcode>
 </div>
 <div class="modal-footer">

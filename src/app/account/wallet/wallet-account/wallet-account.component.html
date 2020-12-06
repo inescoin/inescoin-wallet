@@ -27,10 +27,10 @@
   	<div class="canvas-qr-code">
 			<input type="type" class="form-control" autocomplete="new-password" placeholder="{{ '#Label' | dgTranslate }}" [(ngModel)]="account.wallet.label" />
 			<ngx-qrcode
-			      qrc-element-type="canvas"
-			      [qrc-value]="getQrCodeAddress()"
-			      qrc-class="aclass"
-			      qrc-errorCorrectionLevel="L">
+						elementType="canvas"
+					  [value]="getQrCodeAddress()"
+					  cssClass="aclass"
+					  errorCorrectionLevel="L">
 			</ngx-qrcode>
 			<input type="type" class="form-control mb-3" autocomplete="new-password" placeholder="{{ '#Wallet Id' | dgTranslate }}" [(ngModel)]="account.wallet.walletId" />
 		</div>
