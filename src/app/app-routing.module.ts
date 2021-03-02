@@ -65,7 +65,7 @@ export const routes: Routes = [ {
             component: WalletSendComponent
         }, {
             path: 'messenger',
-            component: MessengerComponent
+            component: InProgressMessengerComponent
         }, {
             path: 'messenger/:address',
             component: MessengerChatComponent

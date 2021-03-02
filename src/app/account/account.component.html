@@ -1,55 +1,96 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a href="//inescoin.org" class="navbar-brand">{{ inescoinConfig.name }}</a>
-      <button class="navbar-toggle" (click)="collapse()" aria-expanded="false">
-        <fa-icon icon="bars"></fa-icon>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
-      <ul class="navbar-nav mr-auto" (click)="collapse()">
-        <li [ngClass]="{ 'nav-item': true }">
-          <a class="nav-link" href="//explorer.inescoin.org">
-            {{ '#Explorer' | dgTranslate }}
-          </a>
-        </li>
-
-        <li [ngClass]="{ 'active': routerWeb.isActive, 'nav-item': true }">
-          <a class="nav-link" routerLinkActive [routerLink]="['/domain']" #routerWeb="routerLinkActive">
-            {{ '#Domain' | dgTranslate }}
-          </a>
-        </li>
-
-        <li [ngClass]="{ 'active': routerWallet.isActive, 'nav-item': true }">
-          <a class="nav-link" routerLinkActive [routerLink]="['/wallet']" #routerWallet="routerLinkActive">
-            {{ '#Wallet' | dgTranslate }}
-          </a>
-        </li>
-
-        <li [ngClass]="{ 'active': routerMessenger.isActive, 'nav-item': true }">
-          <a class="nav-link" routerLinkActive [routerLink]="['/messenger']" #routerMessenger="routerLinkActive">
-            {{ '#Messenger' | dgTranslate }}
-          </a>
-        </li>
-        <li [ngClass]="{ 'active': routerContacts.isActive, 'nav-item': true }">
-          <a class="nav-link" routerLinkActive [routerLink]="['/contacts']" #routerContacts="routerLinkActive">
-            {{ '#Contacts' | dgTranslate }}
-          </a>
-        </li>
-        <li [ngClass]="{ 'active': routerSettings.isActive, 'nav-item': true }">
-          <a class="nav-link" routerLinkActive [routerLink]="['/settings']" #routerSettings="routerLinkActive">
-            {{ '#Settings' | dgTranslate }}
-          </a>
-        </li>
-      </ul>
-      <div class="form-group mt-3 ml-2">
-        <button class="nav-link btn btn-primary" [ngClass]="{ 'btn-block': !isCollapsed }"
-          (click)="openModal('sendCoin', { component: 'wallet', size: 'lg'}); collapse()">
-          <fa-icon icon="paper-plane"></fa-icon> {{ '#Send' | dgTranslate }}
+<nav>
+  <div class="container-fluid top-custom-nav">
+    <div class="row align-items-center">
+      <div class="col-11 text-sm-right text-md-left">
+        <a href="#" class="left-menu-title" [routerLink]="['/wallet']"><img src="/assets/img/logo_inescoin_9.png" width="30" height="30" alt="">
+        <span class="ml-2">{{ inescoinConfig.name }}</span>
+        </a>
+      </div>
+      <div class="col-1 text-sm-left text-md-right">
+        <button class="btn" (click)="toogleRightMenu()">
+          <img src="/assets/img/hamburger.svg"/>
         </button>
       </div>
-      <div class="form-group mt-3 ml-2">
-        <select class="form-control ml-2" [(ngModel)]="chooseLanguage" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeLanguage(); collapse()">
+    </div>
+  </div>
+</nav>
+
+<div [class.cover-menu]="showLeftMenu || showRightMenu"></div>
+
+<div class="responsive-left-menu fixed-bottom text-white">
+  <ul class="nav nav-tabs nav-pills nav-fill">
+    <li class="nav-item">
+      <a
+        #wallet="routerLinkActive"
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['wallet']"
+      >
+          <fa-icon icon="wallet"></fa-icon>
+          <span class="ml-1" [ngClass]="{ 'isActive': wallet.isActive }">{{ "#Wallet" | dgTranslate }}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        #domain="routerLinkActive"
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['domain']"
+      >
+        <fa-icon icon="globe"></fa-icon>
+        <span class="ml-1" [ngClass]="{ 'isActive': domain.isActive }"> {{ "#Domain" | dgTranslate }}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        #messenger="routerLinkActive"
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['messenger']"
+      >
+        <fa-icon icon="paper-plane"></fa-icon>
+        <span class="ml-1" [ngClass]="{ 'isActive': messenger.isActive }"> {{ "#Messenger" | dgTranslate }}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+       #contacts="routerLinkActive"
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['contacts']"
+      >
+      <fa-icon icon="address-book"></fa-icon>
+      <span class="ml-1" [ngClass]="{ 'isActive': contacts.isActive }"> {{ "#Contacts" | dgTranslate }}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        #settings="routerLinkActive"
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['settings']"
+      >
+      <fa-icon icon="cog"></fa-icon>
+      <span class="ml-1" [ngClass]="{ 'isActive': settings.isActive }"> {{ "#Settings" | dgTranslate }}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="responsive-right-menu" [class.responsive-right-menu-toogled]="!showRightMenu">
+  <div class="text-left pb-2" (click)="showRightMenu=false"><i class="fa fa-close"></i></div>
+   <div>
+    <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action" href="https://explorer.inescoin.org">
+        <i class="fa fa-cube mr-2"></i>
+        {{ '#Explorer' | dgTranslate }}
+      </a>
+      <a class="list-group-item list-group-item-action" href="https://inescoin.org">
+        <i class="fa fa-home mr-2"></i>
+        {{ '#Website' | dgTranslate }}
+      </a>
+      <div class="form-group m-4">
+        <select class="form-control mr-3" [(ngModel)]="chooseLanguage" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeLanguage(); collapse()">
           <option value="fr">Français</option>
           <option value="it">Italiano</option>
           <option value="en">English</option>
@@ -61,7 +102,7 @@
       </div>
     </div>
   </div>
-</nav>
+</div>
 
 <div class="container-fluid">
   <div class="row">
@@ -70,11 +111,6 @@
     </main>
 
     <footer class="footer">
-      <div class="container text-center text-muted">
-        <small>
-          © {{ inescoinConfig.name | uppercase }} &nbsp; • &nbsp; <a target="_blank" href="{{ inescoinConfig.website }}"> Inescoin.org</a>
-        </small>
-      </div>
     </footer>
   </div>
 </div>

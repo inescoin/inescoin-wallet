@@ -11,18 +11,16 @@ import * as Elliptic from 'elliptic';
 
 import { encrypt } from 'eccrypto';
 
-
 const secp256k1: any = new Elliptic.ec("secp256k1"); // eslint-disable-line
 import { fromPrivate } from 'eth-lib/lib/account';
 import { keccak256, keccak256s } from 'eth-lib/lib/hash';
-import { privateToPublic } from 'ethereumjs-util';
+import { privateToPublic, isValidChecksumAddress } from 'ethereumjs-util';
 import { UtilsService }  from './utils.service';
 import Bytes from 'eth-lib/lib/bytes';
 
 const crypto = require('crypto');
 
 import { publicKeyConvert } from 'secp256k1';
-
 
 (window as any).global = window;
 // @ts-ignore
@@ -169,11 +167,13 @@ export class CryptoJsService {
       publicKey: ''
     };
 
+
     const finalePriateKey = !privateKey.startsWith('0x') ? '0x' + privateKey : privateKey;
-    const publicKeyBuffer = privateToPublic(finalePriateKey);
+    const publicKeyBuffer = privateToPublic(new Buffer(finalePriateKey.slice(2), 'hex'));
     identity.publicKey = publicKeyBuffer.toString('hex');
 
-    let testBuffer = new Buffer(identity.publicKey, 'hex');
+
+    let testBuffer = new Buffer(publicKeyBuffer.toString('hex'), 'hex');
     if (testBuffer.length === 64) {
        identity.publicKey = '04' + identity.publicKey;
     }
@@ -183,7 +183,8 @@ export class CryptoJsService {
         true
     );
 
-    identity.publicKey = _publicKeyConvert.toString('hex');
+    let bufferPublicKeyConvert = new Buffer(_publicKeyConvert, 'hex');
+    identity.publicKey = bufferPublicKeyConvert.toString('hex');
 
     return identity;
   }

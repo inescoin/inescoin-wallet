@@ -23,6 +23,14 @@
 	</div>
 	<div class="row border-bottom mb-2">
 		<div class="col-2">
+			<label class="font-weight-bold">{{ '#Fee' | dgTranslate }}</label>
+		</div>
+		<div class="col-10 text-break">
+			{{ transfer.fee | cryptoAmount }} INES
+		</div>
+	</div>
+	<div class="row border-bottom mb-2">
+		<div class="col-2">
 			<label class="font-weight-bold">{{ '#From' | dgTranslate }}</label>
 		</div>
 		<div class="col-10 text-break">

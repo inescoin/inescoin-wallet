@@ -1,5 +1,6 @@
 .account-card {
 	cursor: pointer;
+	border: solid 2px #9900CC;
 }
 
 .account-card:hover {
@@ -12,7 +13,7 @@
     margin-bottom: 20px;
 }
 
-@media screen and (min-width: 410px) and (max-width: 768px) {
+@media screen and (max-width: 768px) {
 	h1.total-amount-wallet {
 		font-size: 15pt;
 	}
@@ -27,4 +28,8 @@
 	.input-group-seamless {
 		width: 100%;
 	}
+}
+
+.card-subtitle {
+	color: #9900CC !important;
 }

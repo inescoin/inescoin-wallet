@@ -1,13 +1,13 @@
-<div class="row mb-3">
-	<div class="col-md-6 text">
+<div class="row">
+	<div class="col-md-6">
 		<input 	class="form-control"
 	         	type="text"
 	        	placeholder="{{ '#Search a domain' | dgTranslate }}"
 	        	(keyup)="updateFilter($event)"
 		/>
 	</div>
-	<div class="col-md-6 text-right">
-		<button class="btn btn-light"
+	<div class="col-md-6">
+		<button class="btn btn-light btn-block"
 				(click)="openDomainCreateModal()">
 				<fa-icon icon="plus"></fa-icon> {{ '#Create a new domain' | dgTranslate }}
 		</button>

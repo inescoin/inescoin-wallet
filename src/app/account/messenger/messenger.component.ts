@@ -18,7 +18,7 @@ export class MessengerComponent implements OnInit {
 
 	@ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
-	password: string = 'Amelmouna!123';
+	password: string = 'amelmouna';
 	message: string = '';
 
   showEmojiPicker = false;
@@ -161,6 +161,7 @@ export class MessengerComponent implements OnInit {
   		this.password
   	);
 
+    console.log(decrypted);
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);

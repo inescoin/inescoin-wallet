@@ -5,22 +5,31 @@
 		<div class="card mb-4">
 			<div class="card-body">
 				<div class="amount-balance text-center">
-					{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }} <small>(<span *ngIf="account.total >= 10000">+</span>{{ account.total }} {{ '#transactions' | dgTranslate }})</small>
+					{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }}
+					<br /><small>(<span *ngIf="account.total >= 10000">+</span>{{ account.total }} {{ '#transactions' | dgTranslate }})</small>
 				</div>
 				<hr />
-				<div>
-			  	<button class="btn btn-light ml-2" (click)="openAccountRequestModal()">
-			  		<fa-icon icon="bullhorn"></fa-icon> {{ '#Request payment' | dgTranslate }}
-			  	</button>
-			  	<button class="btn btn-light ml-2" (click)="openAccountResetPasswordModal()">
-			  		<fa-icon icon="lock"></fa-icon> {{ '#Password' | dgTranslate }}
-			  	</button>
-			  	<button class="btn btn-light ml-2" (click)="openAccountKeysModal()">
-			  		<fa-icon icon="eye-slash"></fa-icon> {{ '#Show keys' | dgTranslate }}
-			  	</button>
-			  	<button class="btn btn-danger ml-2" (click)="openAccountRemoveModal()">
-			  		<fa-icon icon="trash"></fa-icon> {{ '#Remove' | dgTranslate }}
-			  	</button>
+				<div class="row">
+					<div class="col-md-3">
+				  	<button class="btn btn-light btn-block mb-2" (click)="openAccountRequestModal()">
+				  		<fa-icon icon="bullhorn"></fa-icon> {{ '#Request payment' | dgTranslate }}
+				  	</button>
+					</div>
+					<div class="col-md-3">
+				  	<button class="btn btn-light btn-block mb-2" (click)="openAccountResetPasswordModal()">
+				  		<fa-icon icon="lock"></fa-icon> {{ '#Password' | dgTranslate }}
+				  	</button>
+				  </div>
+					<div class="col-md-3">
+				  	<button class="btn btn-light btn-block mb-2" (click)="openAccountKeysModal()">
+				  		<fa-icon icon="eye-slash"></fa-icon> {{ '#Show keys' | dgTranslate }}
+				  	</button>
+				  </div>
+					<div class="col-md-3">
+				  	<button class="btn btn-danger btn-block mb-2" (click)="openAccountRemoveModal()">
+				  		<fa-icon icon="trash"></fa-icon> {{ '#Remove' | dgTranslate }}
+				  	</button>
+				  </div>
 				</div>
 			</div>
 		</div>
@@ -35,7 +44,6 @@
 			<input type="type" class="form-control mb-3" autocomplete="new-password" placeholder="{{ '#Wallet Id' | dgTranslate }}" [(ngModel)]="account.wallet.walletId" />
 		</div>
 	</div>
-
 </div>
 
 <div *ngIf="account.transactions && account.transactions.length || account.transactionsPool && account.transactionsPool.length">

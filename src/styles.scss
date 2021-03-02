@@ -64,8 +64,8 @@
     box-sizing: border-box;
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-bottom: 12px solid rgba(33, 33, 255, 0.3);
-    border-top: 12px solid rgba(33, 33, 255, 0.3);
+    border-bottom: 12px solid #9900CC;
+    border-top: 12px solid #9900CC;
     -webkit-animation: rotate 0.8s linear infinite;
     animation: rotate 0.8s linear infinite;
   }
@@ -73,13 +73,13 @@
     background-image: url('/assets/img/logo_inescoin_w.png');
     background-repeat: no-repeat;
     background-size: contain;
-    width: 75px;
-    height: 75px;
+    width: 130px;
+    height: 120px;
     display: inline-block;
     z-index: 100;
     left: 0;
     right: 0;
-    top: 15px;
+    top: 20px;
     bottom: 0;
     margin: auto;
     position: absolute;
@@ -146,6 +146,18 @@
 .card-img-top-product {
     max-height: 100px !important;
     margin: 0 auto;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #9900CC;
+    border-color: #ffb3fb;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #f37aa1;
+    border-color: #ffb3fb;
 }
 
 

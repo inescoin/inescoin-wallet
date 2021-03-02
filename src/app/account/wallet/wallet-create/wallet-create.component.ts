@@ -17,8 +17,8 @@ import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 })
 export class WalletCreateComponent implements OnInit {
 
-  password: string = '';
-	confirmPassword: string = '';
+  password: string = 'amelmouna';
+	confirmPassword: string = 'amelmouna';
 
   qrCodeOpen: boolean = false;
 

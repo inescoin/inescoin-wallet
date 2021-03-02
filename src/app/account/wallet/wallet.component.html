@@ -4,14 +4,14 @@
 
 <div class="row" *ngIf="accountList.length">
 	<div class="col-md-6">
-		<div class="form-group mb-3 mr-5">
+		<div class="form-group mb-3">
 			<div class="input-group input-group-seamless">
 		        <input type="text" class="form-control btn-action" placeholder="{{ '#Search account' | dgTranslate }}" name="requestType" required="" ng-model="hashRequest" autocomplete="new-password">
 		    </div>
 		</div>
 	</div>
 	<div class="col-md-6 text-right">
-		<button class="btn btn-light btn-action mr-2"
+		<button class="btn btn-action btn-primary mr-2"
 			(click)="openModal('sendCoin', { component: 'wallet', size: 'lg' })"
 			><fa-icon icon="paper-plane"></fa-icon> {{ '#Send' | dgTranslate }}</button>
 
@@ -31,7 +31,7 @@
 		<div class="card account-card">
 		  	<div class="card-body">
 				<h6 class="card-subtitle mb-2 text-muted"><fa-icon icon="wallet" pull="left"></fa-icon> {{ account.address }}</h6>
-				<p class="card-text">{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }}</p>
+				<p class="card-text text-right">{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }}</p>
 		  	</div>
 		</div>
 	</div>
