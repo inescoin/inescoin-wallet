@@ -12,5 +12,6 @@
 </div>
 
 <hr />
-
-<button [disabled]="!this.node.ip || !this.node.rpcPort  || !this.node.messengerPort" class="btn btn-success" (click)="updateNode()">{{ '#Update' | dgTranslate }}</button>
+<div class="text-center">
+	<button [disabled]="!this.node.ip || !this.node.rpcPort  || !this.node.messengerPort" class="btn btn-success" (click)="updateNode()">{{ '#Update' | dgTranslate }}</button>
+</div>

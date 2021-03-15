@@ -473,13 +473,14 @@ main .form-search .form-control:focus {
   font-size: 17pt;
   font-weight: bold;
   margin-bottom: 15px;
-  color:#f1f1f1;
+  color:#9900CC;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 .top-custom-nav {
   height: 59px;
-  background-color: #9900CC;
+  background-color: #F1F1F1;
   color: #f1f1f1;
 
   i {
@@ -527,6 +528,13 @@ main .form-search .form-control:focus {
   }
 }
 
+// .img-toogle-hamburger {
+//   background-color: #9900CC;
+//   border-radius: 5px;
+// }
+.btn-toogle-hamburger {
+ padding-right: 0;
+}
 
 .icon-invitation {
   position: absolute;

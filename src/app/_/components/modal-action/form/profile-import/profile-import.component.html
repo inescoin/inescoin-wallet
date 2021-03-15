@@ -12,8 +12,7 @@
 
 	<input *ngIf="!file" (change)="loadWallet($event)" type="file">
 
-	<hr />
-
+</div>
+<div class="mb-4 text-center">
 	<button class="btn btn-success" [disabled]="!file" (click)="importProfile()">{{ '#Import now' | dgTranslate }}</button>
-
 </div>

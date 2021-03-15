@@ -17,31 +17,37 @@
 	</div>
 </div>
 
-<div *ngIf="addressesArray.length && !isSummaryStep">
-	<h6>{{ '#From' | dgTranslate }}</h6>
-	<div class="card">
-		<div class="card-body">
-			<div class="form-group">
-				<select class="form-control" [(ngModel)]="from" (change)="onFromChange($event)">
-					<option value="">
-				      -
-				    </option>
-				    <option *ngFor="let address of addressesArray" [value]="address.address">
-				      {{ address.address }} - {{ address.amount | cryptoAmount}} {{ inescoinConfig.symbol }}
-				    </option>
-				</select>
-			</div>
+
+<div class="row" *ngIf="addressesArray.length && !from">
+	<div class="col-md-12 mb-2">
+		<h6>{{ '#From' | dgTranslate }}</h6>
+	</div>
+	<div class="col-md-12 mb-2" *ngFor="let account of addressesArray">
+		<div class="card account-card-send" *ngIf="account.amount > 0" (click)="selectFrom(account)">
+		  	<div class="card-body">
+				<h6 class="card-subtitle mb-2 text-muted"><fa-icon icon="wallet" pull="left"></fa-icon> {{ account.address }}</h6>
+				<p class="card-text text-right">{{ account.amount | cryptoAmount }} {{ inescoinConfig.symbol }}</p>
+		  	</div>
 		</div>
 	</div>
-	<hr />
+</div>
 
-	<h6>{{ '#To' | dgTranslate }}</h6>
+<div *ngIf="addressesArray.length && !isSummaryStep && from">
+	<h6>{{ '#From' | dgTranslate }}</h6>
+	<div class="card account-card">
+	  	<div class="card-body">
+			<h6 class="card-subtitle mb-2 text-muted"><fa-icon icon="wallet" pull="left"></fa-icon> {{ from.address }}</h6>
+			<p class="card-text text-right">{{ from.amount | cryptoAmount }} {{ inescoinConfig.symbol }}</p>
+	  	</div>
+	</div>
+
+	<h6 class="mt-3">{{ '#To' | dgTranslate }}</h6>
 	<ul class="list-group">
 		<li class="list-group-item" *ngFor="let transfer of transfers; let i = index;">
 			<div class="row">
 				<div class="col-md-5">
-					<button class="pull-right" (click)="openModal('qrCodeScan', { index: i , component: 'wallet-send'})">QrCode <fa-icon icon="qrcode"></fa-icon></button>
 					<label>{{ '#Address' | dgTranslate }}</label>
+					<button class="btn btn-light btn-sm ml-2" (click)="openModal('qrCodeScan', { index: i , component: 'wallet-send'})">QrCode <fa-icon icon="qrcode"></fa-icon></button>
 					<input [(ngModel)]="transfer.to"
 						   [typeahead]="contacts"
 						   [typeaheadMinLength]="0"
@@ -63,50 +69,44 @@
 				  	<input type="number" min="0.002" max="999999999.9999" step=".0001" [(ngModel)]="transfer.amount" class="form-control" placeholder="0.0000">
 				</div>
 				<div class="col-md-1">
-					<label>{{ '#Action' | dgTranslate }}</label>
-					<button class="btn btn-danger form-control" *ngIf="transfers.length > 1" (click)="remove(i)"><i class="fa fa-close"></i></button>
+					<button class="btn btn-danger btn-sm mt-2" *ngIf="transfers.length > 1" (click)="remove(i)"><i class="fa fa-close"></i></button>
 				</div>
 			</div>
 		</li>
 	</ul>
 
-	<hr />
-
-	<div class="text-center" *ngIf="transfers.length < 26">
+	<div class="text-center mt-4" *ngIf="transfers.length < 26">
 		<button class="btn btn-light" (click)="addTransfer()"><i class="fa fa-plus"></i> {{ '#add transfer' | dgTranslate }}</button>
-		<hr />
 	</div>
 
-
-	<div class="text-center form-group send-fee-box">
-		<label>{{ '#Fee' | dgTranslate }}</label>
-		<input class="form-control" type="range" step=".001" min="0.001" max="1" [(ngModel)]="fee" />
-	</div>
-	<hr />
-
-	<h6>{{ '#Total' | dgTranslate }}</h6>
-	<div class="card" >
+	<h6 class="mt-2">{{ '#Total' | dgTranslate }}</h6>
+	<div class="card mb-4">
 		<div class="card-body text-center">
 			{{ getTotal() }} {{ inescoinConfig.symbol }}
+			<input class="form-control" type="range" step=".001" min="0.001" max="1" [(ngModel)]="fee" />
 			<p><small>{{ '#Fee' | dgTranslate }}: {{ fee }} {{ inescoinConfig.symbol }}</small></p>
 		</div>
 	</div>
-	<hr />
-
 	<div class="text-center" *ngIf="!isSummaryStep">
 		<p class="alert alert-danger" *ngIf="error.length">{{ error }}</p>
-		<button class="btn btn-success mr-2" [disabled]="!getTotal() || !from" (click)="isSummaryStep = true">{{ '#Next' | dgTranslate }}</button>
+		<button class="btn btn-light mr-2" (click)="from=null">{{ '#Previous' | dgTranslate }}</button>
+		<button class="btn btn-success mr-2" [disabled]="!(transfers[0] && transfers[0].amount > 0 && transfers[0].to.length) || !from" (click)="isSummaryStep = true">{{ '#Next' | dgTranslate }}</button>
 	</div>
-
 </div>
 
-<div *ngIf="isSummaryStep">
-	<div class="card mb-2">
+<div *ngIf="isSummaryStep && from">
+	<h6>{{ '#From' | dgTranslate }}</h6>
+	<div class="card account-card">
+	  	<div class="card-body">
+			<h6 class="card-subtitle mb-2 text-muted"><fa-icon icon="wallet" pull="left"></fa-icon> {{ from.address }}</h6>
+			<p class="card-text text-right">{{ from.amount | cryptoAmount }} {{ inescoinConfig.symbol }}</p>
+	  	</div>
+	</div>
+
+	<div class="card mb-2 mt-2">
 		<div class="card-body">
 			<div class="form-group">
-				<label>{{ '#From' | dgTranslate }} :</label> {{ from }}
-			</div>
-			<div class="form-group">
+				<pre>{{password}}</pre>
 				<label>{{ '#Password' | dgTranslate }}</label>
 				<input type="password" [(ngModel)]="password" (input)="badPassword=''" autocomplete="off" class="form-control" placeholder="password">
 			</div>
@@ -147,7 +147,7 @@
 
 	<div class="text-center" *ngIf="isSummaryStep">
 		<p class="alert alert-danger" *ngIf="error.length">{{ error }}</p>
-		<button class="btn btn-success mr-2" [disabled]="inProgress" (click)="send()">{{ '#Send Transaction' | dgTranslate }}</button>
-		<button class="btn btn-light" [disabled]="inProgress" (click)="isSummaryStep = false" >{{ '#Back' | dgTranslate }}</button>
+		<button class="btn btn-light mr-2" [disabled]="inProgress" (click)="isSummaryStep = false" >{{ '#Previous' | dgTranslate }}</button>
+		<button class="btn btn-success" [disabled]="inProgress" (click)="send()">{{ '#Send' | dgTranslate }}</button>
 	</div>
 </div>

@@ -4,7 +4,7 @@
 
 import { Injectable, EventEmitter } from '@angular/core';
 
-import * as JSEncryptModule from 'jsencrypt';
+import { JSEncrypt } from 'jsencrypt';
 import * as CryptoJS from 'crypto-js';
 import { publicKeyConvert } from 'secp256k1';
 
@@ -104,7 +104,7 @@ export class MessageService {
   private _doEncryption(message, from, to, toPublicKey, fromPublicKey, fromPrivateKey) {
     let encrypted = this._encryptMessage(message, toPublicKey, fromPrivateKey)
 
-    let sign = new JSEncryptModule.JSEncrypt();
+    let sign = new JSEncrypt({});
     sign.setPrivateKey(fromPrivateKey);
     let date: any = Math.floor(Date.now() / 1000);
 

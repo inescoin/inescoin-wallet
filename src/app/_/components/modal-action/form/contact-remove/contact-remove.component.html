@@ -5,7 +5,7 @@
   </button>
 </div>
 <div class="modal-body text-center">
-	<p class="alert alert-infos">{{ contact.address }}</p>
-	<button class="btn btn-danger mr-2" (click)="remove()">{{ '#Delete now!' | dgTranslate }}</button>
-	<button class="btn btn-secondary" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
+	<p class="alert alert-info text-center"><fa-icon icon="wallet"></fa-icon> {{ contact.address | dgTruncate :{ limit: 20, position: 'center' } }}</p>
+	<button class="btn btn-light mr-2" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
+	<button class="btn btn-danger" (click)="remove()">{{ '#Delete now!' | dgTranslate }}</button>
 </div>

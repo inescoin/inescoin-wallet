@@ -31,7 +31,7 @@ export class WalletSendComponent implements OnInit {
 
   error = '';
 
-	from = '';
+	from: any|null = null;
   publicKey = '';
   data = '';
 
@@ -132,11 +132,14 @@ export class WalletSendComponent implements OnInit {
 
     let decrypted: any = this.transactionService.decryptWithPassword(this.data, this.password);
 
-    if (!this.password) {
+    if (!this.password || !this.from) {
       this.badPassword = true;
       this.inProgress = false;
       return;
     }
+
+
+    console.log(decrypted, this.password, this.data);
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
@@ -147,7 +150,7 @@ export class WalletSendComponent implements OnInit {
           to: transfer.item && transfer.item.address || transfer.to,
           walletId: transfer.walletId || transfer.item && transfer.item.walletId || ''
         };
-      }), this.from, decrypted.publicKey, decrypted.privateKey);
+      }), this.from.address, decrypted.publicKey, decrypted.privateKey);
     } else {
       this.toastrService.error(this.doorgetsTranslateService.instant('#Error: Bad password'));
       this.inProgress = false;
@@ -172,9 +175,21 @@ export class WalletSendComponent implements OnInit {
     let wallets = this._getFromCache();
     this.data = '';
     this.publicKey = '';
-    if (wallets && wallets[this.from]) {
+    if (wallets && wallets[this.from.address]) {
       this.data = wallets[this.from].data;
       this.publicKey = wallets[this.from].publicKey;
+    }
+  }
+
+  selectFrom(account) {
+    let wallets = this._getFromCache();
+
+    this.from = account;
+    this.data = '';
+    this.publicKey = '';
+    if (wallets && wallets[account.address]) {
+      this.data = wallets[account.address].data;
+      this.publicKey = wallets[account.address].publicKey;
     }
   }
 

@@ -1,14 +1,14 @@
 <nav>
   <div class="container-fluid top-custom-nav">
     <div class="row align-items-center">
-      <div class="col-11 text-sm-right text-md-left">
+      <div class="col-9 text-sm-right text-md-left">
         <a href="#" class="left-menu-title" [routerLink]="['/wallet']"><img src="/assets/img/logo_inescoin_9.png" width="30" height="30" alt="">
         <span class="ml-2">{{ inescoinConfig.name }}</span>
         </a>
       </div>
-      <div class="col-1 text-sm-left text-md-right">
-        <button class="btn" (click)="toogleRightMenu()">
-          <img src="/assets/img/hamburger.svg"/>
+      <div class="col-3 text-right">
+        <button class="btn btn-toogle-hamburger" (click)="toogleRightMenu()">
+          <img class="img-toogle-hamburger" src="/assets/img/menu.svg"/>
         </button>
       </div>
     </div>

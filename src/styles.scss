@@ -161,3 +161,20 @@
 }
 
 
+.modal-footer {
+  border-top: 0;
+}
+
+.modal-header {
+  border-bottom: 0;
+}
+.close {
+  outline: none !important;
+}
+.close:hover, .close:focus {
+  outline: none;
+}
+.modal-content {
+  border-radius: 1.3rem;
+}
+

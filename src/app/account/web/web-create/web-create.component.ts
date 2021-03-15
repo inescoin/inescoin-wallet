@@ -39,7 +39,7 @@ export class WebCreateComponent implements OnInit {
 	data: any = {};
 	address: any = {};
 
-	from: any = '';
+	from: any = null;
 	publicKey: any = '';
 
 	domain: any = {
@@ -67,6 +67,8 @@ export class WebCreateComponent implements OnInit {
 
   contacts = [];
   subjects: any = {};
+
+  addressesArray: any = [];
 
   constructor(
     private router: Router,
@@ -111,6 +113,8 @@ export class WebCreateComponent implements OnInit {
         this.domain.newOwnerPublicKey = result.contact.publicKey;
       }
     });
+
+    this._loadAdressesArray();
   }
 
   ngOnDestroy() {
@@ -129,6 +133,17 @@ export class WebCreateComponent implements OnInit {
   	return addresses;
   }
 
+  private _loadAdressesArray() {
+    this.addresses = this.walletService.getFromHomeStorage();
+
+    let addresses = [];
+    for(let address of Object.keys(this.addresses)) {
+      addresses.push(this.addresses[address]);
+    }
+
+    this.addressesArray = addresses;
+  }
+
   onSelectOwner(event: any, index) {
     if (event.item) {
       this.domain.newOwnerAddress = event.item.address;
@@ -141,13 +156,25 @@ export class WebCreateComponent implements OnInit {
     this.data = '';
     this.publicKey = '';
 
-    if (wallets && wallets[this.from]) {
-      this.data = wallets[this.from].data;
-      this.publicKey = wallets[this.from].publicKey;
+    if (wallets && wallets[this.from.address]) {
+      this.data = wallets[this.from.address].data;
+      this.publicKey = wallets[this.from.address].publicKey;
     }
 
-    if (this.addresses[this.from]) {
-      this.address = this.addresses[this.from];
+    if (this.addresses[this.from.address]) {
+      this.address = this.addresses[this.from.address];
+    }
+  }
+
+  selectFrom(account) {
+    let wallets = this._getFromCache();
+
+    this.from = account;
+    this.data = '';
+    this.publicKey = '';
+    if (wallets && wallets[account.address]) {
+      this.data = wallets[account.address].data;
+      this.publicKey = wallets[account.address].publicKey;
     }
   }
 
@@ -185,7 +212,10 @@ export class WebCreateComponent implements OnInit {
 
     let decrypted: any = this.transactionService.decryptWithPassword(this.data, this.password);
 
+    console.log(decrypted);
+
     if (!this.password) {
+      this.inProgress = false;
       this.badPassword = true;
       return;
     }
@@ -194,7 +224,7 @@ export class WebCreateComponent implements OnInit {
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
-      this.transactionService.sendTransaction(this.fee, this._mapTransfer(), this.from, decrypted.publicKey, decrypted.privateKey, [this.domain]);
+      this.transactionService.sendTransaction(this.fee, this._mapTransfer(), this.from.address, decrypted.publicKey, decrypted.privateKey, [this.domain]);
     } else {
       this.toastrService.error(this.doorgetsTranslateService.instant('#Error: Bad password'));
       this.inProgress = false;

@@ -31,6 +31,11 @@ export class QrCodeViewComponent implements OnInit {
   	this.ngbActiveModal.close();
   }
 
+  getQrCodeAddress() {
+    console.log(this.qrCode);
+    return JSON.stringify(this.qrCode);
+  }
+
   dismiss() {
   	this.ngbActiveModal.dismiss();
   }

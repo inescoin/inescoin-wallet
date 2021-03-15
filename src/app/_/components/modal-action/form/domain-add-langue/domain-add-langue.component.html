@@ -23,7 +23,7 @@
 		</select>
 	</div>
 </div>
-<div class="modal-footer">
+<div class="modal-footer text-center">
   <button type="button" class="btn btn-success" [disabled]="!newLangue.code || !newLangue.label || (newLangue.code && domain.html[newLangue.code])" (click)="add()">{{ '#Add' | dgTranslate }}</button>
   <button type="button" class="btn btn-light" (click)="close()">{{ '#Close' | dgTranslate }}</button>
 </div>

@@ -5,9 +5,7 @@
   </button>
 </div>
 <div class="modal-body">
-	<div class="text-center">
-		<small>{{ qrCode.address }}</small>
-	</div>
+	<p class="alert alert-info text-center"><fa-icon icon="wallet"></fa-icon> {{ qrCode.address | dgTruncate :{ limit: 20, position: 'center' } }}</p>
 
 	<ngx-qrcode
 			elementType="canvas"
@@ -16,12 +14,12 @@
 		  errorCorrectionLevel="L">
 	</ngx-qrcode>
 
-	<div class="text-center">
+	<!-- <div class="text-center">
 		<label>{{ '#Public Key' | dgTranslate }}</label> <br /><small>{{ qrCode.publicKey }}</small>
 	</div>
 	<div class="text-center">
 		<label>{{ '#Wallet Id' | dgTranslate }}</label> <br /><small>{{ qrCode.walletId }}</small>
-	</div>
+	</div> -->
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-light" (click)="close()">{{ '#Close' | dgTranslate }}</button>

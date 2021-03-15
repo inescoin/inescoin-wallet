@@ -37,7 +37,7 @@
 		<input 	[(ngModel)]="toPublicKeyValue" autocomplete="off" type="text" class="form-control" placeholder="987987879...">
 	</div>
 </div>
-<div class="modal-footer">
+<div class="modal-footer text-center">
   <button type="button" class="btn btn-success" [disabled]="!(fromValue && toValue && toPublicKeyValue)" (click)="start()">{{ '#Start now' | dgTranslate }}</button>
   <button type="button" class="btn btn-light" (click)="close()">{{ '#Close' | dgTranslate }}</button>
 </div>

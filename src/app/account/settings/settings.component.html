@@ -1,12 +1,12 @@
 <div class="row">
 	<div class="col-md-3">
-		<ul class="list-group list-group-flush">
+		<ul class="list-group list-group-flush mb-4">
 			<a class="list-group-item" routerLinkActive="active" [routerLink]="['profile']">{{ '#Profile' | dgTranslate }}</a>
 			<a class="list-group-item" routerLinkActive="active" [routerLink]="['nodes']">{{ '#Nodes' | dgTranslate }}</a>
 			<a class="list-group-item" routerLinkActive="active" [routerLink]="['messenger']">{{ '#Messenger' | dgTranslate }}</a>
 		</ul>
 	</div>
 	<div class="col-md-9">
-     <router-outlet></router-outlet>
+    	<router-outlet></router-outlet>
 	</div>
 </div>

@@ -38,9 +38,8 @@
 		<input type="password" autocomplete="new-password" class="form-control" [(ngModel)]="config.password" />
 		<ng2-password-strength-bar [passwordToCheck]="config.password"></ng2-password-strength-bar>
 	</div>
-
-	<div class="text-center mt-4">
-		<button class="btn btn-primary"
-			[disabled]="!(config.filename && config.password)" (click)="exportProfile()">{{ '#Save to file' | dgTranslate }}</button>
-	</div>
+</div>
+<div class="mb-4 text-center">
+	<button class="btn btn-success"
+		[disabled]="!(config.filename && config.password)" (click)="exportProfile()">{{ '#Save to file' | dgTranslate }}</button>
 </div>

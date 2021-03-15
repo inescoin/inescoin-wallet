@@ -5,7 +5,7 @@
   </button>
 </div>
 <div class="modal-body">
-	<p class="alert alert-info text-center"><fa-icon icon="wallet"></fa-icon> {{ options.account.address }}</p>
+	<p class="alert alert-info text-center"><fa-icon icon="wallet"></fa-icon> {{ options.account.address | dgTruncate :{ limit: 20, position: 'center' } }}</p>
 
 	<div class="row">
 		<div class="col">
@@ -32,6 +32,6 @@
 		</div>
 	</div>
 </div>
-<div class="modal-footer">
+<div class="modal-footer text-center">
 	<button class="btn btn-light" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
 </div>

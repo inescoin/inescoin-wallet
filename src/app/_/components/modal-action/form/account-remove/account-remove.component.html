@@ -5,7 +5,7 @@
   </button>
 </div>
 <div class="modal-body">
-	<p class="alert alert-info text-center"><fa-icon icon="wallet"></fa-icon> {{ options.account.address }}</p>
+	<p class="alert alert-info text-center"><fa-icon icon="wallet"></fa-icon> {{ options.account.address | dgTruncate :{ limit: 20, position: 'center' } }}</p>
 
 	<div class="alert alert-danger text-center" *ngIf="badPassword">{{ '#Bad password' | dgTranslate }}</div>
 
@@ -14,7 +14,7 @@
 		<input class="form-control" type="password" name="password" [(ngModel)]="password" autocomplete="new-password">
 	</div>
 </div>
-<div class="modal-footer">
+<div class="modal-footer text-center">
 	<button class="btn btn-light" (click)="dismiss()">{{ '#Cancel' | dgTranslate }}</button>
 	<button class="btn btn-danger mr-2" (click)="remove()">{{ '#Delete now!' | dgTranslate }}</button>
 </div>
