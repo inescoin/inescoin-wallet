@@ -14,7 +14,7 @@ Install dependencies
   node patch.js
 ```
 
-Run with dev env
+Run with dev env (open browser)
 ```
   npm start
 
