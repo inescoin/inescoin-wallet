@@ -22,7 +22,7 @@ export class ContactsCreateComponent implements OnInit {
 		label: '',
 		address: '',
 		publicKey: '',
-    walletId: ''
+    reference: ''
 	};
 
   subjects: any = {};

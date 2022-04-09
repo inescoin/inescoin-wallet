@@ -14,7 +14,7 @@
   		<div class="inbox_chat">
     		<div class="chat_list" *ngFor="let channel of conversations" [ngClass]="{'active_chat': channel.id === current.id}">
           <div class="chat_people" (click)="startChat(channel)">
-            <div class="chat_img"> <img src="/assets/img/logo_inescoin.png" alt="sunil"> </div>
+            <div class="chat_img"> <img src="/assets/img/logo_inescoin_9_p.png"> </div>
             <div class="chat_ib">
               <h5>{{ channel.from | dgTruncate :{limit: 8}  }} <fa-icon icon="exchange-alt"></fa-icon> {{ channel.to | dgTruncate :{limit: 8} }}</h5>
             </div>

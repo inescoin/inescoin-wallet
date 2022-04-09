@@ -37,7 +37,7 @@ export class ContactsService {
       label: contact.label,
       address: contact.address,
       publicKey: contact.publicKey,
-      walletId: contact.walletId,
+      reference: contact.reference,
   	});
 
   	this.saveToStorage();

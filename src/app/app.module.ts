@@ -5,7 +5,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -119,7 +119,14 @@ export function newNgTranslate(http: HttpClient) {
 
 registerLocaleData(localeFr, 'fr');
 
-const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: {} };
+// const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: {} };
+
+// const config: SocketIoConfig = {
+//   url: inescoinConfig.messengerAddress, // socket server url;
+//   options: {
+//     transports: ['websocket']
+//   }
+// }
 
 @NgModule({
   declarations: [
@@ -229,7 +236,7 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     HttpModule,
     HttpClientModule,
     NgxTinymceModule.forRoot({
-      baseURL: '//cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.16/'
+      baseURL: './assets/tinymce/'
     }),
     NgxJsonViewerModule,
     ColorPickerModule,
@@ -248,7 +255,7 @@ const config: SocketIoConfig = { url: inescoinConfig.messengerAddress, options: 
     FontAwesomeModule,
     ZXingScannerModule,
     NgxDatatableModule,
-    SocketIoModule.forRoot(config),
+    // SocketIoModule.forRoot(config),
     UiSwitchModule,
     PasswordStrengthBarModule,
     PickerModule,

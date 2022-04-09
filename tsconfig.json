@@ -15,6 +15,9 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "downlevelIteration": true,
+    "paths": {
+      "rxjs": ["node_modules/rxjs"]
+    },
     "typeRoots": [
       "node_modules/@types"
     ],

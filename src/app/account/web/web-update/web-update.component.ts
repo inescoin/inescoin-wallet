@@ -25,7 +25,7 @@ export class WebUpdateComponent implements OnInit {
   error: string = '';
   amount: number = 1;
 
-  to: string = inescoinConfig.webTransferTo;
+  toWalletId: string = inescoinConfig.webTransferTo;
 
   data: any = {};
   address: any = {};
@@ -52,10 +52,10 @@ export class WebUpdateComponent implements OnInit {
   fee = 0.001;
 
   transfers = [{
-    to: inescoinConfig.webTransferTo,
+    toWalletId: inescoinConfig.webTransferTo,
     amount: 0.999,
     item: null,
-    walletId: ''
+    reference: ''
   }];
 
   subjects: any = {};
@@ -187,8 +187,8 @@ export class WebUpdateComponent implements OnInit {
     return this.transfers.map((transfer) => {
       return {
         amount: transfer.amount,
-        to: transfer.item && transfer.item.address || transfer.to,
-        walletId: transfer.walletId || transfer.item && transfer.item.walletId || ''
+        toWalletId: transfer.item && transfer.item.address || transfer.toWalletId,
+        reference: transfer.reference || transfer.item && transfer.item.reference || ''
       };
     })
   }

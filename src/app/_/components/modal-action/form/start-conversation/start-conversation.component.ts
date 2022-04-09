@@ -20,6 +20,8 @@ export class StartConversationComponent implements OnInit {
   contacts: any = [];
   addresses: any = {};
 
+  addressesArray: any = [];
+
   toValue: any = '';
   toPublicKeyValue: any = '';
   fromValue: any = '';
@@ -37,10 +39,14 @@ export class StartConversationComponent implements OnInit {
   ngOnInit() {
     this.addresses = this.walletService.getFromWalletStorage();
 
+    console.log(this.addresses);
+
     this.contacts = this.contactsService.contacts && this.contactsService.contacts.map((contact: any) => {
       contact.value = contact.label + ' ' + contact.address;
       return contact;
     }) || [];
+
+    this._loadAdressesArray();
   }
 
   close() {
@@ -61,6 +67,21 @@ export class StartConversationComponent implements OnInit {
     }
 
     return addresses;
+  }
+
+  private _loadAdressesArray() {
+    // this.addresses = this.walletService.getFromHomeStorage();
+
+    let addresses = [];
+    console.log(this.addresses);
+    for(let address of Object.keys(this.addresses)) {
+      addresses.push({
+        address: address,
+        publicKey: this.addresses[address].publicKey
+      });
+    }
+
+    this.addressesArray = addresses;
   }
 
   onFromChange(event) {

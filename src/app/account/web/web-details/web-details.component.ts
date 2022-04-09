@@ -185,6 +185,8 @@ export class WebDetailsComponent implements OnInit {
     imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
     content_css: [
       '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+      '//cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',
+      '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'
     ]
   };
 

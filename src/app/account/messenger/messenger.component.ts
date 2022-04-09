@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@an
 import { ModalActionService } from '../../_/components/modal-action/modal-action.service';
 import { MessengerService } from './messenger.service';
 import { MessageService } from '../../_/services/message.service';
+import { SocketService } from '../../_/services/socket.service';
 import { Socket } from 'ngx-socket-io';
 
 import { inescoinConfig } from '../../config/inescoin.config';
@@ -45,7 +46,7 @@ export class MessengerComponent implements OnInit {
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
-    private socket: Socket,
+    private socketService: SocketService,
   	private messageService: MessageService,
   	private messengerService: MessengerService,
   	private modalActionService: ModalActionService,) {
@@ -67,10 +68,17 @@ export class MessengerComponent implements OnInit {
   	this.startChat();
   	this._scrollToBottom();
 
-    this.socket.fromEvent('message').subscribe((message) => {
-    });
+    // this.socketService.socket.on('message', (message) => {
+    //   console.log(message);
+    // });
 
-    this.socket.fromEvent('new-message').subscribe((message) => {
+    // this.socketService.socket.on('new-message', (message) => {
+    //   this._checkMessageHistory(message);
+    //   console.log('NEW MESSAGE FOUND', message);
+    // });
+
+    this.socketService.getNewMessage().subscribe((message: string) => {
+      console.log('NEW MESSAGE FOUND', message);
       this._checkMessageHistory(message);
     });
   }
@@ -81,6 +89,7 @@ export class MessengerComponent implements OnInit {
 
   getMessages() {
     this.messageService.getMessages(this.current.from.address).subscribe((data: any) => {
+      console.log(data);
       data && data.messages && data.messages.forEach((message: any) => {
         this._checkMessageHistory(message);
       })
@@ -90,6 +99,7 @@ export class MessengerComponent implements OnInit {
   initHistory(history?) {
     this.history = history || this.messengerService.history;
 
+    console.log(this.history);
   	let conversations = [];
   	for(let channel of Object.keys(this.history)) {
   		conversations.push({
@@ -117,18 +127,17 @@ export class MessengerComponent implements OnInit {
   }
 
   startChat(channel?) {
-  	this.current = channel || this.current;
+  	this.current = channel || this.current;
+
     if (!this.current.id && this.conversations[0]) {
       this.current = this.conversations[0];
     }
+
   	this._loadMessages(this.current.id);
 
     if (this.wallets) {
       let addresses = Object.keys(this.wallets);
-
-      this.socket.emit('authentication', {
-        address: addresses.join(',')
-      });
+      this.socketService.authentication(addresses.join(','));
     }
   }
 
@@ -161,7 +170,7 @@ export class MessengerComponent implements OnInit {
   		this.password
   	);
 
-    console.log(decrypted);
+    console.log(this.current.from, this.password);
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
@@ -193,7 +202,7 @@ export class MessengerComponent implements OnInit {
   private _checkMessage(message) {
     let passed = this.messageService.ecVerify(message.hash, message.signature, message.publicKey);
 
-    if (passed && message && (message.to === this.current.from.address && message.from === this.current.to.address || message.from === this.current.from.address && message.to === this.current.to.address)) {
+    if (passed && message && (message.toWalletId === this.current.from.address && message.fromWalletId === this.current.to.address || message.fromWalletId === this.current.from.address && message.toWalletId === this.current.to.address)) {
       if (this.currentMessages.indexOf(message.signature) === -1) {
 
         let decrypted: any = this.messageService.decryptWithPassword(
@@ -206,7 +215,7 @@ export class MessengerComponent implements OnInit {
 
           message.body = this.messageService.decryptMessage(decrypted.privateKey, message.message);
 
-          message.isMe = message.from === this.current.from.address;
+          message.isMe = message.fromWalletId === this.current.from.address;
 
           if (message.body && !message.isMe) {
             if (this.messengerService.pushMessage(this.current.id, message)) {
@@ -225,44 +234,58 @@ export class MessengerComponent implements OnInit {
   }
 
   private _checkMessageHistory(message) {
+    console.log('-------> 1', message);
+    if (!message) {
+      return;
+    }
+    console.log('-------> 2');
+
     let passed = this.messageService.ecVerify(message.hash, message.signature, message.publicKey);
     if (!passed) {
       return;
     }
+    console.log('-------> 3');
 
     let addresses = Object.keys(this.wallets);
-    let address = addresses.indexOf(message.to) !== -1
-      ? message.to
-      : message.from;
+    let address = addresses.indexOf(message.toWalletId) !== -1
+      ? message.toWalletId
+      : message.fromWalletId;
 
     this.messengerService.saveMessage(address, message);
 
     let ids = Object.keys(this.history);
-    let idDERFrom = CryptoJS.SHA256(message.to + message.from).toString();
-    let idDERTo = CryptoJS.SHA256(message.from + message.to).toString();
+    let idDERFrom = CryptoJS.SHA256(message.toWalletId + message.fromWalletId).toString();
+    let idDERTo = CryptoJS.SHA256(message.fromWalletId + message.toWalletId).toString();
+
+    // console.log('_checkMessageHistory', 'Current Id:' + this.current.id, 'idDERFrom:' + idDERFrom, 'idDERTo:' +idDERTo);
 
     if (this.messengerService.messageExists(idDERFrom, message)) {
+      console.log('----------------------------------------------------------');
+      console.log('----------------------------------------------------------');
+      console.log('--------------------- messageExists ----------------------');
+      console.log('----------------------------------------------------------');
+      console.log('----------------------------------------------------------');
       return;
     }
 
-    if (this.wallets[message.to]) {
+    if (this.wallets[message.toWalletId]) {
       if (!this.history[idDERFrom] || !this.history[idDERTo]) {
         this.messengerService.startConversation(idDERFrom, {
           id: idDERFrom,
           from: {
-            address: message.to,
-            data: this.wallets[message.to].data,
-            publicKey: this.wallets[message.to].publicKey,
+            address: message.toWalletId,
+            data: this.wallets[message.toWalletId].data,
+            publicKey: this.wallets[message.toWalletId].publicKey,
           },
           to: {
-            address: message.from,
+            address: message.fromWalletId,
             publicKey: message.publicKey,
           }
         });
       }
 
       let decrypted: any = this.messageService.decryptWithPassword(
-        this.wallets[message.to].data,
+        this.wallets[message.toWalletId].data,
         this.password
       );
 
@@ -290,41 +313,37 @@ export class MessengerComponent implements OnInit {
       }
     }
 
-    if (this.wallets[message.from]) {
+    if (this.wallets[message.fromWalletId]) {
     }
 
+    if (passed && message && (ids.indexOf(idDERFrom) !== -1 || ids.indexOf(idDERTo) !== -1 )) {
+      let decrypted: any = this.messageService.decryptWithPassword(
+        this.current.from.data,
+        this.password
+      );
 
+      if (decrypted) {
+        decrypted = JSON.parse(decrypted);
 
+        message.body = this.messageService.decryptMessage(decrypted.privateKey, message.message);
 
-    // if (passed && message && (ids.indexOf(idDERFrom) !== -1 || ids.indexOf(idDERTo) !== -1 )) {
+        message.isMe = message.fromWalletId === this.current.from.address;
 
-      // let decrypted: any = this.messageService.decryptWithPassword(
-      //   this.current.from.data,
-      //   this.password
-      // );
+        if (message.body && !message.isMe) {
+          if (this.messengerService.pushMessage(this.current.id, message)) {
+            if (idDERFrom === this.current.id || idDERTo === this.current.id) {
+              this.current.messages.push(message);
+            }
+          }
 
-      // if (decrypted) {
-      //   decrypted = JSON.parse(decrypted);
-
-      //   message.body = this.messageService.decryptMessage(decrypted.privateKey, message.message);
-
-      //   message.isMe = message.from === this.current.from.address;
-
-      //   if (message.body && !message.isMe) {
-      //     if (this.messengerService.pushMessage(this.current.id, message)) {
-      //       if (idDERFrom === this.current.id || idDERTo === this.current.id) {
-      //         this.current.messages.push(message);
-      //       }
-      //     }
-
-      //     this.currentMessages.push(message.signature);
-      //   } else if (message.isMe) {
-      //     let sendedMessage = _.find(this.current.messages, {
-      //       signature: message.signature
-      //     });
-      //   }
-      // }
-    // }
+          this.currentMessages.push(message.signature);
+        } else if (message.isMe) {
+          let sendedMessage = _.find(this.current.messages, {
+            signature: message.signature
+          });
+        }
+      }
+    }
   }
 
   addEmoji(event) {

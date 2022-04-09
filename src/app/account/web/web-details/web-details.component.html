@@ -182,75 +182,94 @@
 	    <ng-template ngbTabTitle><fa-icon icon="file-alt"></fa-icon> {{ '#Page' | dgTranslate }}</ng-template>
 	    <ng-template ngbTabContent>
 	    	<div class="p-2 mt-4">
+					<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" dragula="VAMPIRES" [(dragulaModel)]="domain.html[currentLocale].pages">
+						<ngb-panel  *ngFor="let item of domain.html[currentLocale].pages; let i = index">
+		          	<ng-template ngbPanelTitle>
+		          		<i class="fa fa-close fa-2x text-danger pull-right ml-4" (click)="removePage(i)"></i>
+			          	<div class="page-position">
+			          		<span *ngIf="!item.menuTitle && i !== 0">|---</span>
+			          		{{ '#Position' | dgTranslate }} {{ (i + 1) }}
+			          		<span class="mr-2 badge badge-light" *ngIf="item.menuTitle && i !== 0">
+			          			<i *ngIf="item.isLink" class="fa fa-link"></i>
+			          			{{ item.menuTitle }}
+			          		</span>
+			          		<span *ngIf="i === 0" class="badge badge-light">masthead</span>
+			          	</div>
+								</ng-template>
+					   	 	<ng-template ngbPanelContent>
+					   	 		<div class="row" *ngIf="i !== 0">
+										<div class="col">
+											{{ '#Show in menu' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="item.shownInMenu"></ui-switch>
+										</div>
+										<div class="col text-right">
+											{{ '#Is Link' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="item.isLink"></ui-switch>
+										</div>
+									</div>
+									<div class="row" *ngIf="item.isLink && i !== 0">
+										<div class="col-md-3">
+												<div class="form-group">
+													<label>{{ '#Menu title' | dgTranslate }}</label>
+													<input type="text" class="form-control" [(ngModel)]="item.menuTitle">
+												</div>
+											</div>
+										<div class="col-md-9">
+											<div class="form-group">
+												<label>{{ '#Link' | dgTranslate }}</label>
+												<input type="text" class="form-control" [(ngModel)]="item.linkUrl">
+											</div>
+										</div>
+			          	</div>
 
-					<ul class="list-group" dragula="VAMPIRES" [(dragulaModel)]="domain.html[currentLocale].pages">
-	          <li class="list-group-item" *ngFor="let item of domain.html[currentLocale].pages; let i = index">
-	          	<div class="page-position">
-	          		{{ '#Position' | dgTranslate }} {{ (i + 1) }} <span *ngIf="i === 0" class="badge badge-light">masthead</span> <button class="badge badge-danger pull-right" (click)="removePage(i)"><i class="fa fa-close"></i></button>
-	          	</div>
-	          	<div class="row" *ngIf="i !== 0">
-								<div class="col">
-									{{ '#Show in menu' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="item.shownInMenu"></ui-switch>
+									<div *ngIf="!item.isLink">
+				          	<div class="row" *ngIf="i !== 0">
+											<div class="col">
+												<div class="form-group">
+													<label>{{ '#Menu title' | dgTranslate }}</label>
+													<input type="text" class="form-control" [(ngModel)]="item.menuTitle">
+												</div>
+											</div>
+											<div class="col">
+												<div class="form-group">
+													<label>{{ '#Id' | dgTranslate }}</label>
+													<input type="text" class="form-control" [(ngModel)]="item.divId">
+												</div>
+											</div>
+				          	</div>
+
+				          	<hr />
+
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>{{ '#Background image' | dgTranslate }} (desktop)</label>
+													<input type="text" class="form-control" [(ngModel)]="item.backgroundImage">
+												</div>
+
+												<hr />
+												<img class="img-fluid" [ngStyle]="{'opacity': (item.backgroundOpacity / 100)}" *ngIf="item.backgroundImage" [src]="item.backgroundImage" />
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>{{ '#Background image' | dgTranslate }} (mobile)</label>
+													<input type="text" class="form-control" [(ngModel)]="item.backgroundImageMobile">
+												</div>
+
+				          			<hr />
+												<img class="img-fluid" [ngStyle]="{'opacity': (item.backgroundOpacity / 100)}" *ngIf="item.backgroundImageMobile" [src]="item.backgroundImageMobile" />
+											</div>
+				          	</div>
+				          	<hr />
+
+			          	<div>
+			          	</div>
+			          	<hr />
+
+									<label>{{ '#Content' | dgTranslate }}</label>
+									<tinymce [(ngModel)]="item.body" [config]="tinymceConfig"></tinymce>
 								</div>
-								<div class="col text-right">
-									{{ '#Is Link' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="item.isLink"></ui-switch>
-								</div>
-							</div>
-							<hr />
-
-							<div class="row" *ngIf="item.isLink && i !== 0">
-								<div class="col-md-3">
-										<div class="form-group">
-											<label>{{ '#Menu title' | dgTranslate }}</label>
-											<input type="text" class="form-control" [(ngModel)]="item.menuTitle">
-										</div>
-									</div>
-								<div class="col-md-9">
-									<div class="form-group">
-										<label>{{ '#Link' | dgTranslate }}</label>
-										<input type="text" class="form-control" [(ngModel)]="item.linkUrl">
-									</div>
-								</div>
-	          	</div>
-
-							<div *ngIf="!item.isLink">
-		          	<div class="row" *ngIf="i !== 0">
-									<div class="col">
-										<div class="form-group">
-											<label>{{ '#Menu title' | dgTranslate }}</label>
-											<input type="text" class="form-control" [(ngModel)]="item.menuTitle">
-										</div>
-									</div>
-									<div class="col">
-										<div class="form-group">
-											<label>{{ '#Id' | dgTranslate }}</label>
-											<input type="text" class="form-control" [(ngModel)]="item.divId">
-										</div>
-									</div>
-		          	</div>
-
-		          	<hr />
-
-								<div class="row">
-									<div class="col">
-										<div class="form-group">
-											<label>{{ '#Background image' | dgTranslate }}</label>
-											<input type="text" class="form-control" [(ngModel)]="item.backgroundImage">
-										</div>
-									</div>
-		          	</div>
-		          	<hr />
-		          	<div>
-									<img class="img-fluid" [ngStyle]="{'opacity': (item.backgroundOpacity / 100)}" *ngIf="item.backgroundImage" [src]="item.backgroundImage" />
-		          	</div>
-		          	<hr />
-
-								<label>{{ '#Content' | dgTranslate }}</label>
-								<tinymce [(ngModel)]="item.body" [config]="tinymceConfig"></tinymce>
-							</div>
-	          </li>
-	        </ul>
-
+								</ng-template>
+	        	</ngb-panel>
+	        </ngb-accordion>
 	        <div class="text-center mt-4">
 	    			<button class="btn btn-light" (click)="addPage()"><fa-icon icon="plus"></fa-icon> {{ '#Add a block' | dgTranslate }}</button>
 	    		</div>

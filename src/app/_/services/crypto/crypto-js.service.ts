@@ -191,6 +191,8 @@ export class CryptoJsService {
 
   encryptFromPassword(plainText, passphrase) {
     let encrypted = '';
+    plainText = plainText || plainText;
+
     try {
       encrypted = CryptoJS.AES.encrypt(plainText.trim(), passphrase.trim()).toString();
       this.decryptFromPassword(encrypted, passphrase);
@@ -201,9 +203,13 @@ export class CryptoJsService {
 
   decryptFromPassword(encrypted, passphrase) {
     let decrypted = '';
+    console.log(encrypted, passphrase);
+    encrypted = encrypted || '';
     try {
       decrypted = CryptoJS.AES.decrypt(encrypted.trim(), passphrase.trim()).toString(CryptoJS.enc.Utf8);
-    } catch(e) {}
+    } catch(e) {
+      console.log(e);
+    }
 
     return decrypted;
   }

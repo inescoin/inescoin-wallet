@@ -227,5 +227,9 @@
 	"#Store": "Store",
 	"#Parse": "Parse",
 	"#Update a category": "Update a category",
-	"#Remove a category": "Remove a category"
+	"#Remove a category": "Remove a category",
+	"#Create a category": "Create a category",
+	"#Parent category": "Parent category",
+	"#Update node": "Update node",
+	"#Delete node": "Delete node"
 }

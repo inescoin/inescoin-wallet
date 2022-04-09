@@ -8,7 +8,7 @@ import { JSEncrypt } from 'jsencrypt';
 import * as CryptoJS from 'crypto-js';
 import { publicKeyConvert } from 'secp256k1';
 
-import { Socket } from 'ngx-socket-io';
+// import { Socket } from 'ngx-socket-io';
 
 import { HttpService } from './http/http.service';
 
@@ -33,7 +33,7 @@ export class MessageService {
   nodePublicKey: string = '';
 
   constructor(
-    private socket: Socket,
+    // private socket: Socket,
   	private cryptoJsService: CryptoJsService,
   	private httpService: HttpService) {
   }
@@ -118,8 +118,8 @@ export class MessageService {
     let signature = this.cryptoJsService.ecSign(completeMessage.toString(), fromPrivateKey);
 
     let messageData: any = {
-      from: from,
-      to: to,
+      fromWalletId: from,
+      toWalletId: to,
       message: encrypted,
       signature: signature.toDER('hex'),
       publicKey: fromPublicKey,

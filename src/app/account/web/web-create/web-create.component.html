@@ -17,8 +17,7 @@
 	</div>
 </div>
 
-
-<div class="row" *ngIf="addressesArray.length && !from">
+<div class="row" *ngIf="addressesArray.length && (!from || !from.address)">
 	<div class="col-md-12 mb-2">
 		<h6>{{ '#From' | dgTranslate }}</h6>
 	</div>
@@ -32,10 +31,10 @@
 	</div>
 </div>
 
-<div *ngIf="!isSummaryStep && from">
+<div *ngIf="!isSummaryStep && from && from.address">
 	<h6>{{ '#From' | dgTranslate }}</h6>
 
-	<div class="card account-card">
+	<div class="card account-card" *ngIf="actionType !== 'delete' && actionType !== 'changeOwner'">
   	<div class="card-body">
 			<h6 class="card-subtitle mb-2 text-muted"><fa-icon icon="wallet" pull="left"></fa-icon> {{ from.address }}</h6>
 			<p class="card-text text-right">{{ from.amount | cryptoAmount }} {{ inescoinConfig.symbol }}</p>
@@ -122,9 +121,9 @@
 	</div>
 </div>
 
-<div *ngIf="isSummaryStep && from">
+<div *ngIf="isSummaryStep && from && from.address">
 	<div class="form-group">
-		<label>{{ '#Owner' | dgTranslate }} :</label>
+		<label>{{ '#From' | dgTranslate }} :</label>
 
 		<div class="card account-card">
 	  	<div class="card-body">

@@ -14,7 +14,7 @@
 		</div>
 		<div class="col-12">
 			<div class="form-group">
-				{{ '#Parent' | dgTranslate }}
+				{{ '#Parent category' | dgTranslate }}
 				<select [(ngModel)]="category.parent" class="form-control">
 					<option value=""></option>
 					<option *ngFor="let category of categories" [value]="category.sku">{{ category.title }}</option>

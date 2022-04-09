@@ -5,7 +5,8 @@
   </button>
 </div>
 <div class="modal-body text-center">
-	<p class="alert alert-info text-center"><fa-icon icon="wallet"></fa-icon> {{ options.account.address | dgTruncate :{ limit: 20, position: 'center' } }}</p>
+	<p class="alert alert-info text-left overflow-auto">{{ '#Address' | dgTranslate }}: {{ options.account.address }}</p>
+	<p class="alert alert-info text-left overflow-auto">{{ '#Public key' | dgTranslate }}: {{options.account.wallet.publicKey }}</p>
 	<ngx-qrcode
 		elementType="canvas"
 		[value]="qrCodeKeys"

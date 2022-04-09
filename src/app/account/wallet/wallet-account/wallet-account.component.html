@@ -40,7 +40,7 @@
 					  cssClass="aclass"
 					  errorCorrectionLevel="L">
 			</ngx-qrcode>
-			<input type="type" class="form-control mb-3" autocomplete="new-password" placeholder="{{ '#Wallet Id' | dgTranslate }}" [(ngModel)]="account.wallet.walletId" />
+			<input type="type" class="form-control mb-3" autocomplete="new-password" placeholder="{{ '#Wallet Id' | dgTranslate }}" [(ngModel)]="account.wallet.reference" />
 		</div>
 	</div>
 </div>
@@ -50,22 +50,22 @@
 	<h3 class="text-center"><fa-icon icon="exchange-alt"></fa-icon> {{ '#Last 100 transfers' | dgTranslate }}</h3>
 	<div class="list-group list-group-flush">
 		<div class="list-group-item link-item text-center" *ngFor="let transfer of account.transactionsPool" (click)="openModal('transferDetails', { transfer: transfer, component: 'wallet', size: 'lg'})">
-			<h3 [class.text-danger]="account.address === transfer.from" [class.text-success]="account.address !== transfer.from" >
-				<span *ngIf="account.address === transfer.from">-</span><span *ngIf="account.address !== transfer.from">+</span>{{ transfer.amount | cryptoAmount }} {{ inescoinConfig.symbol }}
+			<h3 [class.text-danger]="account.address === transfer.fromWalletId" [class.text-success]="account.address !== transfer.fromWalletId" >
+				<span *ngIf="account.address === transfer.fromWalletId">-</span><span *ngIf="account.address !== transfer.fromWalletId">+</span>{{ transfer.amount | cryptoAmount }} {{ inescoinConfig.symbol }}
 			</h3>
-			<p *ngIf="account.address === transfer.from">{{ '#To' | dgTranslate }}: {{ transfer.to | dgTruncate :{limit: 15} }}</p>
-			<p *ngIf="account.address !== transfer.from">{{ '#From' | dgTranslate }}: {{ transfer.from | dgTruncate :{limit: 15} }}</p>
+			<p *ngIf="account.address === transfer.fromWalletId">{{ '#To' | dgTranslate }}: {{ transfer.toWalletId | dgTruncate :{limit: 15} }}</p>
+			<p *ngIf="account.address !== transfer.fromWalletId">{{ '#From' | dgTranslate }}: {{ transfer.fromWalletId | dgTruncate :{limit: 15} }}</p>
 			<p><fa-icon icon="hourglass-half"></fa-icon></p>
 		</div>
 	</div>
 
 	<div class="list-group list-group-flush">
 		<div class="list-group-item link-item text-center" *ngFor="let transfer of account.transactions" (click)="openModal('transferDetails', { transfer: transfer, component: 'wallet', size: 'lg'})">
-			<h3 [class.text-danger]="account.address === transfer.from" [class.text-success]="account.address !== transfer.from" >
-				<span *ngIf="account.address === transfer.from">-</span><span *ngIf="account.address !== transfer.from">+</span>{{ transfer.amount | cryptoAmount }} {{ inescoinConfig.symbol }}
+			<h3 [class.text-danger]="account.address === transfer.fromWalletId" [class.text-success]="account.address !== transfer.fromWalletId" >
+				<span *ngIf="account.address === transfer.fromWalletId">-</span><span *ngIf="account.address !== transfer.fromWalletId">+</span>{{ transfer.amount | cryptoAmount }} {{ inescoinConfig.symbol }}
 			</h3>
-			<p *ngIf="account.address === transfer.from">{{ '#To' | dgTranslate }}: {{ transfer.to | dgTruncate :{limit: 15} }}</p>
-			<p *ngIf="account.address !== transfer.from">{{ '#From' | dgTranslate }}: {{ transfer.from | dgTruncate :{limit: 15} }}</p>
+			<p *ngIf="account.address === transfer.fromWalletId">{{ '#To' | dgTranslate }}: {{ transfer.toWalletId | dgTruncate :{limit: 15} }}</p>
+			<p *ngIf="account.address !== transfer.fromWalletId">{{ '#From' | dgTranslate }}: {{ transfer.fromWalletId | dgTruncate :{limit: 15} }}</p>
 			<p>{{ (transfer.createdAt * 1000) | date:'medium' }}</p>
 		</div>
 	</div>

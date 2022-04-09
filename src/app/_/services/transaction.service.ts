@@ -81,12 +81,12 @@ export class TransactionService {
     }
   }
 
-  sendTransaction(fee, transfers, from, publicKey, privateKey, toDo?) {
+  sendTransaction(fee, transfers, fromWalletId, publicKey, privateKey, toDo?) {
     this.httpService.post('get-wallet-addresses-infos', {
-      walletAddresses: from
+      walletAddresses: fromWalletId
     }).subscribe((wallet) => {
-      if (wallet[from]) {
-        let messageData = this._doEncryption(fee * 1000000000, transfers, from, wallet[from].hash, publicKey, privateKey, toDo);
+      if (wallet[fromWalletId]) {
+        let messageData = this._doEncryption(fee * 1000000000, transfers, fromWalletId, wallet[fromWalletId].hash, publicKey, privateKey, toDo);
 
         this.httpService.get('public-key').subscribe((node: any) => {
           this.nodePublicKey = node.publicKey;
@@ -123,9 +123,9 @@ export class TransactionService {
   	}
   }
 
-  private _doEncryption(fee, transfers, from, bankHash, publicKey, privateKey, toDos?) {
-    let encrypted = this._encryptTransaction(from, transfers);
-    let encryptedTodos = toDos ? this._encryptToDo(from, toDos, privateKey) : '';
+  private _doEncryption(fee, transfers, fromWalletId, bankHash, publicKey, privateKey, toDos?) {
+    let encrypted = this._encryptTransaction(fromWalletId, transfers);
+    let encryptedTodos = toDos ? this._encryptToDo(fromWalletId, toDos, privateKey) : '';
 
     let sign = new JSEncrypt({});
     sign.setPrivateKey(privateKey);
@@ -135,7 +135,7 @@ export class TransactionService {
     let completeMessage = CryptoJS.SHA256(
       bankHash
       + this.blockchainConfigHash
-      + from
+      + fromWalletId
       + toDoOutput
       + encrypted
       + this.amount
@@ -146,7 +146,7 @@ export class TransactionService {
     let messageData: any = {
       fee: fee,
     	amount: this.amount,
-      from: from,
+      fromWalletId: fromWalletId,
       bankHash: bankHash,
       toDo: encryptedTodos,
       toDoHash: toDoOutput,
@@ -161,13 +161,13 @@ export class TransactionService {
     return messageData;
   }
 
-  private _encryptToDo(from, toDos, privateKey) {
+  private _encryptToDo(fromWalletId, toDos, privateKey) {
     if (!toDos) {
       return '';
     }
 
     return btoa(JSON.stringify(toDos.map((toDo) => {
-      toDo.hash = (CryptoJS.SHA256(from + toDo.name)).toString()
+      toDo.hash = (CryptoJS.SHA256(fromWalletId + toDo.name)).toString()
       let signature = this.cryptoJsService.ecSign(toDo.hash, privateKey);
       toDo.signature = signature.toDER('hex');
 
@@ -175,7 +175,7 @@ export class TransactionService {
     })));
   }
 
-  private _encryptTransaction(from, transfers) {
+  private _encryptTransaction(fromWalletId, transfers) {
     this.amount = 0;
 
     return btoa(JSON.stringify(transfers.filter(transfer => transfer.amount > 0).map((transfer) => {
@@ -189,13 +189,13 @@ export class TransactionService {
       this.amount += transfer.amount * this.unit;
 
       return {
-        to: transfer.to,
+        toWalletId: transfer.toWalletId,
         amount: transfer.amount * this.unit,
         nonce: nonce,
-        walletId: transfer.walletId,
+        reference: transfer.reference,
         hash: (CryptoJS.SHA256(
-          from
-          + transfer.to
+          fromWalletId
+          + transfer.toWalletId
           + '' + (transfer.amount * this.unit)
           + '' + nonce
         )).toString()

@@ -73,10 +73,10 @@ export class WalletComponent implements OnInit {
     for (let key of Object.keys(this.wallet)) {
       wallet.push({
         address: this.addresses[key] && this.addresses[key].address || key,
-        amount: this.addresses[key] && this.addresses[key].amount || '0.00'
+        amount: this.addresses[key] && parseInt(this.addresses[key].amount) || '0.00'
       });
 
-      total += this.addresses[key] && this.addresses[key].amount || 0;
+      total += this.addresses[key] && parseInt(this.addresses[key].amount) || 0;
       i++;
     }
 

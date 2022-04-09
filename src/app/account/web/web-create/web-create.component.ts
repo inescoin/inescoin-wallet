@@ -34,7 +34,7 @@ export class WebCreateComponent implements OnInit {
   amountThreeMonths: number = 200;
 	amountSixMonths: number = 300;
 
-	to: string = '0x16D6cae25f36A16ABA3482526dFabA1D69a7aB5f';
+	to: string = inescoinConfig.webTransferTo;
 
 	data: any = {};
 	address: any = {};
@@ -59,10 +59,10 @@ export class WebCreateComponent implements OnInit {
   fee = 0.001;
 
 	transfers = [{
-		to: inescoinConfig.webTransferTo,
+		toWalletId: inescoinConfig.webTransferTo,
 		amount: 0.999,
     item: null,
-    walletId: ''
+    reference: ''
 	}];
 
   contacts = [];
@@ -212,8 +212,6 @@ export class WebCreateComponent implements OnInit {
 
     let decrypted: any = this.transactionService.decryptWithPassword(this.data, this.password);
 
-    console.log(decrypted);
-
     if (!this.password) {
       this.inProgress = false;
       this.badPassword = true;
@@ -236,8 +234,8 @@ export class WebCreateComponent implements OnInit {
   	return this.transfers.map((transfer) => {
       return {
         amount: transfer.amount,
-        to: transfer.item && transfer.item.address || transfer.to,
-        walletId: transfer.walletId || transfer.item && transfer.item.walletId || ''
+        toWalletId: transfer.item && transfer.item.address || transfer.toWalletId,
+        reference: transfer.reference || transfer.item && transfer.item.reference || ''
       };
     })
   }

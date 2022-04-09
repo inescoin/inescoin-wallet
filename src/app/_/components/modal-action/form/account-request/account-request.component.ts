@@ -15,7 +15,7 @@ import { WalletService } from '../../../../../account/wallet/wallet.service';
 export class AccountRequestComponent implements OnInit {
 	options: any = {};
 	payment: any = {
-		walletId: '',
+		reference: '',
 		amount: 0,
 	};
 

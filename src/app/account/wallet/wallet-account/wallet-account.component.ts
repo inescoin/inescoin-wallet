@@ -22,12 +22,12 @@ export class WalletAccountComponent implements OnInit {
 		hash: '',
 		wallet: {
 			label: '',
-			walletId: ''
+			reference: ''
 		},
 		address: '',
 		amount: 0,
 		firstHeight: 0,
-		lastHeight: 0,
+		height: 0,
     transactions: [],
     total: 0,
     transactionsPool: [],
@@ -52,16 +52,16 @@ export class WalletAccountComponent implements OnInit {
 
   		this.subjects.getWalletInfos = this.walletService.getWalletInfos(address).subscribe((walletInfos: any) => {
   			if (!walletInfos.error) {
-	  			this.account.amount = walletInfos.amount;
-			    this.account.address = walletInfos.address;
-			    this.account.firstHeight = walletInfos.firstHeight;
-			    this.account.lastHeight = walletInfos.lastHeight;
-			    this.account.hash = walletInfos.hash;
-			    this.account.total = walletInfos.transfers.total;
-          this.account.transactions = walletInfos.transfers.transactions;
+          console.log(walletInfos);
+	  			this.account.amount = walletInfos.wallet?.amount;
+			    this.account.address = walletInfos.wallet?.address;
+			    this.account.height = walletInfos.wallet?.height;
+			    this.account.hash = walletInfos.wallet?.hash;
+			    this.account.total = walletInfos.count;
+          this.account.transactions = walletInfos.transfers;
 
-          this.account.totalPool = walletInfos.transfersPool.total;
-          this.account.transactionsPool = walletInfos.transfersPool.transactions;
+          // this.account.totalPool = walletInfos.transfersPool.total;
+          // this.account.transactionsPool = walletInfos.transfersPool.transactions;
 
 			    this._saveToCache(address, this.account);
   			} else {
@@ -88,7 +88,7 @@ export class WalletAccountComponent implements OnInit {
 				address: '',
 				amount: 0,
 				firstHeight: 0,
-				lastHeight: 0,
+				height: 0,
 				transactions: [],
         total: 0,
         transactionsPool: [],
@@ -126,7 +126,7 @@ export class WalletAccountComponent implements OnInit {
     	address: this.account.address,
     	label: this.account.wallet.label,
     	publicKey: this.account.wallet.publicKey,
-    	walletId: this.account.wallet.walletId,
+    	reference: this.account.wallet.reference,
     });
   }
 

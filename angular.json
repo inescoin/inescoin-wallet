@@ -33,7 +33,9 @@
               "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/sockjs-client/dist/sockjs.min.js"
+            ]
           },
           "configurations": {
             "production": {
