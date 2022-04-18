@@ -68,6 +68,7 @@ export class WebDetailsComponent implements OnInit {
             active: false,
             code: ''
           },
+          store: false,
           meta: [{
               type: 'name',
               name: 'description',
@@ -129,7 +130,8 @@ export class WebDetailsComponent implements OnInit {
           body: '',
           backgroundOpacity: 100,
           height: '',
-          backgroundImage: ''
+          backgroundImage: '',
+          backgroundImageMobile: ''
         }],
         products: [],
         theme: {

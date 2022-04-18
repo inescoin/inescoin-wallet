@@ -46,9 +46,10 @@
 	    			<div class="card-header">
 	    				{{ '#Website' | dgTranslate }} {{ '#Active' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="domain.html[currentLocale].website.active"></ui-switch>
 	    				<span class="pull-right">
-
 	    					<button class="badge badge-danger" *ngIf="generatedLangues.length > 1" (click)="openDomainRemoveLangueModal()"><i class="fa fa-close"></i></button>
 	    				</span>
+
+	    				{{ '#Store' | dgTranslate }} {{ '#Active' | dgTranslate }} <ui-switch class="align-middle" [(ngModel)]="domain.html[currentLocale].website.store"></ui-switch>
 	    			</div>
 	    			<div class="card-body">
 	    				<div class="row">
