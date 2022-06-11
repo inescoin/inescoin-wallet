@@ -166,13 +166,13 @@ export class TransactionService {
       return '';
     }
 
-    return btoa(JSON.stringify(toDos.map((toDo) => {
+    return btoa(encodeURIComponent(JSON.stringify(toDos.map((toDo) => {
       toDo.hash = (CryptoJS.SHA256(fromWalletId + toDo.name)).toString()
       let signature = this.cryptoJsService.ecSign(toDo.hash, privateKey);
       toDo.signature = signature.toDER('hex');
 
       return toDo;
-    })));
+    }))));
   }
 
   private _encryptTransaction(fromWalletId, transfers) {
