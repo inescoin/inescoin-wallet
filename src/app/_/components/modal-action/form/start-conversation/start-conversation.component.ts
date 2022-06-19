@@ -73,7 +73,6 @@ export class StartConversationComponent implements OnInit {
     // this.addresses = this.walletService.getFromHomeStorage();
 
     let addresses = [];
-    console.log(this.addresses);
     for(let address of Object.keys(this.addresses)) {
       addresses.push({
         address: address,

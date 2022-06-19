@@ -52,7 +52,6 @@ export class WalletAccountComponent implements OnInit {
 
   		this.subjects.getWalletInfos = this.walletService.getWalletInfos(address).subscribe((walletInfos: any) => {
   			if (!walletInfos.error) {
-          console.log(walletInfos);
 	  			this.account.amount = walletInfos.wallet?.amount;
 			    this.account.address = walletInfos.wallet?.address;
 			    this.account.height = walletInfos.wallet?.height;

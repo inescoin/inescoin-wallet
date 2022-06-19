@@ -32,7 +32,6 @@ export class QrCodeViewComponent implements OnInit {
   }
 
   getQrCodeAddress() {
-    console.log(this.qrCode);
     return JSON.stringify(this.qrCode);
   }
 

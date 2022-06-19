@@ -302,7 +302,6 @@ export class WebDetailsComponent implements OnInit {
     });
 
     this.subjects.onDomainProductAdded = this.webService.onDomainProductAdded.subscribe((product) => {
-      console.log('product', product);
       if (!this.domain.html[this.currentLocale].products) {
         this.domain.html[this.currentLocale].products = [];
       }
@@ -314,7 +313,6 @@ export class WebDetailsComponent implements OnInit {
     });
 
     this.subjects.onDomainProductsAdded = this.webService.onDomainProductsAdded.subscribe((products) => {
-      console.log('products', products);
       if (!this.domain.html[this.currentLocale].products) {
         this.domain.html[this.currentLocale].products = [];
       }
@@ -330,7 +328,6 @@ export class WebDetailsComponent implements OnInit {
     });
 
     this.subjects.onDomainProductUpdated = this.webService.onDomainProductUpdated.subscribe((data) => {
-      console.log('data', data);
       if (data.product && data.index !== -1) {
         this.domain.html[this.currentLocale].products[data.index] = data.product;
         this.ref.detectChanges();
@@ -339,7 +336,6 @@ export class WebDetailsComponent implements OnInit {
     });
 
     this.subjects.onDomainProductRemoved = this.webService.onDomainProductRemoved.subscribe((data) => {
-      console.log('data', data);
       if (data.product) {
         _.remove(this.domain.html[this.currentLocale].products, {
           sku: data.product.sku
@@ -351,7 +347,6 @@ export class WebDetailsComponent implements OnInit {
     });
 
     this.subjects.onDomainCategoriesAdded = this.webService.onDomainCategoriesAdded.subscribe((category) => {
-      console.log('category', category);
       if (!this.domain.html[this.currentLocale].categories) {
         this.domain.html[this.currentLocale].categories = [];
       }
@@ -378,17 +373,14 @@ export class WebDetailsComponent implements OnInit {
     });
 
     this.subjects.onDomainCategoriesUpdated = this.webService.onDomainCategoriesUpdated.subscribe((models) => {
-      console.log('models', models);
       let category = models.category;
       let parentSKU = models.parent;
 
       if (!category) {
-        console.log('category not found.', category);
         return;
       }
 
       if (!parentSKU && parentSKU !== '') {
-        console.log('parentSKU not found.', parentSKU);
         return;
       }
 
@@ -449,7 +441,6 @@ export class WebDetailsComponent implements OnInit {
     });
 
     this.subjects.onDomainCategoriesRemoved = this.webService.onDomainCategoriesRemoved.subscribe((category) => {
-      console.log('remove category:', category);
 
       if (!category.parent) {
         _.remove(this.domain.html[this.currentLocale].categories, {
@@ -833,7 +824,6 @@ export class WebDetailsComponent implements OnInit {
   }
 
   onTabChange(event) {
-    //console.log('onTabChange::', event);
   }
 
   updateFilterActive(event) {

@@ -103,7 +103,6 @@ export class AccountComponent implements OnInit {
 
   private detectScreenSize() {
     const currentSize = this._document.body.clientWidth;
-    console.log('detectScreenSize');
     this.size = currentSize;
     this.resizeSvc.onResize(currentSize);
   }

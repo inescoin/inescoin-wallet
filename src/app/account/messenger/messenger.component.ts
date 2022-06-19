@@ -69,16 +69,13 @@ export class MessengerComponent implements OnInit {
   	this._scrollToBottom();
 
     // this.socketService.socket.on('message', (message) => {
-    //   console.log(message);
     // });
 
     // this.socketService.socket.on('new-message', (message) => {
     //   this._checkMessageHistory(message);
-    //   console.log('NEW MESSAGE FOUND', message);
     // });
 
     this.socketService.getNewMessage().subscribe((message: string) => {
-      console.log('NEW MESSAGE FOUND', message);
       this._checkMessageHistory(message);
     });
   }
@@ -89,7 +86,6 @@ export class MessengerComponent implements OnInit {
 
   getMessages() {
     this.messageService.getMessages(this.current.from.address).subscribe((data: any) => {
-      console.log(data);
       data && data.messages && data.messages.forEach((message: any) => {
         this._checkMessageHistory(message);
       })
@@ -99,7 +95,6 @@ export class MessengerComponent implements OnInit {
   initHistory(history?) {
     this.history = history || this.messengerService.history;
 
-    console.log(this.history);
   	let conversations = [];
   	for(let channel of Object.keys(this.history)) {
   		conversations.push({
@@ -170,7 +165,6 @@ export class MessengerComponent implements OnInit {
   		this.password
   	);
 
-    console.log(this.current.from, this.password);
 
     if (decrypted) {
       decrypted = JSON.parse(decrypted);
@@ -234,17 +228,14 @@ export class MessengerComponent implements OnInit {
   }
 
   private _checkMessageHistory(message) {
-    console.log('-------> 1', message);
     if (!message) {
       return;
     }
-    console.log('-------> 2');
 
     let passed = this.messageService.ecVerify(message.hash, message.signature, message.publicKey);
     if (!passed) {
       return;
     }
-    console.log('-------> 3');
 
     let addresses = Object.keys(this.wallets);
     let address = addresses.indexOf(message.toWalletId) !== -1
@@ -257,14 +248,8 @@ export class MessengerComponent implements OnInit {
     let idDERFrom = CryptoJS.SHA256(message.toWalletId + message.fromWalletId).toString();
     let idDERTo = CryptoJS.SHA256(message.fromWalletId + message.toWalletId).toString();
 
-    // console.log('_checkMessageHistory', 'Current Id:' + this.current.id, 'idDERFrom:' + idDERFrom, 'idDERTo:' +idDERTo);
 
     if (this.messengerService.messageExists(idDERFrom, message)) {
-      console.log('----------------------------------------------------------');
-      console.log('----------------------------------------------------------');
-      console.log('--------------------- messageExists ----------------------');
-      console.log('----------------------------------------------------------');
-      console.log('----------------------------------------------------------');
       return;
     }
 

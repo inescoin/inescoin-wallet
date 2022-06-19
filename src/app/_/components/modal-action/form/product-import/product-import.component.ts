@@ -45,8 +45,6 @@ export class ProductImportComponent implements OnInit {
 	  	this.webService.onDomainProductsAdded.emit(this.parsed);
 	    this.dismiss();
 		}
-
-  	console.log('parsed', this.parsed);
   }
 
   dismiss() {

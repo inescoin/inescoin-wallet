@@ -34,7 +34,6 @@ export class AccountRequestComponent implements OnInit {
 
   getQrCodeAddress() {
   	this.payment.address = this.options.account.address;
-  	console.log(this.payment);
   	return JSON.stringify(this.payment);
   }
 
